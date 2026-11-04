@@ -1330,8 +1330,7 @@ export function App() {
             </a>
             <div className="sb-footer-signup">
             <p>
-              Ready to join? These sign-up links are referrals that support
-              Slicebase.
+              Referral links - we may earn a reward.
             </p>
             <a
               className="sb-footer-action"
@@ -1378,18 +1377,6 @@ export function App() {
             captured; Oceanpoint reports 77, so its coverage is incomplete. Not
             live quotes. No partnership is implied. Fractional property carries
             risk, including loss of capital.
-          </p>
-          <p className="sb-footer-disclosure">
-            Referral disclosure: &ldquo;Sign up&rdquo; and &ldquo;Join&rdquo;
-            links are referral links. If you register through one and invest,
-            Slicebase&rsquo;s operator may earn a platform reward under the
-            programmes as published on 4 Nov 2026: Lofty credits the referrer
-            $100 once the new investor has invested $250 within 30 days of
-            signing up; Oceanpoint has announced referral rewards of a sign-up
-            bonus plus a share of trading fees, with full terms still pending
-            official launch. Property source, terms and evidence links are
-            never referral
-            links.
           </p>
         </div>
       </footer>
