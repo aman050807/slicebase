@@ -2119,3 +2119,95 @@ a.sb-join-link:hover {
     margin-top: 0;
   }
 }
+
+/* ---------- index stats banner ---------- */
+.sb-index-banner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 4px 0 18px;
+  margin: 0;
+}
+.sb-index-banner > div {
+  border-left: 2px solid #8b352b;
+  padding-left: 14px;
+}
+.sb-index-banner strong {
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 500;
+  font-size: 26px;
+  letter-spacing: -0.03em;
+  color: #2a2423;
+  line-height: 1.1;
+}
+.sb-index-banner span {
+  display: block;
+  margin-top: 3px;
+  color: #716762;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.sb-index-note {
+  margin: 0;
+  padding: 0 0 18px;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: #716762;
+  max-width: 760px;
+}
+.sb-index-note a {
+  color: #8b352b;
+}
+@media (min-width: 720px) {
+  .sb-index-banner {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+}
+
+/* ---------- property badges ---------- */
+.sb-property-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: -12px 0 16px;
+}
+.sb-badge {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #716762;
+  border: 1px solid var(--dir-rule);
+  border-radius: 999px;
+  padding: 3px 9px;
+  white-space: nowrap;
+}
+.sb-badge-live {
+  color: #2f6b3a;
+  border-color: rgba(47, 107, 58, 0.4);
+}
+
+/* ---------- calculator mode toggle ---------- */
+.sb-calc-mode {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.sb-calc-mode button {
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #716762;
+  background: none;
+  border: 1px solid var(--dir-rule);
+  border-radius: 999px;
+  padding: 7px 14px;
+  cursor: pointer;
+}
+.sb-calc-mode button[aria-pressed="true"] {
+  color: #fff;
+  background: #8b352b;
+  border-color: #8b352b;
+}

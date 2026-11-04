@@ -239,6 +239,65 @@ type Listing = {
   rawMetrics: string | null;
 };
 const LISTINGS = listingData as Listing[];
+const valuationNumber = (v: string | null) =>
+  v ? Number(v.replace(/[^0-9.]/g, "")) : 0;
+const compactMoney = (n: number) =>
+  n >= 1000000 ? `$${(n / 1000000).toFixed(1)}M` : money(n);
+const INDEX_STATS = (() => {
+  const ocean = LISTINGS.filter((l) => l.platform === "Oceanpoint");
+  return {
+    listings: LISTINGS.length,
+    platforms: new Set(LISTINGS.map((l) => l.platform)).size,
+    oceanCount: ocean.length,
+    oceanValue: ocean.reduce((sum, l) => sum + valuationNumber(l.valuation), 0),
+  };
+})();
+/** Lofty publishes a sector per listing; Oceanpoint does not, so the
+ *  Oceanpoint sector is read from the listing's own published title. */
+function sectorFor(l: Listing): string {
+  if (l.platform === "Lofty")
+    return l.type === "Not specified" ? "Type not disclosed" : l.type;
+  const n = l.name.toLowerCase();
+  if (n.includes("student")) return "Student housing";
+  if (n.includes("parking")) return "Parking";
+  if (
+    n.includes("guesthouse") ||
+    n.includes("pension") ||
+    n.includes("hotel")
+  )
+    return "Hospitality";
+  if (n.includes("restaurant")) return "Restaurant";
+  if (n.includes("mixed use") || n.includes("multipurpose"))
+    return "Mixed use";
+  if (
+    n.includes("apartment") ||
+    n.includes("duplex") ||
+    n.includes("studio") ||
+    n.includes("house")
+  )
+    return "Residential";
+  return "Type not disclosed";
+}
+function liquidityFor(l: Listing): { text: string; live: boolean } {
+  if (l.platform === "Lofty")
+    return { text: "Secondary market: Lofty exchange", live: true };
+  if (l.status === "TRADING")
+    return { text: "Trading live on Oceanpoint", live: true };
+  if (l.status === "LISTED")
+    return { text: "Listed; not yet trading", live: false };
+  return { text: "Not yet trading", live: false };
+}
+function PropertyBadges({ listing: l }: { listing: Listing }) {
+  const liq = liquidityFor(l);
+  return (
+    <div className="sb-property-badges">
+      <span className="sb-badge">{sectorFor(l)}</span>
+      <span className={`sb-badge${liq.live ? " sb-badge-live" : ""}`}>
+        {liq.text}
+      </span>
+    </div>
+  );
+}
 const COUNTRIES = [
   { code: "us", label: "United States" },
   { code: "in", label: "India" },
@@ -255,6 +314,7 @@ function termsFor(l: Listing): Term[] {
   const lofty = l.platform === "Lofty";
   return [
     { label: "Minimum investment", value: "Exact order minimum unverified" },
+    { label: "Occupancy", value: "Not disclosed in the 4 Nov snapshot" },
     {
       label: "Fees",
       value: lofty
@@ -479,6 +539,8 @@ export function App() {
   };
 
   const [calcId, setCalcId] = useState(1);
+  const [calcMode, setCalcMode] = useState<"invest" | "goal">("invest");
+  const [goal, setGoal] = useState("500");
   const [amount, setAmount] = useState("1000");
   const [rate, setRate] = useState("8");
   const [years, setYears] = useState("5");
@@ -501,6 +563,18 @@ export function App() {
   const gross = (a * r) / 100;
   const annual = gross - f;
   const income = annual * t - u;
+  const goalNumeric = [goal, rate, annualFees].map(Number);
+  const validGoal =
+    [goal, rate, annualFees].every((v) => v.trim() !== "") &&
+    goalNumeric.every(Number.isFinite) &&
+    goalNumeric[0] > 0 &&
+    goalNumeric[0] <= 1000000 &&
+    goalNumeric[1] > 0 &&
+    goalNumeric[1] <= 100 &&
+    goalNumeric[2] >= 0;
+  const [g, gr, gf] = goalNumeric;
+  const goalAnnualAfterCosts = g * 12;
+  const goalInvestment = ((goalAnnualAfterCosts + gf) * 100) / gr;
   const openCalculator = (listing: Listing) => {
     setCalcId(listing.id);
     calculatorRef.current?.scrollIntoView({
@@ -742,6 +816,267 @@ export function App() {
               Source-linked snapshot · Not live quotes
             </span>
           </div>
+          <div className="sb-index-banner">
+            <div>
+              <strong>{INDEX_STATS.listings}</strong>
+              <span>
+                listings indexed across {INDEX_STATS.platforms} platforms
+              </span>
+            </div>
+            <div>
+              <strong>{compactMoney(INDEX_STATS.oceanValue)}</strong>
+              <span>
+                published valuations indexed ({INDEX_STATS.oceanCount}{" "}
+                Oceanpoint listings, USD)
+              </span>
+            </div>
+            <div>
+              <strong>$100M+</strong>
+              <span>invested on Lofty's marketplace, platform-reported</span>
+            </div>
+          </div>
+          <p className="sb-index-note">
+            Checked 5 Nov 2026. &ldquo;Indexed&rdquo; counts only listings
+            captured in this directory, as published - a few listings are
+            multi-property packages, DAOs or individual units of one
+            building. The Lofty figure is Lofty's own
+            marketplace total, not Slicebase coverage; per-listing valuations
+            are not published in our Lofty snapshot. Oceanpoint sectors are
+            read from each listing's own title. A secondary market does not
+            guarantee a buyer or your price.{" "}
+            <TextLink href="https://www.lofty.ai/how-it-works">
+              Lofty figures ↗
+            </TextLink>{" "}
+            ·{" "}
+            <TextLink href="https://oceanpoint.fi/stats">
+              Oceanpoint stats ↗
+            </TextLink>
+          </p>
+          <section
+            id="income"
+            ref={calculatorRef}
+            className="sb-calculator"
+            aria-labelledby="calculator-title"
+          >
+            <div className="sb-calculator-heading">
+              <p className="sb-eyebrow">Run the numbers</p>
+              <h3 id="calculator-title">What could the income look like?</h3>
+              <p>
+                Your own cash-income scenario, separate from platform metrics.
+                Run it from an investment amount, or backward from a monthly
+                income goal. The 8% starting rate is an example, not a listing
+                forecast. Platform APY and avg yield are never loaded as
+                cash-income assumptions.
+              </p>
+            </div>
+            <div className="sb-calculator-layout">
+              <div className="sb-calculator-inputs">
+                <div
+                  className="sb-calc-mode"
+                  role="group"
+                  aria-label="Calculator mode"
+                >
+                  <button
+                    type="button"
+                    aria-pressed={calcMode === "invest"}
+                    onClick={() => setCalcMode("invest")}
+                  >
+                    From an investment
+                  </button>
+                  <button
+                    type="button"
+                    aria-pressed={calcMode === "goal"}
+                    onClick={() => setCalcMode("goal")}
+                  >
+                    Toward a monthly goal
+                  </button>
+                </div>
+                <label className="sb-calc-property">
+                  Property context
+                  <select
+                    value={calcId}
+                    onChange={(e) => {
+                      const l = LISTINGS.find(
+                        (x) => x.id === Number(e.target.value),
+                      )!;
+                      setCalcId(l.id);
+                    }}
+                  >
+                    {LISTINGS.map((l) => (
+                      <option key={l.id} value={l.id}>
+                        {l.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                {(calcMode === "invest"
+                  ? [
+                      [
+                        "Investment ($)",
+                        amount,
+                        setAmount,
+                        "1",
+                        "100000000",
+                      ],
+                      ["Annual income rate (%)", rate, setRate, "0", "100"],
+                      ["Holding period (years)", years, setYears, "1", "30"],
+                      [
+                        "Upfront costs ($)",
+                        upfront,
+                        setUpfront,
+                        "0",
+                        "100000000",
+                      ],
+                      [
+                        "Annual costs ($)",
+                        annualFees,
+                        setAnnualFees,
+                        "0",
+                        "100000000",
+                      ],
+                    ]
+                  : [
+                      [
+                        "Monthly income goal ($)",
+                        goal,
+                        setGoal,
+                        "1",
+                        "1000000",
+                      ],
+                      ["Annual income rate (%)", rate, setRate, "0", "100"],
+                      [
+                        "Annual costs ($)",
+                        annualFees,
+                        setAnnualFees,
+                        "0",
+                        "100000000",
+                      ],
+                    ]
+                ).map(([label, value, setter, min, max]) => (
+                  <label key={String(label)}>
+                    {String(label)}
+                    <input
+                      type="number"
+                      inputMode="decimal"
+                      min={String(min)}
+                      max={String(max)}
+                      step="any"
+                      value={String(value)}
+                      onChange={(e) =>
+                        (
+                          setter as React.Dispatch<React.SetStateAction<string>>
+                        )(e.target.value)
+                      }
+                    />
+                  </label>
+                ))}
+                {calcMode === "invest" ? (
+                  <p>
+                    No reinvestment, tax or change in property value is
+                    included. Income can fall to zero and capital can be lost.
+                    Costs start at $0 as placeholders, not verified fee-free
+                    terms. Enter only costs not already included in the income
+                    rate to avoid counting them twice.
+                  </p>
+                ) : (
+                  <p>
+                    Goal mode works backward from your target: the same rate
+                    assumption, solved for the investment instead. The result is
+                    an estimate, not a plan or a forecast. Income can fall to
+                    zero and capital can be lost. Upfront costs are not included
+                    in the result; add them separately.
+                  </p>
+                )}
+              </div>
+              <div className="sb-calculator-output" aria-live="polite">
+                {calcMode === "goal" ? (
+                  validGoal ? (
+                    <>
+                      <span>
+                        Investment needed to target {money(g)} per month
+                      </span>
+                      <strong>{money(goalInvestment)}</strong>
+                      <dl>
+                        <div>
+                          <dt>Target annual income after costs</dt>
+                          <dd>{money(goalAnnualAfterCosts)}</dd>
+                        </div>
+                        <div>
+                          <dt>Annual income before costs</dt>
+                          <dd>{money(goalAnnualAfterCosts + gf)}</dd>
+                        </div>
+                        <div>
+                          <dt>Assumed annual income rate</dt>
+                          <dd>{gr}%</dd>
+                        </div>
+                      </dl>
+                      <p>
+                        Estimate only. The rate is your own assumption; income
+                        can fall to zero and capital can be lost.
+                      </p>
+                    </>
+                  ) : (
+                    <p role="alert">
+                      Enter a positive monthly goal, a rate above 0 and up to
+                      100% and non-negative annual costs.
+                    </p>
+                  )
+                ) : validCalc ? (
+                  <>
+                    <span>
+                      Income over {t} {t === 1 ? "year" : "years"}, after
+                      entered costs
+                    </span>
+                    <strong>{money(income)}</strong>
+                    <dl>
+                      <div>
+                        <dt>Average monthly income*</dt>
+                        <dd>{money(annual / 12)}</dd>
+                      </div>
+                      <div>
+                        <dt>Annual income after entered costs</dt>
+                        <dd>{money(annual)}</dd>
+                      </div>
+                      <div>
+                        <dt>Income before costs, over period</dt>
+                        <dd>{money(gross * t)}</dd>
+                      </div>
+                      <div>
+                        <dt>Total entered costs</dt>
+                        <dd>{money(u + f * t)}</dd>
+                      </div>
+                    </dl>
+                    <p>
+                      *Monthly average, not a payout schedule. Upfront costs are
+                      deducted from the period total, not the monthly figure.
+                    </p>
+                  </>
+                ) : (
+                  <p role="alert">
+                    Enter a positive investment, a rate from 0-100%, a period
+                    from 1-30 years and non-negative costs.
+                  </p>
+                )}
+              </div>
+            </div>
+            <details className="sb-calculator-method">
+              <summary>Assumptions and calculation</summary>
+              <p>
+                Annual income = investment × annual rate / 100 − annual costs.
+                Period income = annual income × years − upfront costs. The rate
+                stays constant; income is not reinvested. Investment amount
+                excludes upfront costs. The rate is your own assumption, not a
+                copied platform return. Oceanpoint APY and Lofty avg yield are
+                not treated as equivalent cash-income rates. No taxes, currency
+                changes, appreciation, depreciation or sale proceeds are
+                included. This is an income estimate, not total return, IRR or a
+                forecast. Actual income can be lower or zero, and capital can be
+                lost. In goal mode, required investment = (12 × monthly goal +
+                annual costs) × 100 ÷ annual rate; every limit above applies
+                unchanged.
+              </p>
+            </details>
+          </section>
           <div className="sb-controls">
             <div className="sb-control">
               <label htmlFor="f-country">Country context</label>
@@ -797,7 +1132,7 @@ export function App() {
           </div>
           <p className="sb-directory-notice">{ELIGIBILITY_NOTE}</p>
           <div className="sb-result-line">
-            <span>{results.length} properties · 105 captured</span>
+            <span>{results.length} listings · 105 captured</span>
             <button
               type="button"
               onClick={() => {
@@ -841,9 +1176,8 @@ export function App() {
                       <span>{l.status}</span>
                     </div>
                     <h3>{l.name}</h3>
-                    <p className="sb-property-location">
-                      {l.city} · {l.type}
-                    </p>
+                    <p className="sb-property-location">{l.city}</p>
+                    <PropertyBadges listing={l} />
                     <dl className="sb-property-metrics">
                       <div>
                         <dt>
@@ -1018,135 +1352,6 @@ export function App() {
               </p>
             </div>
           )}
-          <section
-            id="income"
-            ref={calculatorRef}
-            className="sb-calculator"
-            aria-labelledby="calculator-title"
-          >
-            <div className="sb-calculator-heading">
-              <p className="sb-eyebrow">Run the numbers</p>
-              <h3 id="calculator-title">What could the income look like?</h3>
-              <p>
-                Your own cash-income scenario, separate from platform metrics.
-                The 8% starting rate is an example, not a listing forecast.
-                Platform APY and avg yield are never loaded as cash-income
-                assumptions.
-              </p>
-            </div>
-            <div className="sb-calculator-layout">
-              <div className="sb-calculator-inputs">
-                <label className="sb-calc-property">
-                  Property context
-                  <select
-                    value={calcId}
-                    onChange={(e) => {
-                      const l = LISTINGS.find(
-                        (x) => x.id === Number(e.target.value),
-                      )!;
-                      setCalcId(l.id);
-                    }}
-                  >
-                    {LISTINGS.map((l) => (
-                      <option key={l.id} value={l.id}>
-                        {l.name}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                {[
-                  ["Investment ($)", amount, setAmount, "1", "100000000"],
-                  ["Annual income rate (%)", rate, setRate, "0", "100"],
-                  ["Holding period (years)", years, setYears, "1", "30"],
-                  ["Upfront costs ($)", upfront, setUpfront, "0", "100000000"],
-                  [
-                    "Annual costs ($)",
-                    annualFees,
-                    setAnnualFees,
-                    "0",
-                    "100000000",
-                  ],
-                ].map(([label, value, setter, min, max]) => (
-                  <label key={String(label)}>
-                    {String(label)}
-                    <input
-                      type="number"
-                      inputMode="decimal"
-                      min={String(min)}
-                      max={String(max)}
-                      step="any"
-                      value={String(value)}
-                      onChange={(e) =>
-                        (
-                          setter as React.Dispatch<React.SetStateAction<string>>
-                        )(e.target.value)
-                      }
-                    />
-                  </label>
-                ))}
-                <p>
-                  No reinvestment, tax or change in property value is included.
-                  Income can fall to zero and capital can be lost. Costs start
-                  at $0 as placeholders, not verified fee-free terms. Enter only
-                  costs not already included in the income rate to avoid
-                  counting them twice.
-                </p>
-              </div>
-              <div className="sb-calculator-output" aria-live="polite">
-                {validCalc ? (
-                  <>
-                    <span>
-                      Income over {t} {t === 1 ? "year" : "years"}, after
-                      entered costs
-                    </span>
-                    <strong>{money(income)}</strong>
-                    <dl>
-                      <div>
-                        <dt>Average monthly income*</dt>
-                        <dd>{money(annual / 12)}</dd>
-                      </div>
-                      <div>
-                        <dt>Annual income after entered costs</dt>
-                        <dd>{money(annual)}</dd>
-                      </div>
-                      <div>
-                        <dt>Income before costs, over period</dt>
-                        <dd>{money(gross * t)}</dd>
-                      </div>
-                      <div>
-                        <dt>Total entered costs</dt>
-                        <dd>{money(u + f * t)}</dd>
-                      </div>
-                    </dl>
-                    <p>
-                      *Monthly average, not a payout schedule. Upfront costs are
-                      deducted from the period total, not the monthly figure.
-                    </p>
-                  </>
-                ) : (
-                  <p role="alert">
-                    Enter a positive investment, a rate from 0-100%, a period
-                    from 1-30 years and non-negative costs.
-                  </p>
-                )}
-              </div>
-            </div>
-            <details className="sb-calculator-method">
-              <summary>Assumptions and calculation</summary>
-              <p>
-                Annual income = investment × annual rate / 100 − annual costs.
-                Period income = annual income × years − upfront costs. The rate
-                stays constant; income is not reinvested. Investment amount
-                excludes upfront costs. The rate is your own assumption, not a
-                copied platform return. Oceanpoint APY and Lofty avg yield are
-                not treated as equivalent cash-income rates. No taxes, currency
-                changes, appreciation, depreciation or sale proceeds are
-                included. This is an income estimate, not total return, IRR or a
-                forecast. Actual income can be lower or zero, and capital can be
-                lost.
-              </p>
-            </details>
-          </section>
         </section>
 
         <section id="how" className="sb-section">
