@@ -2057,3 +2057,38 @@
 .sb-footer-signup .sb-footer-action {
   padding: 14px 0;
 }
+
+/* Prominent, truthfully labelled referral join action */
+a.sb-join-link {
+  display: inline-block;
+  padding: 10px 16px;
+  border: 1px solid #4b3f3a;
+  border-radius: 999px;
+  background: #4b3f3a;
+  color: #fff6ee;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+a.sb-join-link:hover {
+  background: #772e25;
+  border-color: #772e25;
+}
+.sb-property-actions {
+  flex-wrap: wrap;
+}
+.sb-property-actions a.sb-join-link {
+  order: -1;
+  flex: 1 0 100%;
+  text-align: center;
+}
+.sb-comparison-join {
+  margin: 0 0 10px;
+}
+.sb-comparison-join a.sb-join-link {
+  display: block;
+  text-align: center;
+}

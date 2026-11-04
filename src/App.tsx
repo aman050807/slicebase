@@ -291,17 +291,27 @@ const REFERRAL: Record<string, { url: string; perk: string }> = {
   },
 };
 
-function ReferralLine({ platform }: { platform: string }) {
+function ReferralNote() {
+  return (
+    <p className="sb-referral-line">
+      &ldquo;Join&rdquo; opens the platform&rsquo;s sign-up page via a referral
+      link; Slicebase may earn a reward. The source link stays direct.
+    </p>
+  );
+}
+
+function JoinLink({ platform }: { platform: string }) {
   const ref = REFERRAL[platform];
   if (!ref) return null;
   return (
-    <p className="sb-referral-line">
-      New to {platform}?{" "}
-      <a href={ref.url} target="_blank" rel="sponsored noopener noreferrer">
-        Sign up &#8599;
-      </a>{" "}
-      · referral link; Slicebase may earn a reward
-    </p>
+    <a
+      className="sb-join-link"
+      href={ref.url}
+      target="_blank"
+      rel="sponsored noopener noreferrer"
+    >
+      Join {platform} &#8599;
+    </a>
   );
 }
 
@@ -313,6 +323,12 @@ function TermNotes({ listing: l }: { listing: Listing }) {
       <p>
         Platform-wide guidance, checked 4 Nov 2026. Not a verification of this
         offering's complete terms or your eligibility.
+      </p>
+      <p>
+        Property source (direct link, no referral):{" "}
+        <TextLink href={l.source}>
+          View this listing on {l.platform} ↗
+        </TextLink>
       </p>
       {lofty ? (
         <>
@@ -852,10 +868,8 @@ export function App() {
                     </dl>
                     <TermNotes listing={l} />
                     <p className="sb-source-line">
-                      <TextLink href={l.source}>
-                        View {l.platform} source ↗
-                      </TextLink>{" "}
-                      · Checked 4 Nov 2026
+                      Checked 4 Nov 2026 · direct property link under Terms,
+                      scope &amp; sources
                       {l.assetSource && (
                         <>
                           {" "}
@@ -866,8 +880,8 @@ export function App() {
                         </>
                       )}
                     </p>
-                    <ReferralLine platform={l.platform} />
                     <div className="sb-property-actions">
+                      <JoinLink platform={l.platform} />
                       <button
                         type="button"
                         className="file-hover-underline"
@@ -889,6 +903,7 @@ export function App() {
                         </span>
                       </label>
                     </div>
+                    <ReferralNote />
                   </div>
                 </article>
               ))}
@@ -983,10 +998,13 @@ export function App() {
                       ))}
                     </dl>
                     <TermNotes listing={l} />
+                    <p className="sb-comparison-join">
+                      <JoinLink platform={l.platform} />
+                    </p>
                     <button type="button" onClick={() => openCalculator(l)}>
                       Estimate income ↗
                     </button>
-                    <ReferralLine platform={l.platform} />
+                    <ReferralNote />
                   </article>
                 ))}
               </div>
