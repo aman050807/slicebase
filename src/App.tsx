@@ -300,7 +300,7 @@ function ReferralLine({ platform }: { platform: string }) {
       <a href={ref.url} target="_blank" rel="sponsored noopener noreferrer">
         Sign up &#8599;
       </a>{" "}
-      · referral link, supports Slicebase at no extra cost
+      · referral link; Slicebase may earn a reward
     </p>
   );
 }
@@ -1367,8 +1367,8 @@ export function App() {
             $100 once the new investor has invested $250 within 30 days of
             signing up; Oceanpoint has announced referral rewards of a sign-up
             bonus plus a share of trading fees, with full terms still pending
-            official launch. Referral links never change the price you pay.
-            Property source, terms and evidence links are never referral
+            official launch. Property source, terms and evidence links are
+            never referral
             links.
           </p>
         </div>
