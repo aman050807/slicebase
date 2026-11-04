@@ -277,6 +277,34 @@ function termsFor(l: Listing): Term[] {
     },
   ];
 }
+/** Referral sign-up routes supplied by the operator, checked 4 Nov 2026.
+ *  Used only on labelled sign-up CTAs. Property source, terms and evidence
+ *  links stay plain, without referral parameters. */
+const REFERRAL: Record<string, { url: string; perk: string }> = {
+  Lofty: {
+    url: "https://www.lofty.ai/refer?utm_source=growsurf&utm_medium=referrals&utm_campaign=referral-program&grsf=v-m-aman-usskyd",
+    perk: "new accounts currently get a $100 real-estate gift",
+  },
+  Oceanpoint: {
+    url: "https://marketplace.oceanpoint.fi/oceanpoint/auth/sign-up?referralCode=9257706977afb3e695eacd36979504ab7b757e162fb6de7329aa66f81e5a8c5e",
+    perk: "create a marketplace account",
+  },
+};
+
+function ReferralLine({ platform }: { platform: string }) {
+  const ref = REFERRAL[platform];
+  if (!ref) return null;
+  return (
+    <p className="sb-referral-line">
+      New to {platform}?{" "}
+      <a href={ref.url} target="_blank" rel="sponsored noopener noreferrer">
+        Sign up &#8599;
+      </a>{" "}
+      · referral link, supports Slicebase at no extra cost
+    </p>
+  );
+}
+
 function TermNotes({ listing: l }: { listing: Listing }) {
   const lofty = l.platform === "Lofty";
   return (
@@ -838,6 +866,7 @@ export function App() {
                         </>
                       )}
                     </p>
+                    <ReferralLine platform={l.platform} />
                     <div className="sb-property-actions">
                       <button
                         type="button"
@@ -957,6 +986,7 @@ export function App() {
                     <button type="button" onClick={() => openCalculator(l)}>
                       Estimate income ↗
                     </button>
+                    <ReferralLine platform={l.platform} />
                   </article>
                 ))}
               </div>
@@ -1279,6 +1309,28 @@ export function App() {
           <a className="sb-footer-action" href="#compare">
             Compare offerings <span aria-hidden="true">↗</span>
           </a>
+          <div className="sb-footer-signup">
+            <p>
+              Ready to join? These sign-up links are referrals that support
+              Slicebase.
+            </p>
+            <a
+              className="sb-footer-action"
+              href={REFERRAL.Lofty.url}
+              target="_blank"
+              rel="sponsored noopener noreferrer"
+            >
+              Join Lofty <span aria-hidden="true">↗</span>
+            </a>
+            <a
+              className="sb-footer-action"
+              href={REFERRAL.Oceanpoint.url}
+              target="_blank"
+              rel="sponsored noopener noreferrer"
+            >
+              Join Oceanpoint <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </div>
         <div className="sb-footer-info">
           <p>
@@ -1306,6 +1358,18 @@ export function App() {
             captured; Oceanpoint reports 77, so its coverage is incomplete. Not
             live quotes. No partnership is implied. Fractional property carries
             risk, including loss of capital.
+          </p>
+          <p>
+            Referral disclosure: &ldquo;Sign up&rdquo; and &ldquo;Join&rdquo;
+            links are referral links. If you register through one and invest,
+            Slicebase&rsquo;s operator may earn a platform reward under the
+            programmes as published on 4 Nov 2026: Lofty credits the referrer
+            $100 once the new investor has invested $250 within 30 days of
+            signing up; Oceanpoint has announced referral rewards of a sign-up
+            bonus plus a share of trading fees, with full terms still pending
+            official launch. Referral links never change the price you pay.
+            Property source, terms and evidence links are never referral
+            links.
           </p>
         </div>
       </footer>

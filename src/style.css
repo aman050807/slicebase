@@ -2024,3 +2024,36 @@
 }
 
 .sb-term-notes summary::after {content:"+";margin-left:auto;padding-left:8px}.sb-term-notes[open] summary::after{content:"−"}
+
+/* Referral sign-up CTAs: labelled, secondary to plain source links */
+.sb-referral-line {
+  font-size: 11px;
+  line-height: 1.7;
+  color: #716762;
+  margin: 6px 0 0;
+}
+.sb-referral-line a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.sb-referral-line a:hover {
+  color: #4b3f3a;
+}
+.sb-footer-signup {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  min-width: 260px;
+}
+.sb-footer-signup p {
+  color: rgba(255, 246, 238, 0.72);
+  font-size: 12px;
+  line-height: 1.7;
+  max-width: 34ch;
+  margin: 0 0 12px;
+}
+.sb-footer-signup .sb-footer-action {
+  padding: 14px 0;
+}
