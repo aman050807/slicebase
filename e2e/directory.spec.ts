@@ -35,3 +35,20 @@ for (const width of [320, 390, 1280]) {
     ).toBe(true);
   });
 }
+
+for (const width of [390, 1280]) {
+  test(`navbar scrolls away at ${width}px`, async ({page}) => {
+    await page.setViewportSize({width, height:900});
+    await page.goto('/');
+    await expect(page.locator('.sb-nav')).toBeVisible();
+    if(width === 390){
+      await page.getByRole('button', {name:'Menu', exact:true}).click();
+      await expect(page.locator('#sb-mobile-menu')).toBeVisible();
+      await page.locator('#sb-mobile-menu').getByRole('link', {name:/How it works/}).click();
+      await expect(page.locator('#sb-mobile-menu')).toBeHidden();
+    }
+    await page.locator('#how').scrollIntoViewIfNeeded();
+    expect(await page.locator('.sb-nav').evaluate(e=>e.getBoundingClientRect().bottom)).toBeLessThanOrEqual(0);
+    await page.locator('#top').scrollIntoViewIfNeeded();
+  });
+}

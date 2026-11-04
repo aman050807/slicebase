@@ -131,7 +131,7 @@
 
 /* ---------- nav ---------- */
 .sb-nav {
-  position: sticky;
+  position: relative;
   top: 0;
   z-index: 20;
   display: flex;
