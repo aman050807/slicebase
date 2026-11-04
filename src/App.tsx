@@ -1324,10 +1324,11 @@ export function App() {
               <em>Then choose your slice.</em>
             </h2>
           </div>
-          <a className="sb-footer-action" href="#compare">
-            Compare offerings <span aria-hidden="true">↗</span>
-          </a>
-          <div className="sb-footer-signup">
+          <div className="sb-footer-cta">
+            <a className="sb-footer-action" href="#compare">
+              Compare offerings <span aria-hidden="true">↗</span>
+            </a>
+            <div className="sb-footer-signup">
             <p>
               Ready to join? These sign-up links are referrals that support
               Slicebase.
@@ -1348,6 +1349,7 @@ export function App() {
             >
               Join Oceanpoint <span aria-hidden="true">↗</span>
             </a>
+            </div>
           </div>
         </div>
         <div className="sb-footer-info">
@@ -1377,7 +1379,7 @@ export function App() {
             live quotes. No partnership is implied. Fractional property carries
             risk, including loss of capital.
           </p>
-          <p>
+          <p className="sb-footer-disclosure">
             Referral disclosure: &ldquo;Sign up&rdquo; and &ldquo;Join&rdquo;
             links are referral links. If you register through one and invest,
             Slicebase&rsquo;s operator may earn a platform reward under the
