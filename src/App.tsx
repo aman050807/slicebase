@@ -739,12 +739,6 @@ export function App() {
                 How it works
               </a>
             </div>
-            <p className="sb-hero-note">
-              Listings checked 5 Nov 2026 &middot; Referral links may earn us
-              a reward; rankings are never paid for.
-              <br />
-              Fractional property carries risk, including loss of capital.
-            </p>
           </div>
 
           <div

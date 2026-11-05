@@ -2287,14 +2287,6 @@ a.sb-join-link:hover {
   color: rgba(255, 246, 238, 0.78);
   margin-bottom: 16px;
 }
-.sb-hero-note {
-  color: rgba(255, 246, 238, 0.88);
-  font-size: 13px;
-  line-height: 1.6;
-  max-width: 56ch;
-  margin: 22px 0 0;
-  text-shadow: 0 1px 3px rgba(60, 4, 10, 0.6);
-}
 .sb-info-page {
   max-width: 780px;
 }
