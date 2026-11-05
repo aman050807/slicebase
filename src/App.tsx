@@ -2471,8 +2471,9 @@ export function App() {
         <div className="sb-footer-bottom">
           <span>Source records · Informational only</span>
           <p>
-            Lofty &amp; Oceanpoint data. Partial coverage, not live
-            prices. We may earn referral rewards. Capital at risk.
+            Slicebase is an information platform, not an investment platform.
+            Investments carry risk, including loss of capital. Partial Lofty
+            &amp; Oceanpoint data; not live prices. We may earn referral rewards.
           </p>
         </div>
       </footer>
