@@ -2794,3 +2794,6 @@ a.sb-join-link:hover {
 /* Keep the hero-to-directory handoff compact after removing the intro strip. */
 .sb-directory { margin-top: 0; padding-top: 32px; }
 @media (max-width: 719px) { .sb-directory { padding-top: 24px; } }
+
+/* The red opening view includes the 87px navbar; listings begin below the fold. */
+.sb-hero { min-height: calc(100vh - 87px); min-height: calc(100svh - 87px); }

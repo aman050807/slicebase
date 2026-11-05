@@ -112,3 +112,19 @@ for (const width of [390, 1440]) {
     expect(gap.inner).toBeLessThanOrEqual(32);
   });
 }
+
+for (const [width, height] of [[1440, 820], [1440, 1000], [1920, 1080], [390, 844]]) {
+  test(`red opening fills viewport ${width}x${height}`, async ({page}) => {
+    await page.setViewportSize({width,height});
+    await page.goto('/');
+    const bounds = await page.evaluate(() => ({
+      directory: document.querySelector('#compare')!.getBoundingClientRect().top,
+      hero: document.querySelector('.sb-hero')!.getBoundingClientRect().bottom,
+      viewport: innerHeight
+    }));
+    expect(bounds.hero).toBeGreaterThanOrEqual(bounds.viewport-1);
+    expect(bounds.directory).toBeGreaterThanOrEqual(bounds.viewport-1);
+    await page.getByRole('link',{name:'Compare listings',exact:false}).first().click();
+    await expect(page.locator('#compare')).toBeInViewport();
+  });
+}
