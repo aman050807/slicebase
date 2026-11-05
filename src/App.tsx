@@ -2468,13 +2468,31 @@ export function App() {
           <img src={brandSymbol} alt="" />
           <span>Slicebase</span>
         </div>
-        <div className="sb-footer-bottom">
-          <span>Source records · Informational only</span>
+        <div className="sb-footer-bottom sb-footer-legal">
+          <h3>Legal Disclaimer &amp; Disclosure</h3>
           <p>
-            Slicebase is an information platform, not an investment platform.
-            Investments carry risk, including loss of capital. Partial Lofty
-            &amp; Oceanpoint data; not live prices. We may earn referral rewards.
+            Slicebase is an independent informational directory, comparison engine
+            and marketing affiliate. It is not an investment platform and does
+            not provide brokerage, investment advisory or asset management
+            services. Content, data and metrics are for information only, not
+            financial, investment, legal or tax advice. Investments carry risk,
+            including loss of capital.
           </p>
+          <p>
+            Slicebase does not accept investment deposits, hold digital tokens,
+            manage property deeds or execute transactions. Any investment,
+            identity verification (KYC) or token issuance takes place outside
+            Slicebase through the relevant platform and its services, subject to
+            their own terms, eligibility rules and risks. Slicebase may earn
+            referral or affiliate rewards when a visitor registers or transacts
+            through its outbound links. Listing data may be incomplete and is
+            not live pricing.
+          </p>
+          <ul aria-label="Platform role">
+            <li>No Asset Custody</li>
+            <li>Pure Directory Model</li>
+            <li>External Platform Links</li>
+          </ul>
         </div>
       </footer>
     </div>

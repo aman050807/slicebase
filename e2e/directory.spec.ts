@@ -219,3 +219,17 @@ test('wheel glide is disabled with reduced motion', async ({page}) => {
   await page.mouse.wheel(0,600);
   await expect.poll(()=>page.evaluate(()=>scrollY)).toBeGreaterThanOrEqual(599);
 });
+
+for (const width of [320, 390, 1330]) {
+  test(`approved legal disclosure fits at ${width}px`, async ({page}) => {
+    await page.setViewportSize({width,height:844});
+    await page.goto('/');
+    const footer=page.locator('.sb-footer-legal');
+    await expect(footer.getByRole('heading')).toHaveText('Legal Disclaimer & Disclosure');
+    await expect(footer.locator('li')).toHaveText(['No Asset Custody','Pure Directory Model','External Platform Links']);
+    await expect(footer).toContainText('including loss of capital');
+    await expect(footer).not.toContainText('fully licensed');
+    await expect(footer).not.toContainText('External Order Routing');
+    expect(await footer.evaluate(e=>e.scrollWidth <= e.clientWidth)).toBe(true);
+  });
+}

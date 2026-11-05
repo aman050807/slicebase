@@ -2819,3 +2819,39 @@ a.sb-join-link:hover {
 @media (min-width: 960px) { .sb-hero-visual { max-width: min(450px, calc((100svh - 245px) * .7931)); } }
 
 .sb-result-line > button { margin-left: auto; }
+
+/* Long-form disclosure, using the existing footer palette and typography. */
+.sb-footer-bottom.sb-footer-legal {
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+.sb-footer-legal h3 {
+  margin: 0;
+  color: rgba(255, 246, 238, 0.8);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.sb-footer-bottom.sb-footer-legal p {
+  margin: 0;
+  max-width: 110ch;
+  text-align: left;
+  font-size: 12px;
+  line-height: 1.75;
+  color: rgba(255, 246, 238, 0.7);
+}
+.sb-footer-legal ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  padding: 0;
+  margin: 4px 0 0;
+  list-style: none;
+  color: rgba(255, 246, 238, 0.75);
+  font-size: 11px;
+}
+.sb-footer-legal li::before {
+  content: "•";
+  margin-right: 8px;
+}
