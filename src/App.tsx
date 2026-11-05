@@ -787,7 +787,6 @@ export function App() {
             <a href="#income">Calculator</a>
             <a href="#faq">FAQ</a>
             <a href="#about">About</a>
-            <a href="#methodology">Methodology</a>
           </nav>
           <a className="sb-nav-explore" href="#compare">
             Compare listings <span aria-hidden="true">&rarr;</span>
@@ -836,9 +835,6 @@ export function App() {
           </a>
           <a href="#about" onClick={() => setMenuOpen(false)}>
             About
-          </a>
-          <a href="#methodology" onClick={() => setMenuOpen(false)}>
-            Methodology
           </a>
           <p>Dated source records · Informational only</p>
         </nav>
@@ -2490,43 +2486,6 @@ export function App() {
           </p>
         </section>
 
-        <section id="methodology" className="sb-section sb-info-page">
-          <p className="sb-eyebrow">Methodology</p>
-          <h2>How the data is collected.</h2>
-          <p className="sb-info-text">
-            Listing facts and one photo per property are collected from the
-            platforms&apos; own public pages. This directory was first captured on {CAPTURED}
-            and is re-read from the platforms&apos; public pages about hourly;
-            the last refresh was {REFRESHED}. It covers {N_LOFTY} Lofty and
-            {N_OCEAN} Oceanpoint listings; Oceanpoint reports {meta.oceanpointReported} properties, so that
-            coverage is incomplete. Platform-stated fees (checked 5 Nov 2026)
-            come from the platforms&apos; own pages and are linked on every
-            card. Figures labeled as a platform&apos;s own (avg yield, value
-            tag) are republished verbatim; where the platform does not state a
-            basis, the card says so. Nothing here is a live quote, and
-            availability or terms can change - the source link on every card
-            is the reference of record. Exact order minimums and full offering
-            costs remain unverified and are marked as such.
-          </p>
-          <ul className="sb-info-list">
-            <li>
-              &ldquo;Indexed&rdquo; counts only listings captured in this
-              directory, as published. A few listings are multi-property
-              packages, DAOs or individual units of one building.
-            </li>
-            <li>
-              The valuation total covers the {LISTINGS.filter((l) => valuationNumber(l.valuation) > 0).length} of {N_ALL} listings that publish
-              a value; the rest publish none.
-            </li>
-            <li>
-              Lofty publishes a sector per listing; Oceanpoint does not, so
-              Oceanpoint sectors are read from each listing's own title.
-            </li>
-            <li>
-              A secondary market does not guarantee a buyer or your price.
-            </li>
-          </ul>
-        </section>
       </main>
 
       <footer className="sb-footer">
@@ -2587,13 +2546,9 @@ export function App() {
         <div className="sb-footer-bottom">
           <span>Source records · Informational only</span>
           <p>
-            Listing facts and one photo per property are sourced from Lofty and
-            Oceanpoint, refreshed {REFRESHED}. {N_LOFTY} Lofty and {N_OCEAN} Oceanpoint records
-            captured; Oceanpoint reports {meta.oceanpointReported}, so its coverage is incomplete. Not
-            live quotes. Referral links may earn us rewards. Data reuse
-            permission does not imply endorsement. Fractional property
-            carries
-            risk, including loss of capital.
+            Data from Lofty and Oceanpoint, refreshed {REFRESHED}. Coverage is
+            incomplete; not live quotes. Referral links may earn us rewards.
+            Property tokens carry risk, including loss of capital.
           </p>
         </div>
       </footer>
