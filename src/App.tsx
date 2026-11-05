@@ -2420,14 +2420,10 @@ export function App() {
           <p className="sb-eyebrow">About</p>
           <h2>What Slicebase is.</h2>
           <p className="sb-info-text">
-            Slicebase is an independent, informational comparison directory
-            for tokenized real estate. It puts public listing facts from Lofty
-            and Oceanpoint side by side - prices, platform-stated fees, resale
-            and access rules - so visitors can compare before they invest.
-            Slicebase never holds money or tokens, sells nothing itself and
-            gives no investment advice. It may earn a referral reward when a
-            visitor joins a platform through its links; rankings are never
-            paid for, and referral rewards never change what is shown.
+            Slicebase is an independent directory for comparing tokenized real estate. We bring public listing information from Lofty and Oceanpoint into one place, so you can compare prices, platform stated fees, resale terms and access rules, then test your own assumptions with our calculator.
+          </p>
+          <p className="sb-info-text">
+            We provide information, not investment advice, and never hold your money or tokens. Any investment takes place outside Slicebase. We may earn a referral reward when you join a platform through our links; referral rewards do not affect listing order. Coverage is incomplete, so check current details with the platform before investing.
           </p>
         </section>
 
