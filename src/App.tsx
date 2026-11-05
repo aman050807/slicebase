@@ -295,9 +295,10 @@ function liquidityFor(l: Listing): { text: string; live: boolean } {
     return { text: "Listed; not yet trading", live: false };
   return { text: "Not yet trading", live: false };
 }
-/** Platform-stated transaction fees, checked 4 Nov 2026 (see each card's
- *  Terms, scope & sources). Applied to the invested amount with no change in
- *  property value; estimates only, never a listing forecast. */
+/** Platform-stated transaction fees, re-checked against the platforms' own
+ *  pages 5 Nov 2026 (lofty.ai/how-it-works, oceanpoint.fi/earn). Applied to
+ *  the invested amount with no change in property value; estimates only,
+ *  never a listing forecast. */
 function platformFeesFor(l: Listing): {
   buyPct: number;
   sellPct: number;
@@ -307,12 +308,12 @@ function platformFeesFor(l: Listing): {
     return {
       buyPct: 2.5,
       sellPct: 3,
-      note: "Lofty states 2.5% on purchases and 3% on sales; applied here to the invested amount with no change in property value. Market orders can add a separate 2.5% market-maker fee, not included. Property, payment or network costs may also apply.",
+      note: "Lofty states 2.5% on purchases and 3% on sales (lofty.ai/how-it-works, checked 5 Nov 2026); applied here to the invested amount, assuming a later sale at the same value. Market orders can add a separate 2.5% market-maker fee, not included; property, payment or network costs may also apply. Stated platform fees only - not a complete all-in cost.",
     };
   return {
     buyPct: 1.5,
     sellPct: 1.5,
-    note: "Oceanpoint states a 1.5% transaction fee; applied here to both the purchase and a later sale of the invested amount. Network gas and any property or issuer costs are extra and not included.",
+    note: "Oceanpoint charges 1.5% on each marketplace trade, so a purchase and a later sale are each charged (oceanpoint.fi/earn, checked 5 Nov 2026); applied here to the invested amount, assuming a sale at the same value. Network gas and any property or issuer costs are extra and not included. Stated platform fees only - not a complete all-in cost.",
   };
 }
 function PropertyBadges({ listing: l }: { listing: Listing }) {
