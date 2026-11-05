@@ -2009,17 +2009,18 @@ export function App() {
             {calcMode === "invest" && validCalc && seriesMid.length > 1 && (
               <figure className="sb-calc-chart">
                 <figcaption>
-                  Three paths over {t} {t === 1 ? "year" : "years"} at your{" "}
-                  {fmtRate(r)}% rate: value down {cvNum}%, unchanged, up{" "}
-                  {cvNum}%. The start counts the stated buy fee and any
-                  upfront costs; the stated sell fee is applied at sale, in
-                  the last step.
+                  Your cumulative net over {t} {t === 1 ? "year" : "years"}{" "}
+                  at your {fmtRate(r)}% rate, with three outcomes marked at
+                  sale: value down {cvNum}%, unchanged, up {cvNum}%. The
+                  start counts the stated buy fee and any upfront costs; the
+                  stated sell fee and any value change apply at sale, in the
+                  last step.
                 </figcaption>
                 <div className="sb-chart-frame">
                   <svg
-                    viewBox="0 0 560 150"
+                    viewBox="0 0 560 210"
                     role="img"
-                    aria-label="Line chart with three paths for the cumulative net position: property value down, unchanged and up, with a shaded band between them"
+                    aria-label="Line chart of the cumulative net position over time; the property-value change applies at sale, shown as a spread of three outcomes at the end"
                     onMouseMove={(e) => {
                       const rect = e.currentTarget.getBoundingClientRect();
                       const fx = ((e.clientX - rect.left) / rect.width) * 560;
@@ -2037,11 +2038,11 @@ export function App() {
                   >
                     {(() => {
                       const W = 560;
-                      const H = 150;
+                      const H = 210;
                       const PL = 44;
                       const PR = 110;
-                      const PT = 10;
-                      const PB = 24;
+                      const PT = 14;
+                      const PB = 26;
                       const n = seriesMid.length;
                       const all = [...seriesLow, ...seriesHigh, 0];
                       const lo = Math.min(...all);
@@ -2064,15 +2065,10 @@ export function App() {
                         H - PB - ((v - lo) / span) * (H - PT - PB);
                       const pts = (arr: number[]) =>
                         arr.map((v, ii) => `${X(ii)},${Y(v)}`).join(" ");
-                      const band =
-                        pts(seriesHigh) +
-                        " " +
-                        seriesLow
-                          .map(
-                            (_, ii) =>
-                              `${X(n - 1 - ii)},${Y(seriesLow[n - 1 - ii])}`,
-                          )
-                          .join(" ");
+                      const areaD =
+                        "M " +
+                        pts(seriesMid).split(" ").join(" L ") +
+                        ` L ${X(n - 1)},${H - PB} L ${X(0)},${H - PB} Z`;
                       const yTicks: number[] = [];
                       for (
                         let v = Math.ceil(lo / step) * step;
@@ -2121,21 +2117,48 @@ export function App() {
                               </text>
                             </>
                           )}
-                          {cvNum > 0 && (
-                            <polygon className="band" points={band} />
-                          )}
-                          {cvNum > 0 && (
-                            <polyline
-                              className="line-band"
-                              points={pts(seriesLow)}
-                            />
-                          )}
+                          <path className="area" d={areaD} />
                           <polyline className="line" points={pts(seriesMid)} />
                           {cvNum > 0 && (
-                            <polyline
-                              className="line-band"
-                              points={pts(seriesHigh)}
-                            />
+                            <>
+                              <polyline
+                                className="fan"
+                                points={`${X(n - 2)},${Y(seriesMid[n - 2])} ${X(n - 1)},${Y(seriesHigh[n - 1])}`}
+                              />
+                              <polyline
+                                className="fan"
+                                points={`${X(n - 2)},${Y(seriesMid[n - 2])} ${X(n - 1)},${Y(seriesLow[n - 1])}`}
+                              />
+                              <line
+                                className="spread"
+                                x1={X(n - 1)}
+                                x2={X(n - 1)}
+                                y1={Y(seriesHigh[n - 1])}
+                                y2={Y(seriesLow[n - 1])}
+                              />
+                            </>
+                          )}
+                          <circle
+                            className="end-dot"
+                            cx={X(n - 1)}
+                            cy={Y(seriesMid[n - 1])}
+                            r={4}
+                          />
+                          {cvNum > 0 && (
+                            <>
+                              <circle
+                                className="end-dot end-dot-alt"
+                                cx={X(n - 1)}
+                                cy={Y(seriesHigh[n - 1])}
+                                r={3.5}
+                              />
+                              <circle
+                                className="end-dot end-dot-alt"
+                                cx={X(n - 1)}
+                                cy={Y(seriesLow[n - 1])}
+                                r={3.5}
+                              />
+                            </>
                           )}
                           {beMonth != null && (
                             <g>
@@ -2172,40 +2195,44 @@ export function App() {
                               ...(cvNum > 0
                                 ? [
                                     {
-                                      t: `Up ${cvNum}% ${money(seriesHigh[n - 1])}`,
+                                      lab: `Up ${cvNum}%`,
+                                      val: money(seriesHigh[n - 1]),
                                       y: Y(seriesHigh[n - 1]),
-                                      cls: "band-label",
                                     },
                                   ]
                                 : []),
                               {
-                                t: `Unchanged ${money(seriesMid[n - 1])}`,
+                                lab: "Unchanged",
+                                val: money(seriesMid[n - 1]),
                                 y: Y(seriesMid[n - 1]),
-                                cls: "",
                               },
                               ...(cvNum > 0
                                 ? [
                                     {
-                                      t: `Down ${cvNum}% ${money(seriesLow[n - 1])}`,
+                                      lab: `Down ${cvNum}%`,
+                                      val: money(seriesLow[n - 1]),
                                       y: Y(seriesLow[n - 1]),
-                                      cls: "band-label",
                                     },
                                   ]
                                 : []),
                             ].sort((p, q) => p.y - q.y);
                             for (let k = 1; k < ends.length; k++)
-                              if (ends[k].y < ends[k - 1].y + 11)
-                                ends[k].y = ends[k - 1].y + 11;
+                              if (ends[k].y < ends[k - 1].y + 12)
+                                ends[k].y = ends[k - 1].y + 12;
                             return ends.map((e) => (
-                              <text
-                                key={e.t}
-                                className={e.cls || undefined}
-                                x={W - 4}
-                                y={e.y + 3}
-                                textAnchor="end"
-                              >
-                                {e.t}
-                              </text>
+                              <g key={e.lab}>
+                                <line
+                                  className="end-leader"
+                                  x1={X(n - 1) + 8}
+                                  x2={W - PR + 16}
+                                  y1={e.y}
+                                  y2={e.y}
+                                />
+                                <text x={W - 4} y={e.y + 3} textAnchor="end">
+                                  <tspan className="end-lab">{e.lab} </tspan>
+                                  <tspan className="end-val">{e.val}</tspan>
+                                </text>
+                              </g>
                             ));
                           })()}
                         </>

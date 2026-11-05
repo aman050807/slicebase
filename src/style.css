@@ -2398,8 +2398,43 @@ a.sb-join-link:hover {
 }
 .sb-calc-chart .line {
   stroke: #6f2923;
-  stroke-width: 2;
+  stroke-width: 2.5;
   fill: none;
+  stroke-linejoin: round;
+}
+.sb-calc-chart .area {
+  fill: #6f2923;
+  opacity: 0.07;
+}
+.sb-calc-chart .fan {
+  stroke: #a8918a;
+  stroke-width: 1.5;
+  fill: none;
+  stroke-dasharray: 4 3;
+}
+.sb-calc-chart .spread {
+  stroke: #c4b6ae;
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+}
+.sb-calc-chart .end-dot {
+  fill: #6f2923;
+  stroke: #fff;
+  stroke-width: 1.5;
+}
+.sb-calc-chart .end-dot-alt {
+  fill: #8a7f79;
+}
+.sb-calc-chart .end-leader {
+  stroke: #e0d6cf;
+  stroke-width: 1;
+}
+.sb-calc-chart svg text .end-lab {
+  fill: #8a7f79;
+}
+.sb-calc-chart svg text .end-val {
+  fill: #3f3835;
+  font-weight: 600;
 }
 .sb-calc-chart .zero {
   stroke: #b8aca4;
