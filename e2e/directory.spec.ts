@@ -97,3 +97,18 @@ test('clarity cleanup keeps secondary detail on demand and metrics explicit', as
   await expect(page.locator('.sb-compare-strip')).toBeVisible();
   await expect(page.locator('.sb-footer-signup')).toHaveCount(0);
 });
+
+for (const width of [390, 1440]) {
+  test(`hero leads directly into directory at ${width}px`, async ({page}) => {
+    await page.setViewportSize({width,height:820});
+    await page.goto('/');
+    const gap = await page.evaluate(() => {
+      const hero = document.querySelector('.sb-hero')!.getBoundingClientRect();
+      const directory = document.querySelector('#compare')!.getBoundingClientRect();
+      const heading = document.querySelector('.sb-directory-head')!.getBoundingClientRect();
+      return {outer:directory.top-hero.bottom, inner:heading.top-directory.top};
+    });
+    expect(gap.outer).toBe(0);
+    expect(gap.inner).toBeLessThanOrEqual(32);
+  });
+}

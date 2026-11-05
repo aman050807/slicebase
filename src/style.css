@@ -2790,3 +2790,7 @@ a.sb-join-link:hover {
 .sb-secondary-details:not([open]) { border-top: 1px solid var(--dir-rule); border-bottom: 1px solid var(--dir-rule); }
 .sb-card-detail-content .sb-property-badges { margin: 14px 0; }
 @media (min-width: 720px) { .sb-directory .sb-controls { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* Keep the hero-to-directory handoff compact after removing the intro strip. */
+.sb-directory { margin-top: 0; padding-top: 32px; }
+@media (max-width: 719px) { .sb-directory { padding-top: 24px; } }
