@@ -1060,7 +1060,9 @@
     "photo": "lofty-56.jpg",
     "rawMetrics": "$17.00/share · 8.2% avg yield · 57% Undervalued",
     "valuation": "$228,500",
-    "monthlyRent": "$0.00"
+    "monthlyRent": "$0.00",
+    "delisted": true,
+    "delistedAt": "2026-11-05"
   },
   {
     "id": 57,
