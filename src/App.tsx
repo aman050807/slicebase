@@ -337,14 +337,14 @@ const COUNTRIES = [
 ];
 
 const ELIGIBILITY_NOTE =
-  "Snapshot: 4 Nov 2026. 84 Lofty listings and 21 Oceanpoint listings captured from their catalogs. Oceanpoint reports 77 properties; 56 are not captured in this view, so coverage is incomplete. Quotes and status can change. Platform terms below are checked separately from property metrics. Exact order minimums and full property costs remain unverified. Country selection is context only, not an eligibility filter.";
+  "Last updated: 4 Nov 2026. 84 Lofty listings and 21 Oceanpoint listings collected from their catalogs. Oceanpoint reports 77 properties; 56 are not captured in this view, so coverage is incomplete. Quotes and status can change. Platform terms below are checked separately from property metrics. Exact order minimums and full property costs remain unverified. Country selection is context only, not an eligibility filter.";
 
 type Term = { label: string; value: string };
 function termsFor(l: Listing): Term[] {
   const lofty = l.platform === "Lofty";
   return [
     { label: "Minimum investment", value: "Exact order minimum unverified" },
-    { label: "Occupancy", value: "Not disclosed in the 4 Nov snapshot" },
+    { label: "Occupancy", value: "Not available in our listing data (4 Nov 2026)" },
     {
       label: "Fees",
       value: lofty
@@ -700,7 +700,7 @@ export function App() {
           <a href="#faq" onClick={() => setMenuOpen(false)}>
             FAQ <span aria-hidden="true">↗</span>
           </a>
-          <p>Dated source snapshots · Informational only</p>
+          <p>Dated source records · Informational only</p>
         </nav>
       </header>
 
@@ -855,7 +855,7 @@ export function App() {
               </p>
             </div>
             <span className="sb-demo-label">
-              Source-linked snapshot · Not live quotes
+              Source-linked listings · Not live quotes
             </span>
           </div>
           <div className="sb-index-banner">
@@ -1295,7 +1295,7 @@ export function App() {
                     </dl>
                     <p className="sb-yield-note">
                       {l.platform === "Lofty"
-                        ? "\u201Cavg yield\u201D and the value tag are Lofty's own published figures for this listing; whether the yield is gross or net, and over what period, is not stated in our snapshot."
+                        ? "\u201Cavg yield\u201D and the value tag are Lofty's own published figures for this listing; whether the yield is gross or net, and over what period, is not stated in our listing data."
                         : "APY is Oceanpoint's own published figure, as the platform defines it."}{" "}
                       A higher yield does not mean lower risk.
                     </p>
@@ -1458,7 +1458,7 @@ export function App() {
               <p className="sb-comparison-note">
                 Before choosing: verify total fees, occupancy assumptions,
                 ownership rights, country restrictions and how you can sell.
-                These are source snapshots, not independently audited
+                These are dated source records, not independently audited
                 investments. Platform metric definitions differ; APY and avg
                 yield are not directly comparable. A higher stated yield is not
                 evidence of a better investment.
@@ -1495,7 +1495,7 @@ export function App() {
               <span className="sb-step-num">03</span>
               <h3>Check before you invest</h3>
               <p>
-                This is a dated listing snapshot. Before investing, confirm
+                This is a dated listing record. Before investing, confirm
                 eligibility, fees, ownership rights and resale rules with the
                 platform. A higher yield does not mean lower risk.
               </p>
@@ -1517,7 +1517,7 @@ export function App() {
               Know what still needs checking.
             </p>
             <span className="sb-question-demo">
-              Source-linked snapshot · No capital handled
+              Source-linked listings · No capital handled
             </span>
           </div>
           <div className="sb-question-list">
@@ -1536,7 +1536,7 @@ export function App() {
                 <p>
                   These records and photos were captured from Lofty and
                   Oceanpoint's live marketplaces on 4 Nov 2026. They are dated
-                  snapshots, not live offers or independently verified
+                  records, not live offers or independently verified
                   investment advice. Oceanpoint
                   coverage is incomplete: 21 captured against 77 reported. Check
                   the source for current availability, terms and eligibility.
@@ -1689,13 +1689,14 @@ export function App() {
           <span>Slicebase</span>
         </div>
         <div className="sb-footer-bottom">
-          <span>Source snapshots · Informational only</span>
+          <span>Source records · Informational only</span>
           <p>
             Listing facts and one photo per property are sourced from Lofty and
             Oceanpoint, checked 4 Nov 2026. 84 Lofty and 21 Oceanpoint records
             captured; Oceanpoint reports 77, so its coverage is incomplete. Not
-            live quotes. The platforms do not sponsor or endorse Slicebase.
-            Fractional property carries
+            live quotes. Referral links may earn us rewards. Data reuse
+            permission does not imply endorsement. Fractional property
+            carries
             risk, including loss of capital.
           </p>
         </div>

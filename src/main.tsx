@@ -1,8 +1,11 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import { App } from "./App";
-createRoot(document.getElementById("root")!).render(
+const el = document.getElementById("root")!;
+const tree = (
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>
 );
+if (el.hasChildNodes()) hydrateRoot(el, tree);
+else createRoot(el).render(tree);
