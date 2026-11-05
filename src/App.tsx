@@ -246,12 +246,12 @@ const valuationNumber = (v: string | null) =>
 const compactMoney = (n: number) =>
   n >= 1000000 ? `$${(n / 1000000).toFixed(1)}M` : money(n);
 const INDEX_STATS = (() => {
-  const ocean = LISTINGS.filter((l) => l.platform === "Oceanpoint");
+  const valued = LISTINGS.filter((l) => valuationNumber(l.valuation) > 0);
   return {
     listings: LISTINGS.length,
     platforms: new Set(LISTINGS.map((l) => l.platform)).size,
-    oceanCount: ocean.length,
-    oceanValue: ocean.reduce((sum, l) => sum + valuationNumber(l.valuation), 0),
+    valueCount: valued.length,
+    totalValue: valued.reduce((sum, l) => sum + valuationNumber(l.valuation), 0),
   };
 })();
 /** Lofty publishes a sector per listing; Oceanpoint does not, so the
@@ -858,14 +858,14 @@ export function App() {
           <div className="sb-directory-head">
             <div className="sb-head">
               <p className="sb-eyebrow">The directory</p>
-              <h2>Compare properties.</h2>
+              <h2>Compare listings.</h2>
               <p className="sb-section-sub">
                 One view. The numbers that matter.
               </p>
+              <span className="sb-demo-label">
+                Source-linked listings · Not live quotes
+              </span>
             </div>
-            <span className="sb-demo-label">
-              Source-linked listings · Not live quotes
-            </span>
           </div>
           <div className="sb-index-banner">
             <div>
@@ -875,23 +875,20 @@ export function App() {
               </span>
             </div>
             <div>
-              <strong>{compactMoney(INDEX_STATS.oceanValue)}</strong>
+              <strong>{compactMoney(INDEX_STATS.totalValue)}</strong>
               <span>
-                published valuations indexed ({INDEX_STATS.oceanCount}{" "}
-                Oceanpoint listings, USD)
+                platform-published valuations indexed (
+                {INDEX_STATS.valueCount} of {INDEX_STATS.listings} listings,
+                USD)
               </span>
             </div>
           </div>
           <p className="sb-index-note">
-            Listings captured 4 Nov 2026; this page last reviewed 5 Nov
-            2026. &ldquo;Indexed&rdquo; counts only listings captured in this
-            directory, as published - a few listings are multi-property
-            packages, DAOs or individual units of one building. Per-listing
-            values and monthly rents are published per listing on Lofty's
-            own pages and are now shown on the cards, refreshed 5 Nov 2026;
-            the valuation total above still covers the 21 Oceanpoint listings
-            only. Oceanpoint sectors are read from each listing's own title. A secondary
-            market does not guarantee a buyer or your price.{" "}
+            Listings captured 4 Nov 2026; page last reviewed 5 Nov 2026.{" "}
+            <TextLink href="https://www.lofty.ai/marketplace">
+              Lofty marketplace ↗
+            </TextLink>{" "}
+            ·{" "}
             <TextLink href="https://oceanpoint.fi/stats">
               Oceanpoint stats ↗
             </TextLink>
@@ -906,11 +903,10 @@ export function App() {
               <p className="sb-eyebrow">Run the numbers</p>
               <h3 id="calculator-title">What could the income look like?</h3>
               <p>
-                Your own cash-income scenario, separate from platform metrics.
-                Run it from an investment amount, or backward from a monthly
-                income goal. The 8% starting rate is an example, not a listing
-                forecast. Platform APY and avg yield are never loaded as
-                cash-income assumptions. Platform-stated transaction fees are
+                Estimate your own income, separate from platform metrics.
+                Start from an investment amount, or work back from a monthly
+                goal. The 8% starting rate is an example, not a forecast, and
+                platform yields are never used here. Platform-stated fees are
                 included by default; turn them off below to see income before
                 fees.
               </p>
@@ -938,10 +934,10 @@ export function App() {
                   </button>
                 </div>
                 <label className="sb-calc-property">
-                  Property context
+                  Listing context
                   <span className="sb-calc-property-hint">
                     Sets which platform's stated fees are estimated below.
-                    Platform yields are never loaded into this calculator.
+                    Platform yields are never used in this calculator.
                   </span>
                   <select
                     value={calcId}
@@ -1210,7 +1206,7 @@ export function App() {
                 onChange={(e) => setSort(e.target.value)}
               >
                 <option value="min">Source order</option>
-                <option value="name">Property name</option>
+                <option value="name">Listing name</option>
                 <option value="platform">Platform</option>
               </select>
             </div>
@@ -1373,7 +1369,7 @@ export function App() {
                 type="button"
                 onClick={() => setVisibleCount((n) => n + 12)}
               >
-                Show more properties
+                Show more listings
               </button>
             </div>
           )}
@@ -1385,7 +1381,7 @@ export function App() {
               <strong>{picked.length} of 3 selected</strong>
               <span>
                 {picked.length < 2
-                  ? "Choose 2-3 properties to compare."
+                  ? "Choose 2-3 listings to compare."
                   : "Compare the trade-offs, not just the yield."}
               </span>
             </div>
@@ -1485,9 +1481,9 @@ export function App() {
           <ol className="sb-steps">
             <li className="sb-glass">
               <span className="sb-step-num">01</span>
-              <h3>Compare properties</h3>
+              <h3>Compare listings</h3>
               <p>
-                Pick 2-3 properties. Compare minimum investment, stated yield,
+                Pick 2-3 listings. Compare minimum investment, stated yield,
                 fees and exit terms. Missing information stays marked as
                 unverified.
               </p>
@@ -1674,6 +1670,24 @@ export function App() {
             is the reference of record. Exact order minimums and full offering
             costs remain unverified and are marked as such.
           </p>
+          <ul className="sb-info-list">
+            <li>
+              &ldquo;Indexed&rdquo; counts only listings captured in this
+              directory, as published. A few listings are multi-property
+              packages, DAOs or individual units of one building.
+            </li>
+            <li>
+              The valuation total covers the 103 of 105 listings that publish
+              a value (82 Lofty, 21 Oceanpoint); 2 Lofty DAOs publish none.
+            </li>
+            <li>
+              Lofty publishes a sector per listing; Oceanpoint does not, so
+              Oceanpoint sectors are read from each listing's own title.
+            </li>
+            <li>
+              A secondary market does not guarantee a buyer or your price.
+            </li>
+          </ul>
         </section>
       </main>
 

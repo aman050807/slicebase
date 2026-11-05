@@ -5,7 +5,7 @@ test("directory, disclosure, comparison and independent calculator", async ({
   await page.goto("/");
   await expect(page.locator(".sb-property")).toHaveCount(12);
   await page.locator("#f-platform").selectOption("Oceanpoint");
-  await page.getByRole("button", { name: "Show more properties" }).click();
+  await page.getByRole("button", { name: "Show more listings" }).click();
   await expect(page.locator(".sb-property")).toHaveCount(21);
   await page.locator(".sb-property summary").first().click();
   await expect(page.locator(".sb-term-notes").first()).toHaveAttribute(
