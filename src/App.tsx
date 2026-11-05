@@ -1321,22 +1321,13 @@ export function App() {
                       ))}
                     </dl>
                     <TermNotes listing={l} />
-                    <p className="sb-source-line">
-                      {l.platform === "Lofty"
-                        ? "Captured 4 Nov 2026; value and rent refreshed 5 Nov"
-                        : "Captured 4 Nov 2026"}{" "}
-                      · direct property link under Terms,
-                      scope &amp; sources
-                      {l.assetSource && (
-                        <>
-                          {" "}
-                          ·{" "}
-                          <TextLink href={l.assetSource}>
-                            Token contract ↗
-                          </TextLink>
-                        </>
-                      )}
-                    </p>
+                    {l.assetSource && (
+                      <p className="sb-source-line">
+                        <TextLink href={l.assetSource}>
+                          Token contract ↗
+                        </TextLink>
+                      </p>
+                    )}
                     <div className="sb-property-actions">
                       <JoinLink platform={l.platform} />
                       <button
