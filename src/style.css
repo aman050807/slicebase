@@ -2291,3 +2291,178 @@ a.sb-join-link:hover {
 .sb-info-list li {
   margin-bottom: 10px;
 }
+
+/* Calculator: net-outcome tiles, scenario grid, chart */
+.sb-calc-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 0 0 12px;
+}
+.sb-calc-tiles > div {
+  border: 1px solid var(--dir-rule);
+  border-radius: 5px;
+  padding: 12px;
+}
+.sb-calc-tiles span {
+  font-size: 11px;
+  color: #716762;
+  display: block;
+}
+.sb-calc-tiles strong {
+  display: block;
+  font-size: 19px;
+  font-weight: 500;
+  color: #6f2923;
+  margin: 6px 0 4px;
+  overflow-wrap: anywhere;
+}
+.sb-calc-tiles p {
+  font-size: 10.5px;
+  color: #716762;
+  margin: 0;
+  line-height: 1.5;
+}
+.sb-calc-liquidity {
+  font-size: 11.5px;
+  color: #8b352b;
+  margin: -10px 0 16px;
+}
+.sb-calc-scenarios {
+  margin-top: 26px;
+}
+.sb-calc-scenarios h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 10px;
+}
+.sb-calc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  background: #fff;
+  border: 1px solid var(--dir-rule);
+  border-radius: 5px;
+}
+.sb-calc-table th,
+.sb-calc-table td {
+  padding: 10px 12px;
+  border-top: 1px solid var(--dir-rule);
+  text-align: right;
+}
+.sb-calc-table th:first-child,
+.sb-calc-table td:first-child {
+  text-align: left;
+}
+.sb-calc-table thead th {
+  border-top: none;
+  color: #716762;
+  font-weight: 500;
+  font-size: 11.5px;
+}
+.sb-calc-table .is-base,
+.sb-calc-table tr.is-base td {
+  background: #faf3ee;
+  font-weight: 600;
+}
+.sb-calc-scenarios p {
+  font-size: 11px;
+  color: #716762;
+  line-height: 1.7;
+  margin: 10px 0 0;
+}
+.sb-calc-chart {
+  margin: 22px 0 0;
+  background: #fff;
+  border: 1px solid var(--dir-rule);
+  border-radius: 5px;
+  padding: 16px;
+}
+.sb-calc-chart figcaption {
+  font-size: 12px;
+  color: #716762;
+  margin-bottom: 10px;
+}
+.sb-calc-chart svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.sb-calc-chart .line {
+  stroke: #6f2923;
+  stroke-width: 2;
+  fill: none;
+}
+.sb-calc-chart .zero {
+  stroke: #b8aca4;
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+.sb-calc-chart .dot {
+  fill: #8b352b;
+}
+.sb-calc-chart text {
+  font-size: 10px;
+  fill: #716762;
+}
+.sb-fee-details {
+  margin-top: 14px;
+  border-top: 1px solid var(--dir-rule);
+  padding-top: 12px;
+}
+.sb-fee-details summary {
+  font-size: 12px;
+  cursor: pointer;
+  color: #6f2923;
+}
+.sb-fee-details dl {
+  margin: 10px 0 0;
+}
+.sb-fee-details dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 8px 0;
+  font-size: 12px;
+  border-top: 1px dashed var(--dir-rule);
+}
+.sb-fee-details dt {
+  color: #716762;
+}
+.sb-fee-details dd {
+  margin: 0;
+  text-align: right;
+}
+.sb-calc-check {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 12.5px;
+}
+@media (max-width: 700px) {
+  .sb-calc-tiles {
+    grid-template-columns: 1fr;
+  }
+}
+.sb-calc-table-wrap {
+  overflow-x: auto;
+}
+.sb-calc-table-wrap .sb-calc-table {
+  min-width: 340px;
+}
+.sb-chart-toggle {
+  margin: 0 0 12px;
+}
+.sb-chart-toggle button {
+  font-size: 11px;
+  padding: 5px 12px;
+}
+.sb-calc-chart .bar {
+  fill: #6f2923;
+}
+.sb-calc-chart .bar.neg {
+  fill: #b3402f;
+}
+.sb-calc-chart .bar-label {
+  font-size: 10px;
+}

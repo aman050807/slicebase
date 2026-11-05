@@ -309,7 +309,7 @@ function platformFeesFor(l: Listing): {
     return {
       buyPct: 2.5,
       sellPct: 3,
-      note: "Lofty states 2.5% on purchases and 3% on sales (lofty.ai/how-it-works, checked 5 Nov 2026); applied here to the invested amount, assuming a later sale at the same value. Market orders can add a separate 2.5% market-maker fee, not included; property, payment or network costs may also apply. Stated platform fees only - not a complete all-in cost.",
+      note: "Lofty states 2.5% on purchases and 3% on sales (lofty.ai/how-it-works, checked 5 Nov 2026); applied here to the invested amount, assuming a later sale at the same value. Market orders can add a separate 2.5% market-maker fee (off by default; turn it on above to include it); property, payment or network costs may also apply. Stated platform fees only - not a complete all-in cost.",
     };
   return {
     buyPct: 1.5,
@@ -586,6 +586,11 @@ export function App() {
   const calcListing = LISTINGS.find((l) => l.id === calcId) ?? LISTINGS[0];
   const calcFees = platformFeesFor(calcListing);
   const calculatorRef = useRef<HTMLElement>(null);
+  const [sellAtEnd, setSellAtEnd] = useState(true);
+  const [includeMarketFee, setIncludeMarketFee] = useState(false);
+  const [taxRate, setTaxRate] = useState("0");
+  const [compareRate, setCompareRate] = useState("");
+  const [chartView, setChartView] = useState<"line" | "bars">("line");
   const numeric = [amount, rate, years, upfront, annualFees].map(Number);
   const validCalc =
     [amount, rate, years, upfront, annualFees].every((v) => v.trim() !== "") &&
@@ -599,12 +604,82 @@ export function App() {
     numeric[3] >= 0 &&
     numeric[4] >= 0;
   const [a, r, t, u, f] = numeric;
-  const gross = (a * r) / 100;
-  const annual = gross - f;
-  const platformFeeEstimate = includeFees
-    ? (a * (calcFees.buyPct + calcFees.sellPct)) / 100
+  const marketFeePct =
+    calcListing.platform === "Lofty" && includeMarketFee ? 2.5 : 0;
+  const buyEff = calcFees.buyPct + marketFeePct;
+  const sellEff = calcFees.sellPct + marketFeePct;
+  const taxNum = Number(taxRate);
+  const tn =
+    taxRate.trim() !== "" &&
+    Number.isFinite(taxNum) &&
+    taxNum >= 0 &&
+    taxNum < 100
+      ? taxNum
+      : 0;
+  const cmpNum = Number(compareRate);
+  const validCmp =
+    compareRate.trim() !== "" &&
+    Number.isFinite(cmpNum) &&
+    cmpNum >= 0 &&
+    cmpNum <= 100;
+  /** Net outcome of one scenario at income rate rr with the property value
+   *  changing by dv (fraction) over the holding period. Sale at the end is
+   *  optional; the sell fee is charged on the sale value. */
+  const scenario = (rr: number, dv: number) => {
+    const buyFee = includeFees ? (a * buyEff) / 100 : 0;
+    const saleValue = a * (1 + dv);
+    const sellFee = sellAtEnd && includeFees ? (saleValue * sellEff) / 100 : 0;
+    const annualNet = ((a * rr) / 100) * (1 - tn / 100) - f;
+    const periodIncome = annualNet * t - u;
+    const totalIn = a + buyFee;
+    const saleNet = sellAtEnd ? saleValue - sellFee : 0;
+    const totalBack = periodIncome + saleNet;
+    return {
+      buyFee,
+      sellFee,
+      saleValue,
+      annualNet,
+      periodIncome,
+      totalIn,
+      saleNet,
+      totalBack,
+      net: totalBack - totalIn,
+    };
+  };
+  const base = scenario(r, 0);
+  const oneTimeCosts = base.buyFee + base.sellFee + u;
+  const breakEvenMonths =
+    base.annualNet > 0 ? (oneTimeCosts / base.annualNet) * 12 : null;
+  const annualizedNet =
+    base.totalIn > 0 ? (base.net / base.totalIn / t) * 100 : 0;
+  const sensitivity10 =
+    0.1 * a * (1 - (sellAtEnd && includeFees ? sellEff : 0) / 100);
+  const listingVal = valuationNumber(calcListing.valuation);
+  const listingRent = calcListing.monthlyRent
+    ? Number(calcListing.monthlyRent.replace(/[^0-9.]/g, ""))
     : 0;
-  const income = annual * t - u - platformFeeEstimate;
+  const impliedYield =
+    listingVal > 0 && listingRent > 0
+      ? (listingRent * 12 * 100) / listingVal
+      : null;
+  const gridMid = impliedYield ?? r;
+  const gridRates = [gridMid + 2, gridMid, Math.max(gridMid - 2, 0.25)];
+  const gridRows: { label: string; dv: number }[] = [
+    { label: "Value down 10%", dv: -0.1 },
+    { label: "Value unchanged", dv: 0 },
+    { label: "Value up 10%", dv: 0.1 },
+  ];
+  const cmpGain = validCmp ? (a * cmpNum * t) / 100 : null;
+  const chartPoints: number[] = [];
+  if (validCalc) {
+    const qCount = Math.max(Math.round(t * 4), 4);
+    for (let q = 0; q <= qCount; q++) {
+      let pos = -(includeFees ? base.buyFee : 0) - u + base.annualNet * (q / 4);
+      if (sellAtEnd && q === qCount) pos += base.saleValue - base.sellFee - a;
+      chartPoints.push(pos);
+    }
+  }
+  const breakEvenIdx = chartPoints.findIndex((v) => v >= 0);
   const goalNumeric = [goal, rate, annualFees].map(Number);
   const validGoal =
     [goal, rate, annualFees].every((v) => v.trim() !== "") &&
@@ -617,6 +692,7 @@ export function App() {
   const [g, gr, gf] = goalNumeric;
   const goalAnnualAfterCosts = g * 12;
   const goalInvestment = ((goalAnnualAfterCosts + gf) * 100) / gr;
+  const goalRates = [gr + 2, gr, Math.max(gr - 2, 0.25)];
   const openCalculator = (listing: Listing) => {
     setCalcId(listing.id);
     calculatorRef.current?.scrollIntoView({
@@ -967,12 +1043,11 @@ export function App() {
                         Include {calcListing.platform}&apos;s stated transaction
                         fees: {calcFees.buyPct}% buy + {calcFees.sellPct}% sell
                         {validCalc && includeFees
-                          ? ` (about ${money(platformFeeEstimate)} on ${money(a)})`
+                          ? ` (about ${money(base.buyFee + base.sellFee)} on ${money(a)})`
                           : ""}
                         .
                       </span>
                     </label>
-                    <p>{calcFees.note}</p>
                   </div>
                 )}
                 {(calcMode === "invest"
@@ -1036,25 +1111,78 @@ export function App() {
                     />
                   </label>
                 ))}
+                {calcMode === "invest" && (
+                  <>
+                    <label className="sb-calc-check">
+                      <input
+                        type="checkbox"
+                        checked={sellAtEnd}
+                        onChange={(e) => setSellAtEnd(e.target.checked)}
+                      />
+                      <span>
+                        Sell at the end of the period - includes the stated
+                        sell fee and the sale proceeds.
+                      </span>
+                    </label>
+                    {calcListing.platform === "Lofty" && (
+                      <label className="sb-calc-check">
+                        <input
+                          type="checkbox"
+                          checked={includeMarketFee}
+                          onChange={(e) =>
+                            setIncludeMarketFee(e.target.checked)
+                          }
+                        />
+                        <span>
+                          Include Lofty&apos;s 2.5% market-order fee (market
+                          orders only).
+                        </span>
+                      </label>
+                    )}
+                    <label>
+                      Tax rate on income (%, optional)
+                      <input
+                        type="number"
+                        inputMode="decimal"
+                        min="0"
+                        max="99"
+                        step="any"
+                        value={taxRate}
+                        onChange={(e) => setTaxRate(e.target.value)}
+                      />
+                    </label>
+                    <label>
+                      Compare with leaving it at (% a year, optional)
+                      <input
+                        type="number"
+                        inputMode="decimal"
+                        min="0"
+                        max="100"
+                        step="any"
+                        value={compareRate}
+                        placeholder="Blank = off"
+                        onChange={(e) => setCompareRate(e.target.value)}
+                      />
+                    </label>
+                  </>
+                )}
                 {calcMode === "invest" ? (
                   <p>
-                    No reinvestment, tax or change in property value is
-                    included. Income can fall to zero and capital can be lost.
-                    The cost fields stay at $0 for any extra costs you know
-                    of; platform transaction fees are already included above
+                    No reinvestment or compounding is included, and the value
+                    is assumed unchanged unless a scenario below says
+                    otherwise. Income can fall to zero and capital can be
+                    lost. The cost fields stay at $0 unless you know of extra
+                    costs; platform transaction fees are already included
                     unless you turn them off. Enter only costs not already
                     counted, to avoid counting them twice.
                   </p>
                 ) : (
                   <p>
                     Goal mode works backward from your target: the same rate
-                    assumption, solved for the investment instead. The result is
-                    an estimate, not a plan or a forecast. Income can fall to
-                    zero and capital can be lost. Upfront costs are not included
-                    in the result; add them separately. Platform transaction
-                    fees are not included either - on {calcListing.platform}{" "}
-                    they run about {calcFees.buyPct + calcFees.sellPct}% of the
-                    amount invested across a purchase and later sale.
+                    assumption, solved for the investment instead. The results
+                    are estimates, not a plan or a forecast. Income can fall to
+                    zero and capital can be lost. Upfront costs are not
+                    included; add them separately.
                   </p>
                 )}
               </div>
@@ -1063,26 +1191,39 @@ export function App() {
                   validGoal ? (
                     <>
                       <span>
-                        Investment needed to target {money(g)} per month
+                        Capital needed to target {money(g)} per month
                       </span>
-                      <strong>{money(goalInvestment)}</strong>
-                      <dl>
-                        <div>
-                          <dt>Target annual income after costs</dt>
-                          <dd>{money(goalAnnualAfterCosts)}</dd>
-                        </div>
-                        <div>
-                          <dt>Annual income before costs</dt>
-                          <dd>{money(goalAnnualAfterCosts + gf)}</dd>
-                        </div>
-                        <div>
-                          <dt>Assumed annual income rate</dt>
-                          <dd>{gr}%</dd>
-                        </div>
-                      </dl>
+                      <table className="sb-calc-table">
+                        <thead>
+                          <tr>
+                            <th>Net income rate</th>
+                            <th>Capital needed</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {goalRates.map((grr, i) => (
+                            <tr key={i} className={i === 1 ? "is-base" : ""}>
+                              <td>
+                                {grr.toFixed(1)}%{i === 1 ? " (your rate)" : ""}
+                              </td>
+                              <td>
+                                {money(((goalAnnualAfterCosts + gf) * 100) / grr)}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                       <p>
-                        Estimate only. The rate is your own assumption; income
-                        can fall to zero and capital can be lost.
+                        At {money(goalInvestment)}, {calcListing.platform}
+                        &apos;s stated buy + sell fees would total about{" "}
+                        {money(
+                          (goalInvestment *
+                            (calcFees.buyPct + calcFees.sellPct)) /
+                            100,
+                        )}{" "}
+                        across a purchase and a later sale at the same value.
+                        Estimate only - the rate is your own assumption;
+                        income can fall to zero and capital can be lost.
                       </p>
                     </>
                   ) : (
@@ -1094,38 +1235,114 @@ export function App() {
                 ) : validCalc ? (
                   <>
                     <span>
-                      Income over {t} {t === 1 ? "year" : "years"}, after
-                      entered costs
+                      {sellAtEnd
+                        ? "Net result after costs and fees, if sold at end"
+                        : "Net income after costs and fees"}{" "}
+                      - over {t} {t === 1 ? "year" : "years"}
                     </span>
-                    <strong>{money(income)}</strong>
+                    <strong>{money(base.net)}</strong>
+                    <p className="sb-calc-liquidity">
+                      A secondary market doesn&apos;t guarantee a buyer or your
+                      price.
+                    </p>
+                    <div className="sb-calc-tiles">
+                      <div>
+                        <span>You put in</span>
+                        <strong>{money(base.totalIn)}</strong>
+                        <p>
+                          {money(a)}
+                          {base.buyFee > 0
+                            ? ` + ${money(base.buyFee)} stated buy fee`
+                            : ""}
+                        </p>
+                      </div>
+                      <div>
+                        <span>You get back</span>
+                        <strong>{money(base.totalBack)}</strong>
+                        <p>
+                          {money(base.periodIncome)} income
+                          {sellAtEnd
+                            ? ` + ${money(base.saleNet)} sale proceeds after the stated sell fee`
+                            : ""}
+                        </p>
+                      </div>
+                      <div>
+                        <span>Annualized net</span>
+                        <strong>{annualizedNet.toFixed(1)}%</strong>
+                        <p>
+                          simple average on the money actually in, vs the {r}%
+                          entered rate
+                        </p>
+                      </div>
+                    </div>
                     <dl>
                       <div>
-                        <dt>Average monthly income, before transaction fees*</dt>
-                        <dd>{money(annual / 12)}</dd>
+                        <dt>Average monthly income, before transaction fees</dt>
+                        <dd>{money(base.annualNet / 12)}</dd>
                       </div>
-                      <div>
-                        <dt>Annual income before transaction fees</dt>
-                        <dd>{money(annual)}</dd>
-                      </div>
-                      <div>
-                        <dt>Income before costs, over period</dt>
-                        <dd>{money(gross * t)}</dd>
-                      </div>
-                      {includeFees && (
+                      {breakEvenMonths != null && oneTimeCosts > 0 && (
                         <div>
-                          <dt>Estimated platform transaction fees</dt>
-                          <dd>{money(platformFeeEstimate)}</dd>
+                          <dt>Fee break-even</dt>
+                          <dd>
+                            about {Math.round(breakEvenMonths)} months of
+                            income just to cover the fees
+                            {u > 0 ? " and upfront costs" : ""}
+                          </dd>
                         </div>
                       )}
-                      <div>
-                        <dt>Total costs, including fees</dt>
-                        <dd>{money(u + f * t + platformFeeEstimate)}</dd>
-                      </div>
+                      {sellAtEnd && (
+                        <div>
+                          <dt>Value sensitivity</dt>
+                          <dd>
+                            every 10% change in property value moves this
+                            result by about {money(sensitivity10)}
+                          </dd>
+                        </div>
+                      )}
+                      {validCmp && cmpGain != null && (
+                        <div>
+                          <dt>vs. leaving it at {cmpNum}%</dt>
+                          <dd>
+                            that earns about {money(cmpGain)} -{" "}
+                            {money(Math.abs(base.net - cmpGain))}{" "}
+                            {base.net >= cmpGain ? "less" : "more"} than this
+                            scenario
+                          </dd>
+                        </div>
+                      )}
                     </dl>
+                    <details className="sb-fee-details">
+                      <summary>Fee details</summary>
+                      <dl>
+                        <div>
+                          <dt>
+                            Buy fee ({buyEff}% of {money(a)})
+                          </dt>
+                          <dd>{money(base.buyFee)}</dd>
+                        </div>
+                        {sellAtEnd && (
+                          <div>
+                            <dt>
+                              Sell fee ({sellEff}% of {money(base.saleValue)})
+                            </dt>
+                            <dd>{money(base.sellFee)}</dd>
+                          </div>
+                        )}
+                        <div>
+                          <dt>Platform fees total</dt>
+                          <dd>{money(base.buyFee + base.sellFee)}</dd>
+                        </div>
+                        <div>
+                          <dt>Your costs (upfront + annual)</dt>
+                          <dd>{money(u + f * t)}</dd>
+                        </div>
+                      </dl>
+                      <p>{calcFees.note}</p>
+                    </details>
                     <p>
-                      *Monthly average, not a payout schedule. Transaction fees
-                      and upfront costs are one-time; they reduce the period
-                      total, not the income rate.
+                      Monthly average is not a payout schedule. Fees and
+                      upfront costs are one-time; they reduce the result, not
+                      the income rate.
                     </p>
                   </>
                 ) : (
@@ -1136,25 +1353,226 @@ export function App() {
                 )}
               </div>
             </div>
+            {calcMode === "invest" && validCalc && (
+              <div className="sb-calc-scenarios">
+                <h4>
+                  Stress test: {t}-year net on {money(a)}
+                </h4>
+                <div className="sb-calc-table-wrap">
+                <table className="sb-calc-table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      {gridRates.map((grr, i) => (
+                        <th key={i}>
+                          Income at {grr.toFixed(1)}%
+                          {i === 1 && impliedYield != null ? "*" : ""}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {gridRows.map((row) => (
+                      <tr key={row.label}>
+                        <th>{row.label}</th>
+                        {gridRates.map((grr, i) => (
+                          <td
+                            key={i}
+                            className={
+                              i === 1 && row.dv === 0 ? "is-base" : ""
+                            }
+                          >
+                            {money(scenario(grr, row.dv).net)}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                </div>
+                <p>
+                  {impliedYield != null
+                    ? `*Middle column uses the selected listing's stated rent vs its published value (${impliedYield.toFixed(1)}%), platform-stated and not a forecast. `
+                    : ""}
+                  Scenario illustrations from your inputs and the stated fees.
+                  Informational only, not investment advice.
+                </p>
+              </div>
+            )}
+            {calcMode === "invest" && validCalc && chartPoints.length > 1 && (
+              <figure className="sb-calc-chart">
+                <figcaption>
+                  {chartView === "line"
+                    ? "Cumulative net position over time - the fee hurdle, then the climb past break-even"
+                    : `Net result if the value falls, holds or rises - at the middle-column rate (${gridMid.toFixed(1)}%)`}
+                </figcaption>
+                <div className="sb-calc-mode sb-chart-toggle" role="group" aria-label="Chart view">
+                  <button
+                    type="button"
+                    aria-pressed={chartView === "line"}
+                    onClick={() => setChartView("line")}
+                  >
+                    Over time
+                  </button>
+                  <button
+                    type="button"
+                    aria-pressed={chartView === "bars"}
+                    onClick={() => setChartView("bars")}
+                  >
+                    Scenarios
+                  </button>
+                </div>
+                {chartView === "bars" ? (
+                <svg
+                  viewBox="0 0 560 210"
+                  role="img"
+                  aria-label="Bar chart of the net result when the property value falls 10 percent, is unchanged, or rises 10 percent"
+                >
+                  {(() => {
+                    const W = 560;
+                    const H = 210;
+                    const PT = 30;
+                    const PB = 44;
+                    const vals = gridRows.map((row) => ({
+                      label: row.label,
+                      v: scenario(gridMid, row.dv).net,
+                    }));
+                    const lo = Math.min(...vals.map((d) => d.v), 0);
+                    const hi = Math.max(...vals.map((d) => d.v), 0);
+                    const span = hi - lo || 1;
+                    const y = (v: number) =>
+                      H - PB - ((v - lo) / span) * (H - PT - PB);
+                    const bw = 90;
+                    return (
+                      <>
+                        <line
+                          className="zero"
+                          x1={30}
+                          x2={W - 30}
+                          y1={y(0)}
+                          y2={y(0)}
+                        />
+                        {vals.map((d, i) => {
+                          const cx = (W * (i + 0.5)) / 3;
+                          const top = Math.min(y(d.v), y(0));
+                          const h = Math.abs(y(d.v) - y(0)) || 1;
+                          return (
+                            <g key={d.label}>
+                              <rect
+                                className={d.v >= 0 ? "bar" : "bar neg"}
+                                x={cx - bw / 2}
+                                y={top}
+                                width={bw}
+                                height={h}
+                                rx={2}
+                              />
+                              <text
+                                x={cx}
+                                y={d.v >= 0 ? top - 6 : top + h + 14}
+                                textAnchor="middle"
+                              >
+                                {money(d.v)}
+                              </text>
+                              <text
+                                x={cx}
+                                y={H - 24}
+                                textAnchor="middle"
+                                className="bar-label"
+                              >
+                                {d.label}
+                              </text>
+                            </g>
+                          );
+                        })}
+                      </>
+                    );
+                  })()}
+                </svg>
+                ) : (
+                <svg
+                  viewBox="0 0 560 210"
+                  role="img"
+                  aria-label="Line chart of cumulative net position over the holding period, starting below zero at the fees and climbing with income"
+                >
+                  {(() => {
+                    const W = 560;
+                    const H = 210;
+                    const P = 40;
+                    const lo = Math.min(...chartPoints, 0);
+                    const hi = Math.max(...chartPoints, 0);
+                    const span = hi - lo || 1;
+                    const x = (i: number) =>
+                      P + (i / (chartPoints.length - 1)) * (W - 2 * P);
+                    const y = (v: number) =>
+                      H - P - ((v - lo) / span) * (H - 2 * P);
+                    const pts = chartPoints
+                      .map((v, i) => `${x(i)},${y(v)}`)
+                      .join(" ");
+                    const last = chartPoints[chartPoints.length - 1];
+                    return (
+                      <>
+                        {lo < 0 && (
+                          <line
+                            className="zero"
+                            x1={P}
+                            x2={W - P}
+                            y1={y(0)}
+                            y2={y(0)}
+                          />
+                        )}
+                        <polyline className="line" points={pts} />
+                        {breakEvenIdx > 0 && (
+                          <g>
+                            <circle
+                              className="dot"
+                              cx={x(breakEvenIdx)}
+                              cy={y(chartPoints[breakEvenIdx])}
+                              r={4}
+                            />
+                            <text
+                              x={Math.min(x(breakEvenIdx) + 8, W - P - 110)}
+                              y={y(chartPoints[breakEvenIdx]) - 8}
+                            >
+                              Break-even, about month {breakEvenIdx * 3}
+                            </text>
+                          </g>
+                        )}
+                        <text x={P} y={y(chartPoints[0]) + 16}>
+                          {money(chartPoints[0])}
+                        </text>
+                        <text x={W - P} y={y(last) - 10} textAnchor="end">
+                          {money(last)} after {t}{" "}
+                          {t === 1 ? "year" : "years"}
+                        </text>
+                      </>
+                    );
+                  })()}
+                </svg>
+                )}
+              </figure>
+            )}
             <details className="sb-calculator-method">
               <summary>Assumptions and calculation</summary>
               <p>
-                Annual income = investment × annual rate / 100 − annual costs.
-                Period income = annual income × years − upfront costs. The rate
-                stays constant; income is not reinvested. Investment amount
-                excludes upfront costs. The rate is your own assumption, not a
-                copied platform return. Oceanpoint APY and Lofty avg yield are
-                not treated as equivalent cash-income rates. No taxes, currency
-                changes, appreciation, depreciation or sale proceeds are
-                included. This is an income estimate, not total return, IRR or a
-                forecast. Actual income can be lower or zero, and capital can be
-                lost. In goal mode, required investment = (12 × monthly goal +
-                annual costs) × 100 ÷ annual rate; every limit above applies
-                unchanged. When platform transaction fees are included, the
-                selected platform's stated buy and sell percentages (see the
-                card's Terms, scope & sources) are applied to the investment
-                and deducted from period income; the sale fee assumes no
-                change in property value.
+                Net result = period income + optional sale proceeds −
+                investment − fees. Period income = (investment × annual rate ÷
+                100, less any tax rate you enter, − annual costs) × years −
+                upfront costs. The rate stays constant and income is not
+                reinvested; it is your own assumption, not a copied platform
+                return. Fees use the selected platform's stated percentages:
+                the buy fee on the investment, the sell fee on the sale value
+                (assumed equal to the investment unless a scenario row changes
+                it); Lofty's 2.5% market-order fee is optional and off by
+                default. Annualized net is a simple average (net ÷ money in ÷
+                years), not compounded and not IRR. The scenario grid moves
+                the rate ±2 points and the end value ±10%; where the selected
+                listing publishes rent and a value, the middle column uses
+                that platform-stated ratio, never a forecast. Oceanpoint APY
+                and Lofty avg yield are not treated as equivalent cash-income
+                rates. Goal mode: capital = (12 × monthly goal + annual
+                costs) × 100 ÷ rate, shown at your rate ±2 points. Actual
+                income can be lower or zero, and capital can be lost.
+                Informational only, not investment advice.
               </p>
             </details>
           </section>
