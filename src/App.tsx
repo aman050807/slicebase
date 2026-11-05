@@ -657,6 +657,10 @@ export function App() {
   const [taxRate, setTaxRate] = useState(qpNum("tax", 0, 99) ?? "0");
   const [compareRate, setCompareRate] = useState(qpNum("cmp", 0, 100) ?? "");
   const [valueChg, setValueChg] = useState("10");
+  /** False right after a listing prefill: the math then uses the exact
+   *  stated ratio while the field shows it rounded. True once the user
+   *  types their own rate, which is then used exactly as entered. */
+  const [rateEdited, setRateEdited] = useState(false);
   const [copied, setCopied] = useState(false);
   const [chartTip, setChartTip] = useState<{ i: number; px: number } | null>(
     null,
@@ -674,6 +678,11 @@ export function App() {
     numeric[3] >= 0 &&
     numeric[4] >= 0;
   const [a, r, t, u, f] = numeric;
+  const impliedYield = impliedYieldFor(calcListing);
+  /** Exact internal math, rounded display: after a listing prefill the math
+   *  runs on the exact stated ratio while the field shows 2 decimals; once
+   *  the user edits, their entered value is used exactly. */
+  const rUse = !rateEdited && impliedYield != null ? impliedYield : r;
   const marketFeePct =
     calcListing.platform === "Lofty" && includeMarketFee ? 2.5 : 0;
   const buyEff = calcFees.buyPct + marketFeePct;
@@ -697,7 +706,7 @@ export function App() {
    *  table. */
   const calcInp = {
     amount: a,
-    ratePct: r,
+    ratePct: rUse,
     years: t,
     upfront: u,
     annualCosts: f,
@@ -714,31 +723,26 @@ export function App() {
     sellPctE: number = sellEff,
   ) =>
     calcScenario({ ...calcInp, buyPct: buyPctE, sellPct: sellPctE }, rr, dv);
-  const base = scenario(r, 0);
+  const base = scenario(rUse, 0);
   const oneTimeCosts = base.buyFee + base.sellFee + u;
   const breakEvenMonths = feeBreakEvenMonths(base, u);
   const annualizedNet = annualizedNetPct(base, t);
   const irrNet = irrAnnualPct(calcInp, base);
   const valueFall = valueFallBreakEven(calcInp);
   const sensitivity10 = sensitivityPer10Pct(calcInp);
-  const impliedYield = impliedYieldFor(calcListing);
   /** Stress-table columns: the user's own rate ±2 points, plus the selected
    *  listing's stated rent / value at its exact ratio when published. */
   const gridRates = useMemo(() => {
-    const round2 = (v: number) => Math.round(v * 100) / 100;
-    const raw = [round2(r + 2), r, Math.max(round2(r - 2), 0.25)];
-    /** The listing-stated column computes at the same 2-decimal ratio it
-     *  displays; the exact source ratio is disclosed in the assumptions
-     *  accordion. */
-    const iy2 = impliedYield != null ? round2(impliedYield) : null;
-    if (iy2 != null && Math.abs(iy2 - r) >= 0.005) raw.push(iy2);
+    const raw = [rUse + 2, rUse, Math.max(rUse - 2, 0.25)];
+    if (impliedYield != null && Math.abs(impliedYield - rUse) >= 0.005)
+      raw.push(impliedYield);
     raw.sort((x, y) => y - x);
     const dedup: number[] = [];
     raw.forEach((v) => {
       if (!dedup.some((d) => Math.abs(d - v) < 0.05)) dedup.push(v);
     });
     return dedup;
-  }, [r, impliedYield]);
+  }, [rUse, impliedYield]);
   /** Value-change magnitude tested in the stress table and chart band. */
   const cvNum = Math.min(Math.max(Number(valueChg) || 0, 0), 40);
   const gridRows: { label: string; dv: number }[] = [
@@ -764,7 +768,8 @@ export function App() {
     goalNumeric[1] > 0 &&
     goalNumeric[1] <= 100 &&
     goalNumeric[2] >= 0;
-  const [g, gr, gf] = goalNumeric;
+  const [g, , gf] = goalNumeric;
+  const gr = rUse;
   const goalGrossNeeded = tn > 0 ? (g * 12) / (1 - tn / 100) : g * 12;
   const goalAnnualAfterCosts = g * 12;
   const goalInvestment = ((goalGrossNeeded + gf) * 100) / gr;
@@ -774,7 +779,10 @@ export function App() {
   const applyListing = (listing: Listing) => {
     setCalcId(listing.id);
     const iy = impliedYieldFor(listing);
-    if (iy != null) setRate(iy.toFixed(2));
+    if (iy != null) {
+      setRate(iy.toFixed(2));
+      setRateEdited(false);
+    }
   };
   const openCalculator = (listing: Listing) => {
     applyListing(listing);
@@ -1550,7 +1558,16 @@ export function App() {
                   {(calcMode === "invest"
                     ? [
                         ["Investment ($)", amount, setAmount, "1", "100000000"],
-                        ["Annual income rate (%)", rate, setRate, "0", "100"],
+                        [
+                          "Annual income rate (%)",
+                          rate,
+                          (v: string | ((p: string) => string)) => {
+                            setRate(v);
+                            setRateEdited(true);
+                          },
+                          "0",
+                          "100",
+                        ],
                         ["Holding period (years)", years, setYears, "1", "30"],
                       ]
                     : [
@@ -1561,7 +1578,16 @@ export function App() {
                           "1",
                           "1000000",
                         ],
-                        ["Annual income rate (%)", rate, setRate, "0", "100"],
+                        [
+                          "Annual income rate (%)",
+                          rate,
+                          (v: string | ((p: string) => string)) => {
+                            setRate(v);
+                            setRateEdited(true);
+                          },
+                          "0",
+                          "100",
+                        ],
                       ]
                   ).map((f) => renderField(f as FieldDef))}
                   {impliedYield != null && (
@@ -1569,9 +1595,10 @@ export function App() {
                       This listing&apos;s stated rent / value is{" "}
                       {impliedYield.toFixed(2)}% - platform-stated, as
                       published (rent before any management or other costs;
-                      add those under Annual costs), not a forecast; the exact
-                      ratio is in Assumptions and calculation. The rate
-                      starts here when you pick the listing; edit it freely.
+                      add those under Annual costs), not a forecast. The
+                      field shows it rounded to 2 decimals; the exact ratio
+                      is used until you edit the rate, and is listed in
+                      Assumptions and calculation.
                     </p>
                   )}
                 </fieldset>
@@ -1928,12 +1955,10 @@ export function App() {
                     <tr>
                       <th></th>
                       {gridRates.map((grr, i) => {
-                        const isUser = Math.abs(grr - r) < 0.005;
+                        const isUser = Math.abs(grr - rUse) < 0.005;
                         const isListing =
                           impliedYield != null &&
-                          Math.abs(
-                            grr - Math.round(impliedYield * 100) / 100,
-                          ) < 0.005;
+                          Math.abs(grr - impliedYield) < 0.005;
                         return (
                           <th key={i}>
                             Income at {fmtRate(grr)}%
@@ -1974,7 +1999,7 @@ export function App() {
                 </div>
                 <p>
                   {impliedYield != null
-                    ? `*The starred column is the selected listing's stated rent vs its published value (source ratio ${impliedYield.toFixed(4)}%, shown and used at ${(Math.round(impliedYield * 100) / 100).toFixed(2)}%), platform-stated and not a forecast. `
+                    ? `*The starred column is the selected listing's stated rent vs its published value (source ratio ${impliedYield.toFixed(4)}%, displayed rounded to ${(Math.round(impliedYield * 100) / 100).toFixed(2)}%; the exact ratio is used until you edit the rate), platform-stated and not a forecast. `
                     : ""}
                   Scenario illustrations from your inputs and the stated fees.
                   Informational only, not investment advice.
@@ -2021,7 +2046,18 @@ export function App() {
                       const all = [...seriesLow, ...seriesHigh, 0];
                       const lo = Math.min(...all);
                       const hi = Math.max(...all);
-                      const span = hi - lo || 1;
+                      const rawSpan = hi - lo || 1;
+                      const rawStep = rawSpan / 3;
+                      const mag = Math.pow(
+                        10,
+                        Math.floor(Math.log10(rawStep)),
+                      );
+                      const step = Math.ceil(rawStep / mag) * mag;
+                      /** Axis top is raised to a labeled tick strictly above
+                       *  every path, so no line runs off the scale. */
+                      let top = Math.ceil(hi / step) * step;
+                      if (top <= hi) top += step;
+                      const span = top - lo;
                       const X = (ii: number) =>
                         PL + (ii / (n - 1)) * (W - PL - PR);
                       const Y = (v: number) =>
@@ -2037,13 +2073,10 @@ export function App() {
                               `${X(n - 1 - ii)},${Y(seriesLow[n - 1 - ii])}`,
                           )
                           .join(" ");
-                      const rawStep = span / 3;
-                      const mag = Math.pow(10, Math.floor(Math.log10(rawStep)));
-                      const step = Math.ceil(rawStep / mag) * mag;
                       const yTicks: number[] = [];
                       for (
                         let v = Math.ceil(lo / step) * step;
-                        v <= hi + step * 0.6;
+                        v <= top;
                         v += step
                       ) {
                         const rv = Math.round(v * 100) / 100;
@@ -2242,7 +2275,7 @@ export function App() {
                           <tr>
                             <th>Listing</th>
                             <th>Stated fees</th>
-                            <th>Net at your {r}%</th>
+                            <th>Net at your {fmtRate(rUse)}%</th>
                             <th>Net at stated rent/value</th>
                           </tr>
                         </thead>
@@ -2262,10 +2295,12 @@ export function App() {
                                 <td>
                                   {lBuy}% buy + {lSell}% sell
                                 </td>
-                                <td>{money(scenario(r, 0, lBuy, lSell).net)}</td>
+                                <td>
+                                  {money(scenario(rUse, 0, lBuy, lSell).net)}
+                                </td>
                                 <td>
                                   {iy != null
-                                    ? `${money(scenario(Math.round(iy * 100) / 100, 0, lBuy, lSell).net)} (${iy.toFixed(2)}%)`
+                                    ? `${money(scenario(iy, 0, lBuy, lSell).net)} (${iy.toFixed(2)}%)`
                                     : "Figures not published"}
                                 </td>
                               </tr>
@@ -2340,16 +2375,15 @@ export function App() {
                 listing&apos;s published value, from the listing&apos;s own
                 figures. The exact source ratio (
                 {impliedYield != null ? `${impliedYield.toFixed(4)}%` : "3.9518%"}{" "}
-                for the selected listing) is shown and used rounded to 2
-                decimals, so the rate you see is the rate the math uses.
+                for the selected listing) is displayed rounded to 2 decimals;
+                the exact ratio is used in all math until you edit the rate.
               </p>
               <p>
                 Fees use the selected platform's stated percentages; Lofty's
                 2.5% market-order fee is optional and off by default. The
                 stress table moves your rate ±2 points and adds the selected
-                listing's stated rent / value at the same displayed
-                2-decimal ratio where published - platform-stated, never a
-                forecast. The chart
+                listing's stated rent / value at its exact ratio where
+                published - platform-stated, never a forecast. The chart
                 charges the buy fee and upfront costs up front and applies
                 the sell fee at sale. Oceanpoint APY and Lofty avg yield are
                 not treated as equivalent cash-income rates. The math lives
