@@ -244,7 +244,7 @@
     0 2px 30px rgba(80, 6, 12, 0.65);
 }
 .sb-sub {
-  color: var(--ink-2);
+  color: #fff6ee;
   font-size: clamp(16px, 1.6vw, 19px);
   max-width: 46ch;
   margin: 0 0 30px;
@@ -952,7 +952,7 @@
 .sb-nav-desktop {
   display: flex;
   align-items: center;
-  gap: clamp(16px, 2.4vw, 36px);
+  gap: clamp(12px, 1.8vw, 26px);
 }
 .sb-nav-desktop a {
   color: rgba(255, 246, 238, 0.78);
@@ -2264,4 +2264,41 @@ a.sb-join-link:hover {
   border-radius: 10px;
   padding: 14px 18px;
   box-shadow: 0 12px 32px rgba(42, 36, 35, 0.22);
+}
+
+/* hero copy contrast scrim + hero note + info pages */
+.sb-hero-copy {
+  position: relative;
+  isolation: isolate;
+}
+.sb-hero-copy::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 115% 100% at 38% 50%,
+    rgba(60, 6, 10, 0.45),
+    transparent 72%
+  );
+  z-index: -1;
+  pointer-events: none;
+}
+.sb-hero-eyebrow {
+  color: rgba(255, 246, 238, 0.78);
+  margin-bottom: 16px;
+}
+.sb-hero-note {
+  color: rgba(255, 246, 238, 0.88);
+  font-size: 13px;
+  line-height: 1.6;
+  max-width: 56ch;
+  margin: 22px 0 0;
+  text-shadow: 0 1px 3px rgba(60, 4, 10, 0.6);
+}
+.sb-info-page {
+  max-width: 780px;
+}
+.sb-info-text {
+  color: var(--ink-2);
+  max-width: 68ch;
 }

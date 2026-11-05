@@ -650,13 +650,15 @@ export function App() {
             />
           </a>
           <nav className="sb-nav-desktop" aria-label="Primary">
-            <a href="#compare">Compare</a>
+            <a href="#compare">Listings</a>
             <a href="#how">How it works</a>
             <a href="#income">Calculator</a>
             <a href="#faq">FAQ</a>
+            <a href="#about">About</a>
+            <a href="#methodology">Methodology</a>
           </nav>
           <a className="sb-nav-explore" href="#compare">
-            Explore listings <span aria-hidden="true">↗</span>
+            Compare listings <span aria-hidden="true">&rarr;</span>
           </a>
           <button
             ref={menuButton}
@@ -689,16 +691,22 @@ export function App() {
           hidden={!menuOpen}
         >
           <a href="#compare" onClick={() => setMenuOpen(false)}>
-            Compare offerings <span aria-hidden="true">↗</span>
+            Compare listings <span aria-hidden="true">&rarr;</span>
           </a>
           <a href="#how" onClick={() => setMenuOpen(false)}>
-            How it works <span aria-hidden="true">↗</span>
+            How it works
           </a>
           <a href="#income" onClick={() => setMenuOpen(false)}>
-            Calculator <span aria-hidden="true">↗</span>
+            Calculator
           </a>
           <a href="#faq" onClick={() => setMenuOpen(false)}>
-            FAQ <span aria-hidden="true">↗</span>
+            FAQ
+          </a>
+          <a href="#about" onClick={() => setMenuOpen(false)}>
+            About
+          </a>
+          <a href="#methodology" onClick={() => setMenuOpen(false)}>
+            Methodology
           </a>
           <p>Dated source records · Informational only</p>
         </nav>
@@ -707,6 +715,9 @@ export function App() {
       <main id="top">
         <section className="sb-hero">
           <div className="sb-hero-copy">
+            <p className="sb-eyebrow sb-hero-eyebrow">
+              Independent comparison of tokenized real estate
+            </p>
             <h1>
               <span>
                 A slice of <em>property.</em>
@@ -714,17 +725,26 @@ export function App() {
               <span>A clearer choice.</span>
             </h1>
             <p className="sb-sub">
-              Compare tokenized properties across platforms. See the costs,
-              terms and risks before you invest.
+              Compare tokenized properties across Lofty and Oceanpoint. See
+              the costs, terms and risks before you invest.
             </p>
             <div className="sb-actions">
               <a className="sb-btn sb-btn--solid" href="#compare">
-                Compare offerings <span aria-hidden="true">&rarr;</span>
+                Compare listings <span aria-hidden="true">&rarr;</span>
+              </a>
+              <a className="sb-quiet-link" href="#income">
+                Run the numbers <span aria-hidden="true">&rarr;</span>
               </a>
               <a className="sb-quiet-link" href="#how">
-                How it works <span aria-hidden="true">&#8599;</span>
+                How it works
               </a>
             </div>
+            <p className="sb-hero-note">
+              Listings checked 5 Nov 2026 &middot; Referral links may earn us
+              a reward; rankings are never paid for.
+              <br />
+              Fractional property carries risk, including loss of capital.
+            </p>
           </div>
 
           <div
@@ -814,10 +834,6 @@ export function App() {
                 );
               })}
             </svg>
-            <div className="sb-sculpture-caption">
-              <span />
-              One property. Many possibilities.
-            </div>
           </div>
         </section>
 
@@ -827,20 +843,20 @@ export function App() {
           </p>
           <ul className="sb-strip">
             <li>
-              <strong>Side-by-side offerings</strong>
+              <strong>Side-by-side listings</strong>
               <span>Yields, fees and terms in one view</span>
             </li>
             <li>
-              <strong>Access rules up front</strong>
-              <span>Eligibility and restrictions flagged on every card</span>
+              <strong>Access rules on every card</strong>
+              <span>The stated baseline: 18+, KYC, sanctions and local rules</span>
             </li>
             <li>
-              <strong>Independent by design</strong>
-              <span>No sponsored rankings</span>
+              <strong>Rankings never paid for</strong>
+              <span>Referral links may earn us a reward</span>
             </li>
             <li>
-              <strong>Informational only</strong>
-              <span>We never hold money or tokens</span>
+              <strong>We never hold money or tokens</strong>
+              <span>Informational only; not investment advice</span>
             </li>
           </ul>
         </div>
@@ -1095,11 +1111,11 @@ export function App() {
                     <strong>{money(income)}</strong>
                     <dl>
                       <div>
-                        <dt>Average monthly income*</dt>
+                        <dt>Average monthly income, before transaction fees*</dt>
                         <dd>{money(annual / 12)}</dd>
                       </div>
                       <div>
-                        <dt>Annual income after entered costs</dt>
+                        <dt>Annual income before transaction fees</dt>
                         <dd>{money(annual)}</dd>
                       </div>
                       <div>
@@ -1118,8 +1134,9 @@ export function App() {
                       </div>
                     </dl>
                     <p>
-                      *Monthly average, not a payout schedule. Upfront costs are
-                      deducted from the period total, not the monthly figure.
+                      *Monthly average, not a payout schedule. Transaction fees
+                      and upfront costs are one-time; they reduce the period
+                      total, not the income rate.
                     </p>
                   </>
                 ) : (
@@ -1631,6 +1648,40 @@ export function App() {
             </details>
           </div>
         </section>
+        <section id="about" className="sb-section sb-info-page">
+          <p className="sb-eyebrow">About</p>
+          <h2>What Slicebase is.</h2>
+          <p className="sb-info-text">
+            Slicebase is an independent, informational comparison directory
+            for tokenized real estate. It puts public listing facts from Lofty
+            and Oceanpoint side by side - prices, platform-stated fees, resale
+            and access rules - so visitors can compare before they invest.
+            Slicebase never holds money or tokens, sells nothing itself and
+            gives no investment advice. It may earn a referral reward when a
+            visitor joins a platform through its links; rankings are never
+            paid for, and referral rewards never change what is shown.
+          </p>
+        </section>
+
+        <section id="methodology" className="sb-section sb-info-page">
+          <p className="sb-eyebrow">Methodology</p>
+          <h2>How the data is collected.</h2>
+          <p className="sb-info-text">
+            Listing facts and one photo per property are collected from the
+            platforms&apos; own public pages. This directory was captured on 4
+            Nov 2026; per-listing values and monthly rents were refreshed from
+            Lofty&apos;s property pages on 5 Nov 2026. It covers 84 Lofty and
+            21 Oceanpoint listings; Oceanpoint reports 77 properties, so that
+            coverage is incomplete. Platform-stated fees (checked 5 Nov 2026)
+            come from the platforms&apos; own pages and are linked on every
+            card. Figures labeled as a platform&apos;s own (avg yield, value
+            tag) are republished verbatim; where the platform does not state a
+            basis, the card says so. Nothing here is a live quote, and
+            availability or terms can change - the source link on every card
+            is the reference of record. Exact order minimums and full offering
+            costs remain unverified and are marked as such.
+          </p>
+        </section>
       </main>
 
       <footer className="sb-footer">
@@ -1645,7 +1696,7 @@ export function App() {
           </div>
           <div className="sb-footer-cta">
             <a className="sb-footer-action" href="#compare">
-              Compare offerings <span aria-hidden="true">↗</span>
+              Compare listings <span aria-hidden="true">&rarr;</span>
             </a>
             <div className="sb-footer-signup">
             <p>
