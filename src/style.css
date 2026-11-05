@@ -2485,6 +2485,9 @@ a.sb-join-link:hover {
 }
 @media (max-width: 700px) {
   .sb-calc-chart svg text {
+    font-size: 15px;
+  }
+  .sb-calc-chart svg .be-note {
     display: none;
   }
   .sb-calc-chart-legend {

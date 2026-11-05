@@ -263,7 +263,7 @@ const impliedYieldFor = (l: Listing): number | null => {
 /** Rate display with meaningful decimals only: 8 stays "8", 3.95 stays
  *  "3.95". */
 const fmtRate = (v: number): string =>
-  v.toFixed(2).replace(/\.?0+$/, "");
+  v.toFixed(4).replace(/\.?0+$/, "");
 type FieldDef = [
   string,
   string,
@@ -640,7 +640,7 @@ export function App() {
         const iy = impliedYieldFor(
           LISTINGS.find((l) => l.id === initialCalcId) ?? LISTINGS[0],
         );
-        return iy != null ? iy.toFixed(2) : "8";
+        return iy != null ? iy.toFixed(4) : "8";
       })(),
   );
   const [years, setYears] = useState(qpNum("y", 1, 30) ?? "5");
@@ -725,8 +725,10 @@ export function App() {
   /** Stress-table columns: the user's own rate ±2 points, plus the selected
    *  listing's stated rent / value at its exact ratio when published. */
   const gridRates = useMemo(() => {
-    const raw = [r + 2, r, Math.max(r - 2, 0.25)];
-    if (impliedYield != null) raw.push(impliedYield);
+    const round2 = (v: number) => Math.round(v * 100) / 100;
+    const raw = [round2(r + 2), r, Math.max(round2(r - 2), 0.25)];
+    if (impliedYield != null && Math.abs(impliedYield - r) >= 0.005)
+      raw.push(impliedYield);
     raw.sort((x, y) => y - x);
     const dedup: number[] = [];
     raw.forEach((v) => {
@@ -769,7 +771,7 @@ export function App() {
   const applyListing = (listing: Listing) => {
     setCalcId(listing.id);
     const iy = impliedYieldFor(listing);
-    if (iy != null) setRate(iy.toFixed(2));
+    if (iy != null) setRate(iy.toFixed(4));
   };
   const openCalculator = (listing: Listing) => {
     applyListing(listing);
@@ -1160,8 +1162,9 @@ export function App() {
                 goal. Where the selected listing publishes rent and a value,
                 the rate starts at that stated rent / value ratio -
                 platform-stated, as published, not a forecast - and otherwise
-                at an 8% example. Edit every field freely; platform yields
-                are never used as the income rate. Platform-stated fees are
+                at an 8% example. Edit every field freely; platform
+                avg-yield metrics (avg yield, APY) are never used as the
+                income rate. Platform-stated fees are
                 included by default; turn them off below to see income before
                 fees.
               </p>
@@ -1191,8 +1194,10 @@ export function App() {
                 <label className="sb-calc-property">
                   Listing context
                   <span className="sb-calc-property-hint">
-                    Sets which platform's stated fees are estimated below.
-                    Platform yields are never used in this calculator.
+                    Sets which platform's stated fees are estimated below
+                    and, where the listing publishes rent and a value,
+                    pre-fills the rate from that stated ratio. Platform
+                    avg-yield metrics are never used as the income rate.
                   </span>
                   <select
                     value={calcId}
@@ -1232,7 +1237,7 @@ export function App() {
                   {impliedYield != null && (
                     <p className="sb-calc-rate-hint">
                       This listing&apos;s stated rent / value is{" "}
-                      {impliedYield.toFixed(2)}% - platform-stated, as
+                      {impliedYield.toFixed(4)}% - platform-stated, as
                       published (rent before any management or other costs;
                       add those under Annual costs), not a forecast. The rate
                       starts there when you pick the listing; edit it freely.
@@ -1625,7 +1630,7 @@ export function App() {
                 </label>
                 <p>
                   {impliedYield != null
-                    ? `*The starred column is the selected listing's stated rent vs its published value (exact ratio ${impliedYield.toFixed(2)}%, used as shown), platform-stated and not a forecast. `
+                    ? `*The starred column is the selected listing's stated rent vs its published value (exact ratio ${impliedYield.toFixed(4)}%, used as shown), platform-stated and not a forecast. `
                     : ""}
                   Scenario illustrations from your inputs and the stated fees.
                   Informational only, not investment advice.
@@ -1768,6 +1773,7 @@ export function App() {
                                 points={`${X(beMonth)},${Y(0) - 4} ${Math.min(X(beMonth) + 12, W - PR - 148)},${Math.max(Y(0) - 16, PT + 6)}`}
                               />
                               <text
+                                className="be-note"
                                 x={Math.min(X(beMonth) + 14, W - PR - 146)}
                                 y={Math.max(Y(0) - 16, PT + 6) + 3}
                               >
@@ -1893,7 +1899,7 @@ export function App() {
                                 <td>{money(scenario(r, 0, lBuy, lSell).net)}</td>
                                 <td>
                                   {iy != null
-                                    ? `${money(scenario(iy, 0, lBuy, lSell).net)} (${iy.toFixed(2)}%)`
+                                    ? `${money(scenario(iy, 0, lBuy, lSell).net)} (${iy.toFixed(4)}%)`
                                     : "Figures not published"}
                                 </td>
                               </tr>

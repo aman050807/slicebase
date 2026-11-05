@@ -24,7 +24,7 @@ test("calculator stays separate and no custody/payment integration is present", 
   // the income rate falls back to a generic 8% example and never to a
   // platform yield; listings with published rent/value pre-fill their ratio
   assert.ok(app.includes('"8"'));
-  assert.ok(/platform yields are never used/.test(app.replace(/\s+/g, " ")));
+  assert.ok(/avg-yield metrics are never used/.test(app.replace(/\s+/g, " ")));
   assert.ok(
     app.includes("No deposits") ||
       app.includes("does not accept investment deposits"),
