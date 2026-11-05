@@ -603,12 +603,43 @@ export function App() {
             : a.id - b.id,
     );
     if (sort === "mixed" && platform === "all") {
-      const lofty = rows.filter((l) => l.platform === "Lofty");
-      const oceanpoint = rows.filter((l) => l.platform === "Oceanpoint");
-      rows = [];
-      for (let i = 0; i < Math.max(lofty.length, oceanpoint.length); i++) {
-        if (lofty[i]) rows.push(lofty[i]);
-        if (oceanpoint[i]) rows.push(oceanpoint[i]);
+      // A repeatable shuffle keeps pagination stable. Spread the smaller
+      // catalogue through the entire list, with varied rather than rigid gaps.
+      let seed = 314159;
+      const random = () => {
+        seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+        return seed / 4294967296;
+      };
+      const shuffled = <T,>(items: T[]): T[] => {
+        const copy = [...items];
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(random() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+      };
+      const lofty = shuffled(rows.filter((l) => l.platform === "Lofty"));
+      const oceanpoint = shuffled(rows.filter((l) => l.platform === "Oceanpoint"));
+      if (lofty.length && oceanpoint.length) {
+        const gaps = oceanpoint.map((_, i) =>
+          Math.floor(((i + 1) * lofty.length) / oceanpoint.length) -
+          Math.floor((i * lofty.length) / oceanpoint.length),
+        );
+        // Move one Lofty between neighbouring gaps to vary the rhythm while
+        // retaining exactly the same catalogue and balanced full-list coverage.
+        for (let i = 0; i + 1 < gaps.length; i += 2) {
+          const move = Math.min(2, gaps[i]);
+          gaps[i] -= move;
+          gaps[i + 1] += move;
+        }
+        const variedGaps = shuffled(gaps);
+        let cursor = 0;
+        rows = [];
+        oceanpoint.forEach((listing, i) => {
+          rows.push(...lofty.slice(cursor, cursor + variedGaps[i]), listing);
+          cursor += variedGaps[i];
+        });
+        rows.push(...lofty.slice(cursor));
       }
     }
     return rows;
@@ -1215,7 +1246,7 @@ export function App() {
                 value={sort}
                 onChange={(e) => setSort(e.target.value)}
               >
-                <option value="mixed">Both platforms</option>
+                <option value="mixed">Mixed listings</option>
                 <option value="min">Source order</option>
                 <option value="name">Listing name</option>
                 <option value="platform">Platform</option>

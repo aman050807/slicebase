@@ -60,8 +60,16 @@ test("default first twelve mix platforms without overriding explicit sorting", a
   await page.goto("/");
   const platforms = page.locator(".sb-property-platform");
   await expect(platforms).toHaveCount(12);
-  expect((await platforms.allTextContents()).filter(t=>t.includes("Lofty"))).toHaveLength(6);
-  expect((await platforms.allTextContents()).filter(t=>t.includes("Oceanpoint"))).toHaveLength(6);
+  const first = await platforms.allTextContents();
+  expect(first.some(t=>t.includes("Lofty"))).toBe(true);
+  expect(first.some(t=>t.includes("Oceanpoint"))).toBe(true);
+  expect(first.some((t,i)=>i>0 && t===first[i-1])).toBe(true);
+  for(let i=0;i<8;i++) await page.getByRole("button",{name:"Show more listings"}).click();
+  const all = await platforms.allTextContents();
+  expect(all).toHaveLength(105);
+  expect(all.filter(t=>t.includes("Oceanpoint"))).toHaveLength(21);
+  for(let i=0;i<all.length-6;i++) expect(all.slice(i,i+7).some(t=>t.includes("Oceanpoint"))).toBe(true);
+  await page.reload();
   await page.locator("#f-sort").selectOption("min");
   expect((await platforms.allTextContents()).every(t=>t.includes("Lofty"))).toBe(true);
   await page.locator("#f-platform").selectOption("Oceanpoint");
