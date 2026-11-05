@@ -2471,9 +2471,8 @@ export function App() {
         <div className="sb-footer-bottom">
           <span>Source records · Informational only</span>
           <p>
-            Data from Lofty and Oceanpoint, refreshed {REFRESHED}. Coverage is
-            incomplete; not live quotes. Referral links may earn us rewards.
-            Property tokens carry risk, including loss of capital.
+            Lofty &amp; Oceanpoint data. Partial coverage, not live
+            prices. We may earn referral rewards. Capital at risk.
           </p>
         </div>
       </footer>
