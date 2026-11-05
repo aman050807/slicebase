@@ -2466,3 +2466,17 @@ a.sb-join-link:hover {
 .sb-calc-chart .bar-label {
   font-size: 10px;
 }
+.sb-calc-side {
+  margin-top: 26px;
+}
+.sb-calc-side h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 10px;
+}
+.sb-calc-side p {
+  font-size: 11px;
+  color: #716762;
+  line-height: 1.7;
+  margin: 10px 0 0;
+}

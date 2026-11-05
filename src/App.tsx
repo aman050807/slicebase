@@ -625,15 +625,24 @@ export function App() {
   /** Net outcome of one scenario at income rate rr with the property value
    *  changing by dv (fraction) over the holding period. Sale at the end is
    *  optional; the sell fee is charged on the sale value. */
-  const scenario = (rr: number, dv: number) => {
-    const buyFee = includeFees ? (a * buyEff) / 100 : 0;
+  const scenario = (
+    rr: number,
+    dv: number,
+    buyPctE: number = buyEff,
+    sellPctE: number = sellEff,
+  ) => {
+    const buyFee = includeFees ? (a * buyPctE) / 100 : 0;
     const saleValue = a * (1 + dv);
-    const sellFee = sellAtEnd && includeFees ? (saleValue * sellEff) / 100 : 0;
+    const sellFee =
+      sellAtEnd && includeFees ? (saleValue * sellPctE) / 100 : 0;
     const annualNet = ((a * rr) / 100) * (1 - tn / 100) - f;
     const periodIncome = annualNet * t - u;
     const totalIn = a + buyFee;
     const saleNet = sellAtEnd ? saleValue - sellFee : 0;
     const totalBack = periodIncome + saleNet;
+    /** Sold at end: net = income + sale proceeds - investment - fees.
+     *  Held: the principal is still owned, so net = income - fees. */
+    const net = periodIncome + saleNet - buyFee - (sellAtEnd ? a : 0);
     return {
       buyFee,
       sellFee,
@@ -643,7 +652,7 @@ export function App() {
       totalIn,
       saleNet,
       totalBack,
-      net: totalBack - totalIn,
+      net,
     };
   };
   const base = scenario(r, 0);
@@ -662,7 +671,16 @@ export function App() {
     listingVal > 0 && listingRent > 0
       ? (listingRent * 12 * 100) / listingVal
       : null;
-  const gridMid = impliedYield ?? r;
+  /** Same stated rent-vs-published-value ratio for any listing; null when
+   *  the listing does not publish both figures. */
+  const impliedYieldFor = (l: Listing): number | null => {
+    const lv = valuationNumber(l.valuation);
+    const lr = l.monthlyRent ? Number(l.monthlyRent.replace(/[^0-9.]/g, "")) : 0;
+    return lv > 0 && lr > 0 ? (lr * 12 * 100) / lv : null;
+  };
+  /** Stated-figure rate rounded to one decimal so the grid header and the
+   *  cell math use exactly the same rate. */
+  const gridMid = impliedYield != null ? Math.round(impliedYield * 10) / 10 : r;
   const gridRates = [gridMid + 2, gridMid, Math.max(gridMid - 2, 0.25)];
   const gridRows: { label: string; dv: number }[] = [
     { label: "Value down 10%", dv: -0.1 },
@@ -672,10 +690,13 @@ export function App() {
   const cmpGain = validCmp ? (a * cmpNum * t) / 100 : null;
   const chartPoints: number[] = [];
   if (validCalc) {
-    const qCount = Math.max(Math.round(t * 4), 4);
-    for (let q = 0; q <= qCount; q++) {
-      let pos = -(includeFees ? base.buyFee : 0) - u + base.annualNet * (q / 4);
-      if (sellAtEnd && q === qCount) pos += base.saleValue - base.sellFee - a;
+    const mCount = Math.max(Math.round(t * 12), 12);
+    const hurdle = (includeFees ? base.buyFee + base.sellFee : 0) + u;
+    for (let m = 0; m <= mCount; m++) {
+      let pos = -hurdle + (base.annualNet * m) / 12;
+      /** Sell fee is already counted in the hurdle; at the end add only the
+       *  value change on sale (zero when the value is unchanged). */
+      if (sellAtEnd && m === mCount) pos += base.saleValue - a;
       chartPoints.push(pos);
     }
   }
@@ -690,8 +711,9 @@ export function App() {
     goalNumeric[1] <= 100 &&
     goalNumeric[2] >= 0;
   const [g, gr, gf] = goalNumeric;
+  const goalGrossNeeded = tn > 0 ? (g * 12) / (1 - tn / 100) : g * 12;
   const goalAnnualAfterCosts = g * 12;
-  const goalInvestment = ((goalAnnualAfterCosts + gf) * 100) / gr;
+  const goalInvestment = ((goalGrossNeeded + gf) * 100) / gr;
   const goalRates = [gr + 2, gr, Math.max(gr - 2, 0.25)];
   const openCalculator = (listing: Listing) => {
     setCalcId(listing.id);
@@ -1111,6 +1133,18 @@ export function App() {
                     />
                   </label>
                 ))}
+                <label>
+                  Tax rate on income (%, optional)
+                  <input
+                    type="number"
+                    inputMode="decimal"
+                    min="0"
+                    max="99"
+                    step="any"
+                    value={taxRate}
+                    onChange={(e) => setTaxRate(e.target.value)}
+                  />
+                </label>
                 {calcMode === "invest" && (
                   <>
                     <label className="sb-calc-check">
@@ -1139,18 +1173,6 @@ export function App() {
                         </span>
                       </label>
                     )}
-                    <label>
-                      Tax rate on income (%, optional)
-                      <input
-                        type="number"
-                        inputMode="decimal"
-                        min="0"
-                        max="99"
-                        step="any"
-                        value={taxRate}
-                        onChange={(e) => setTaxRate(e.target.value)}
-                      />
-                    </label>
                     <label>
                       Compare with leaving it at (% a year, optional)
                       <input
@@ -1192,11 +1214,12 @@ export function App() {
                     <>
                       <span>
                         Capital needed to target {money(g)} per month
+                        {tn > 0 ? " after tax" : ""}, after annual costs
                       </span>
                       <table className="sb-calc-table">
                         <thead>
                           <tr>
-                            <th>Net income rate</th>
+                            <th>Annual income rate</th>
                             <th>Capital needed</th>
                           </tr>
                         </thead>
@@ -1207,7 +1230,7 @@ export function App() {
                                 {grr.toFixed(1)}%{i === 1 ? " (your rate)" : ""}
                               </td>
                               <td>
-                                {money(((goalAnnualAfterCosts + gf) * 100) / grr)}
+                                {money(((goalGrossNeeded + gf) * 100) / grr)}
                               </td>
                             </tr>
                           ))}
@@ -1285,7 +1308,7 @@ export function App() {
                           <dt>Fee break-even</dt>
                           <dd>
                             about {Math.round(breakEvenMonths)} months of
-                            income just to cover the fees
+                            income covers the full buy + sell fees
                             {u > 0 ? " and upfront costs" : ""}
                           </dd>
                         </div>
@@ -1392,7 +1415,7 @@ export function App() {
                 </div>
                 <p>
                   {impliedYield != null
-                    ? `*Middle column uses the selected listing's stated rent vs its published value (${impliedYield.toFixed(1)}%), platform-stated and not a forecast. `
+                    ? `*Middle column uses the selected listing's stated rent vs its published value (exact ratio ${impliedYield.toFixed(2)}%, shown and computed at ${gridMid.toFixed(1)}%), platform-stated and not a forecast. `
                     : ""}
                   Scenario illustrations from your inputs and the stated fees.
                   Informational only, not investment advice.
@@ -1403,7 +1426,7 @@ export function App() {
               <figure className="sb-calc-chart">
                 <figcaption>
                   {chartView === "line"
-                    ? "Cumulative net position over time - the fee hurdle, then the climb past break-even"
+                    ? "Cumulative net position over time - starts at the total fees and any upfront costs, then climbs with income"
                     : `Net result if the value falls, holds or rises - at the middle-column rate (${gridMid.toFixed(1)}%)`}
                 </figcaption>
                 <div className="sb-calc-mode sb-chart-toggle" role="group" aria-label="Chart view">
@@ -1523,18 +1546,31 @@ export function App() {
                         <polyline className="line" points={pts} />
                         {breakEvenIdx > 0 && (
                           <g>
-                            <circle
-                              className="dot"
-                              cx={x(breakEvenIdx)}
-                              cy={y(chartPoints[breakEvenIdx])}
-                              r={4}
-                            />
-                            <text
-                              x={Math.min(x(breakEvenIdx) + 8, W - P - 110)}
-                              y={y(chartPoints[breakEvenIdx]) - 8}
-                            >
-                              Break-even, about month {breakEvenIdx * 3}
-                            </text>
+                            {(() => {
+                              const prev = chartPoints[breakEvenIdx - 1];
+                              const cur = chartPoints[breakEvenIdx];
+                              const frac =
+                                cur > prev ? -prev / (cur - prev) : 0;
+                              const month = breakEvenIdx - 1 + frac;
+                              const cx = x(breakEvenIdx - 1 + frac);
+                              return (
+                                <>
+                                  <circle
+                                    className="dot"
+                                    cx={cx}
+                                    cy={y(0)}
+                                    r={4}
+                                  />
+                                  <text
+                                    x={Math.min(cx + 8, W - P - 120)}
+                                    y={y(0) - 8}
+                                  >
+                                    Break-even, about month{" "}
+                                    {Math.round(month)}
+                                  </text>
+                                </>
+                              );
+                            })()}
                           </g>
                         )}
                         <text x={P} y={y(chartPoints[0]) + 16}>
@@ -1550,6 +1586,66 @@ export function App() {
                 </svg>
                 )}
               </figure>
+            )}
+            {calcMode === "invest" && validCalc && (
+              <div className="sb-calc-side">
+                <h4>Side by side: net outcome per listing</h4>
+                {pickedListings.length >= 2 ? (
+                  <>
+                    <div className="sb-calc-table-wrap">
+                      <table className="sb-calc-table">
+                        <thead>
+                          <tr>
+                            <th>Listing</th>
+                            <th>Stated fees</th>
+                            <th>Net at your {r}%</th>
+                            <th>Net at stated rent/value</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {pickedListings.map((l) => {
+                            const lf = platformFeesFor(l);
+                            const lMarket =
+                              l.platform === "Lofty" && includeMarketFee
+                                ? 2.5
+                                : 0;
+                            const lBuy = lf.buyPct + lMarket;
+                            const lSell = lf.sellPct + lMarket;
+                            const iy = impliedYieldFor(l);
+                            return (
+                              <tr key={l.id}>
+                                <td>{l.name}</td>
+                                <td>
+                                  {lBuy}% buy + {lSell}% sell
+                                </td>
+                                <td>{money(scenario(r, 0, lBuy, lSell).net)}</td>
+                                <td>
+                                  {iy != null
+                                    ? `${money(scenario(Math.round(iy * 10) / 10, 0, lBuy, lSell).net)} (${(Math.round(iy * 10) / 10).toFixed(1)}%)`
+                                    : "Figures not published"}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                    <p>
+                      Same investment, period, costs and toggles for each
+                      listing - only the platform&apos;s stated fees and the
+                      listing&apos;s stated rent/value ratio change. The
+                      stated-figure column is platform-stated, not a
+                      forecast. Informational only, not investment advice.
+                    </p>
+                  </>
+                ) : (
+                  <p>
+                    Tick 2-3 listings on the cards below to see their net
+                    outcome side by side here, on the same investment and
+                    settings.
+                  </p>
+                )}
+              </div>
             )}
             <details className="sb-calculator-method">
               <summary>Assumptions and calculation</summary>
