@@ -1254,9 +1254,6 @@ export function App() {
                       src={homeImages[l.id - 1]}
                       alt={`${l.name}, photo from ${l.platform}`}
                     />
-                    <span>
-                      {l.platform} photo · {String(l.id).padStart(2, "0")}
-                    </span>
                   </div>
                   <div className="sb-property-body">
                     <div className="sb-property-platform">
