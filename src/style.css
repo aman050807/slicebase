@@ -2267,21 +2267,12 @@ a.sb-join-link:hover {
 }
 
 /* hero copy contrast scrim + hero note + info pages */
-.sb-hero-copy {
-  position: relative;
-  isolation: isolate;
-}
-.sb-hero-copy::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse 115% 100% at 38% 50%,
-    rgba(60, 6, 10, 0.45),
-    transparent 72%
-  );
-  z-index: -1;
-  pointer-events: none;
+.sb-hero-eyebrow,
+.sb-hero-copy h1,
+.sb-hero-copy .sb-quiet-link {
+  text-shadow:
+    0 1px 3px rgba(60, 4, 10, 0.6),
+    0 2px 14px rgba(60, 4, 10, 0.45);
 }
 .sb-hero-eyebrow {
   color: rgba(255, 246, 238, 0.78);
