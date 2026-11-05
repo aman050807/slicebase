@@ -848,8 +848,8 @@ export function App() {
               <span>A clearer choice.</span>
             </h1>
             <p className="sb-sub">
-              Compare tokenized properties across Lofty and Oceanpoint. See
-              the costs, terms and risks before you invest.
+              Compare tokenized properties across platforms. See the costs,
+              terms and risks before you invest.
             </p>
             <div className="sb-actions">
               <a className="sb-btn sb-btn--solid" href="#compare">
@@ -862,102 +862,104 @@ export function App() {
                 How it works <span aria-hidden="true">&rarr;</span>
               </a>
             </div>
+          </div>
+
+          <div className="sb-hero-visual">
+            <div
+              className="sb-sculpture"
+              role="img"
+              aria-label="Abstract glass building made of horizontal slices, with one golden slice drawn out"
+            >
+              <svg viewBox="0 0 460 580" aria-hidden="true">
+                <defs>
+                  <linearGradient id="glassTop" x1="0" y1="0" x2="1" y2="1">
+                    <stop stopColor="#fff9df" stopOpacity=".48" />
+                    <stop offset=".5" stopColor="#ffe2b0" stopOpacity=".13" />
+                    <stop offset="1" stopColor="#b3522c" stopOpacity=".32" />
+                  </linearGradient>
+                  <linearGradient id="glassFront">
+                    <stop stopColor="#43101a" stopOpacity=".74" />
+                    <stop offset=".48" stopColor="#e88d55" stopOpacity=".4" />
+                    <stop offset="1" stopColor="#fff0c6" stopOpacity=".55" />
+                  </linearGradient>
+                  <linearGradient id="glassSide">
+                    <stop stopColor="#fff2d3" stopOpacity=".5" />
+                    <stop offset="1" stopColor="#54151e" stopOpacity=".8" />
+                  </linearGradient>
+                  <linearGradient id="sliceGold">
+                    <stop stopColor="#fff5c0" />
+                    <stop offset=".5" stopColor="#ffc76e" />
+                    <stop offset="1" stopColor="#d66b31" />
+                  </linearGradient>
+                  <radialGradient id="baseGlow">
+                    <stop stopColor="#491019" stopOpacity=".7" />
+                    <stop offset="1" stopColor="#491019" stopOpacity="0" />
+                  </radialGradient>
+                </defs>
+                <ellipse
+                  cx="235"
+                  cy="513"
+                  rx="205"
+                  ry="48"
+                  fill="url(#baseGlow)"
+                />
+                {Array.from({ length: 14 }, (_, i) => {
+                  const selected = i === 6;
+                  const y = 72 + i * 25;
+                  return (
+                    <g
+                      key={i}
+                      transform={`translate(${selected ? 64 : 0}, ${y})`}
+                      className={selected ? "sb-pulled-slice" : ""}
+                    >
+                      <path
+                        d="M62 45 L212 106 L306 52 L156 -9 Z"
+                        fill={selected ? "url(#sliceGold)" : "url(#glassTop)"}
+                        stroke={selected ? "#ffe6a4" : "#ffeed5"}
+                        strokeOpacity={selected ? 0.95 : 0.48}
+                        strokeWidth=".8"
+                      />
+                      <path
+                        d="M62 45 L212 106 L212 124 L62 63 Z"
+                        fill={selected ? "#df9e5a" : "url(#glassFront)"}
+                        stroke="#ffecd3"
+                        strokeOpacity=".42"
+                        strokeWidth=".65"
+                      />
+                      <path
+                        d="M212 106 L306 52 L306 70 L212 124 Z"
+                        fill={selected ? "#f4ba75" : "url(#glassSide)"}
+                        stroke="#fff0d5"
+                        strokeOpacity=".52"
+                        strokeWidth=".65"
+                      />
+                      {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                        <path
+                          key={n}
+                          d={`M${72 + n * 16} ${49 + n * 6.5} v18`}
+                          stroke="#fff4dc"
+                          strokeOpacity=".18"
+                          strokeWidth=".7"
+                        />
+                      ))}
+                      <path
+                        d="M212 106 L212 124"
+                        stroke="#fff7d9"
+                        strokeOpacity=".85"
+                        strokeWidth="1.3"
+                      />
+                    </g>
+                  );
+                })}
+              </svg>
+            </div>
             <a className="sb-hero-value" href="#coverage-notes"
               onClick={() => { const notes = document.getElementById("coverage-notes"); if (notes instanceof HTMLDetailsElement) notes.open = true; }}
               title={`Platform-published USD valuations for ${HERO_VALUE_STATS.count} currently indexed properties, excluding delisted records; partial catalogue, not assets managed.`}
             >
-              <span className="sb-hero-value-title"><strong>${(Math.floor(HERO_VALUE_STATS.total / 100000) / 10).toFixed(1)}M+</strong> tracked across properties</span>
+              <span className="sb-hero-value-title"><strong>${(Math.floor(HERO_VALUE_STATS.total / 100000) / 10).toFixed(1)}M+</strong> <span>tracked across properties</span></span>
               <span className="sb-hero-value-scope">Published property values · excludes delisted <span aria-hidden="true">↗</span></span>
             </a>
-          </div>
-
-          <div
-            className="sb-sculpture"
-            role="img"
-            aria-label="Abstract glass building made of horizontal slices, with one golden slice drawn out"
-          >
-            <svg viewBox="0 0 460 580" aria-hidden="true">
-              <defs>
-                <linearGradient id="glassTop" x1="0" y1="0" x2="1" y2="1">
-                  <stop stopColor="#fff9df" stopOpacity=".48" />
-                  <stop offset=".5" stopColor="#ffe2b0" stopOpacity=".13" />
-                  <stop offset="1" stopColor="#b3522c" stopOpacity=".32" />
-                </linearGradient>
-                <linearGradient id="glassFront">
-                  <stop stopColor="#43101a" stopOpacity=".74" />
-                  <stop offset=".48" stopColor="#e88d55" stopOpacity=".4" />
-                  <stop offset="1" stopColor="#fff0c6" stopOpacity=".55" />
-                </linearGradient>
-                <linearGradient id="glassSide">
-                  <stop stopColor="#fff2d3" stopOpacity=".5" />
-                  <stop offset="1" stopColor="#54151e" stopOpacity=".8" />
-                </linearGradient>
-                <linearGradient id="sliceGold">
-                  <stop stopColor="#fff5c0" />
-                  <stop offset=".5" stopColor="#ffc76e" />
-                  <stop offset="1" stopColor="#d66b31" />
-                </linearGradient>
-                <radialGradient id="baseGlow">
-                  <stop stopColor="#491019" stopOpacity=".7" />
-                  <stop offset="1" stopColor="#491019" stopOpacity="0" />
-                </radialGradient>
-              </defs>
-              <ellipse
-                cx="235"
-                cy="513"
-                rx="205"
-                ry="48"
-                fill="url(#baseGlow)"
-              />
-              {Array.from({ length: 14 }, (_, i) => {
-                const selected = i === 6;
-                const y = 72 + i * 25;
-                return (
-                  <g
-                    key={i}
-                    transform={`translate(${selected ? 64 : 0}, ${y})`}
-                    className={selected ? "sb-pulled-slice" : ""}
-                  >
-                    <path
-                      d="M62 45 L212 106 L306 52 L156 -9 Z"
-                      fill={selected ? "url(#sliceGold)" : "url(#glassTop)"}
-                      stroke={selected ? "#ffe6a4" : "#ffeed5"}
-                      strokeOpacity={selected ? 0.95 : 0.48}
-                      strokeWidth=".8"
-                    />
-                    <path
-                      d="M62 45 L212 106 L212 124 L62 63 Z"
-                      fill={selected ? "#df9e5a" : "url(#glassFront)"}
-                      stroke="#ffecd3"
-                      strokeOpacity=".42"
-                      strokeWidth=".65"
-                    />
-                    <path
-                      d="M212 106 L306 52 L306 70 L212 124 Z"
-                      fill={selected ? "#f4ba75" : "url(#glassSide)"}
-                      stroke="#fff0d5"
-                      strokeOpacity=".52"
-                      strokeWidth=".65"
-                    />
-                    {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-                      <path
-                        key={n}
-                        d={`M${72 + n * 16} ${49 + n * 6.5} v18`}
-                        stroke="#fff4dc"
-                        strokeOpacity=".18"
-                        strokeWidth=".7"
-                      />
-                    ))}
-                    <path
-                      d="M212 106 L212 124"
-                      stroke="#fff7d9"
-                      strokeOpacity=".85"
-                      strokeWidth="1.3"
-                    />
-                  </g>
-                );
-              })}
-            </svg>
           </div>
         </section>
 

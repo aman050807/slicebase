@@ -2806,3 +2806,14 @@ a.sb-join-link:hover {
 .sb-hero-value > span { margin-left: 0; }
 .sb-hero-value-title { font-size: 15px; color: #fff6ee; }
 .sb-hero-value-scope { font-size: 11px; color: rgba(255,246,238,.65); }
+
+/* Pair the property-value signal with the architectural visual, not the actions. */
+.sb-hero-visual { width: 100%; max-width: 450px; justify-self: center; display: flex; flex-direction: column; align-items: center; }
+.sb-hero-visual .sb-sculpture { margin-top: 0; }
+.sb-hero-visual .sb-hero-value { margin: 8px 0 0; align-items: center; text-align: center; text-shadow: 0 1px 8px rgba(60,4,10,.45); }
+.sb-hero-value-title { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.sb-hero-value-title strong { font-family: "Space Grotesk", sans-serif; font-size: 30px; font-weight: 500; letter-spacing: -.025em; line-height: 1.1; }
+.sb-hero-value-title > span { font-size: 12px; }
+.sb-hero-value-scope { font-size: 10px; }
+@media (max-width: 959px) { .sb-hero-visual { max-width: 350px; } }
+@media (min-width: 960px) { .sb-hero-visual { max-width: min(450px, calc((100svh - 245px) * .7931)); } }
