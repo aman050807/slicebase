@@ -144,3 +144,30 @@ test('hero property value is derived from published valuations and opens scope',
   await expect(page.locator('#coverage-notes')).toHaveAttribute('open','');
   await expect(page.locator('.sb-index-banner')).toBeVisible();
 });
+
+for (const width of [390, 1330]) {
+  test(`explicit compare opens in view without jumping on selection at ${width}px`, async ({page}) => {
+    await page.setViewportSize({width, height:844});
+    await page.goto('/');
+    await page.locator('.sb-property input').nth(7).check();
+    await page.locator('.sb-property input').nth(8).check();
+    await expect(page.locator('.sb-comparison')).toHaveCount(0);
+    await expect(page.locator('.sb-property input:checked')).toHaveCount(2);
+    await page.getByRole('button', {name:'Compare selected', exact:true}).click();
+    const heading = page.getByRole('heading', {name:'Your comparison', exact:true});
+    await expect(heading).toBeFocused();
+    await expect(heading).toBeInViewport();
+    expect(await heading.evaluate(e=>e.getBoundingClientRect().top)).toBeGreaterThanOrEqual(0);
+    expect(await heading.evaluate(e=>e.getBoundingClientRect().top)).toBeLessThan(150);
+    await expect(page.locator('.sb-comparison-options article')).toHaveCount(2);
+    await page.getByRole('button', {name:'Hide comparison', exact:true}).click();
+    await expect(page.locator('.sb-comparison')).toHaveCount(0);
+    await page.locator('.sb-property input').nth(9).check();
+    await expect(page.locator('.sb-property input:checked')).toHaveCount(3);
+    await expect(page.locator('.sb-comparison')).toHaveCount(0);
+    await page.getByRole('button', {name:'Compare selected', exact:true}).click();
+    await expect(heading).toBeFocused();
+    await expect(heading).toBeInViewport();
+    await expect(page.locator('.sb-comparison-options article')).toHaveCount(3);
+  });
+}

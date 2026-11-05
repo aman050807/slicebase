@@ -400,6 +400,14 @@ export function App() {
   useEffect(() => setVisibleCount(12), [platform, maxMin, sort]);
   const [picked, setPicked] = useState<number[]>([]);
   const [compareOpen, setCompareOpen] = useState(false);
+  const comparisonHeadingRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    if (!compareOpen) return;
+    const heading = comparisonHeadingRef.current;
+    if (!heading) return;
+    heading.focus({ preventScroll: true });
+    heading.scrollIntoView({ block: "start", behavior: "instant" });
+  }, [compareOpen]);
 
   const results = useMemo(() => {
     let rows = LISTINGS.filter(
@@ -1243,7 +1251,7 @@ export function App() {
           {compareOpen && pickedListings.length >= 2 && (
             <div className="sb-comparison">
               <div className="sb-comparison-heading">
-                <h3>Your comparison</h3>
+                <h3 ref={comparisonHeadingRef} tabIndex={-1} style={{ scrollMarginTop: 24 }}>Your comparison</h3>
                 <p>
                   No overall score. Lower entry cost does not mean lower risk.
                 </p>
