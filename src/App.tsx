@@ -100,6 +100,10 @@ const INDEX_STATS = (() => {
     totalValue: valued.reduce((sum, l) => sum + valuationNumber(l.valuation), 0),
   };
 })();
+const HERO_VALUE_STATS = (() => {
+  const valued = LISTINGS.filter((l) => !l.delisted && valuationNumber(l.valuation) > 0);
+  return { count: valued.length, total: valued.reduce((sum, l) => sum + valuationNumber(l.valuation), 0) };
+})();
 /** Lofty publishes a sector per listing; Oceanpoint does not, so the
  *  Oceanpoint sector is read from the listing's own published title. */
 function sectorFor(l: Listing): string {
@@ -858,6 +862,13 @@ export function App() {
                 How it works <span aria-hidden="true">&rarr;</span>
               </a>
             </div>
+            <a className="sb-hero-value" href="#coverage-notes"
+              onClick={() => { const notes = document.getElementById("coverage-notes"); if (notes instanceof HTMLDetailsElement) notes.open = true; }}
+              title={`Platform-published USD valuations for ${HERO_VALUE_STATS.count} currently indexed properties, excluding delisted records; partial catalogue, not assets managed.`}
+            >
+              <span className="sb-hero-value-title"><strong>${(Math.floor(HERO_VALUE_STATS.total / 100000) / 10).toFixed(1)}M+</strong> tracked across properties</span>
+              <span className="sb-hero-value-scope">Published property values · excludes delisted <span aria-hidden="true">↗</span></span>
+            </a>
           </div>
 
           <div
@@ -1001,8 +1012,9 @@ export function App() {
               </select>
             </div>
           </div>
-          <details className="sb-directory-data-notes">
+          <details id="coverage-notes" className="sb-directory-data-notes">
             <summary>Partial catalogue <span>Coverage &amp; data notes</span></summary>
+            <p className="sb-directory-notice">The hero total is {compactMoney(HERO_VALUE_STATS.total)} in platform-published USD property valuations across {HERO_VALUE_STATS.count} indexed properties with values, excluding delisted records. It is not money invested or managed by Slicebase. Catalogue totals below include retained delisted records.</p>
           <div className="sb-index-banner">
             <div>
               <strong>{INDEX_STATS.listings}</strong>

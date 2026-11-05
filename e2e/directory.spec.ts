@@ -128,3 +128,13 @@ for (const [width, height] of [[1440, 820], [1440, 1000], [1920, 1080], [390, 84
     await expect(page.locator('#compare')).toBeInViewport();
   });
 }
+
+test('hero property value is derived from published valuations and opens scope', async ({page}) => {
+  await page.goto('/');
+  const value = listings.filter((l:any)=>!l.delisted).reduce((sum:number,l:any)=>sum+(Number((l.valuation||'').replace(/[^0-9.]/g,''))||0),0);
+  await expect(page.locator('.sb-hero-value-title')).toContainText(`$${(Math.floor(value/1e5)/10).toFixed(1)}M+ tracked across properties`);
+  await expect(page.locator('.sb-hero-value-scope')).toContainText('Published property values · excludes delisted');
+  await page.locator('.sb-hero-value').click();
+  await expect(page.locator('#coverage-notes')).toHaveAttribute('open','');
+  await expect(page.locator('.sb-index-banner')).toBeVisible();
+});

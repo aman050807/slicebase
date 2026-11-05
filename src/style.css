@@ -2797,3 +2797,12 @@ a.sb-join-link:hover {
 
 /* The red opening view includes the 87px navbar; listings begin below the fold. */
 .sb-hero { min-height: calc(100vh - 87px); min-height: calc(100svh - 87px); }
+
+.sb-hero-value { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 5px; margin-top: 24px; font-size: 13px; color: rgba(255,246,238,.78); text-decoration: none; text-shadow: 0 1px 8px rgba(60,4,10,.45); }
+.sb-hero-value strong { font-weight: 600; color: #fff6ee; }
+.sb-hero-value > span { margin-left: 4px; }
+.sb-hero-value:hover { text-decoration: underline; text-underline-offset: 4px; }
+.sb-hero-value { display: flex; flex-direction: column; gap: 3px; width: fit-content; }
+.sb-hero-value > span { margin-left: 0; }
+.sb-hero-value-title { font-size: 15px; color: #fff6ee; }
+.sb-hero-value-scope { font-size: 11px; color: rgba(255,246,238,.65); }
