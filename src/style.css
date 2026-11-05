@@ -2436,6 +2436,11 @@ a.sb-join-link:hover {
   fill: #3f3835;
   font-weight: 600;
 }
+.sb-calc-chart svg text.start-lab {
+  paint-order: stroke;
+  stroke: #fff;
+  stroke-width: 3px;
+}
 .sb-calc-chart .zero {
   stroke: #b8aca4;
   stroke-width: 1;

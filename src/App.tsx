@@ -2020,7 +2020,7 @@ export function App() {
                   <svg
                     viewBox="0 0 560 210"
                     role="img"
-                    aria-label="Line chart of the cumulative net position over time; the property-value change applies at sale, shown as a spread of three outcomes at the end"
+                    aria-label="Line chart of the cumulative net position over time, starting below zero at the up-front costs; the property-value change applies at sale, shown as a spread of three outcomes at the end"
                     onMouseMove={(e) => {
                       const rect = e.currentTarget.getBoundingClientRect();
                       const fx = ((e.clientX - rect.left) / rect.width) * 560;
@@ -2078,9 +2078,9 @@ export function App() {
                         const rv = Math.round(v * 100) / 100;
                         if (!(lo < 0 && rv === 0)) yTicks.push(rv);
                       }
-                      const xTicks: number[] = [];
-                      for (let yr = 1; yr <= t; yr++)
-                        xTicks.push((yr * (n - 1)) / t);
+                      const xTicks: { ii: number; yr: number }[] = [];
+                      for (let yr = 0; yr <= t; yr++)
+                        xTicks.push({ ii: (yr * (n - 1)) / t, yr });
                       const shortD = (v: number) => `$${Math.round(v)}`;
                       return (
                         <>
@@ -2098,9 +2098,9 @@ export function App() {
                               </text>
                             </g>
                           ))}
-                          {xTicks.map((ii, k) => (
-                            <text key={k} x={X(ii)} y={H - 8} textAnchor="middle">
-                              {k + 1}y
+                          {xTicks.map(({ ii, yr }) => (
+                            <text key={yr} x={X(ii)} y={H - 8} textAnchor="middle">
+                              {yr}y
                             </text>
                           ))}
                           {lo < 0 && (
@@ -2119,6 +2119,25 @@ export function App() {
                           )}
                           <path className="area" d={areaD} />
                           <polyline className="line" points={pts(seriesMid)} />
+                          <circle
+                            className="end-dot"
+                            cx={X(0)}
+                            cy={Y(seriesMid[0])}
+                            r={3.5}
+                          />
+                          <text
+                            className="start-lab"
+                            x={X(0) + 8}
+                            y={Y(seriesMid[0]) + 3}
+                          >
+                            <tspan className="end-lab">Start </tspan>
+                            <tspan className="end-val">
+                              {money(seriesMid[0])}
+                            </tspan>
+                            {seriesMid[0] < 0 && (
+                              <tspan className="end-lab"> up front</tspan>
+                            )}
+                          </text>
                           {cvNum > 0 && (
                             <>
                               <polyline
@@ -2241,7 +2260,8 @@ export function App() {
                   </svg>
                   {chartTip && (
                     <div className="sb-chart-tip" style={{ left: chartTip.px }}>
-                      Month {chartTip.i} · down {money(seriesLow[chartTip.i])} ·
+                      {chartTip.i === 0 ? "Start" : `Month ${chartTip.i}`} ·
+                      down {money(seriesLow[chartTip.i])} ·
                       flat {money(seriesMid[chartTip.i])} · up{" "}
                       {money(seriesHigh[chartTip.i])}
                     </div>
