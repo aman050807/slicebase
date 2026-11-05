@@ -27,8 +27,8 @@ Import this repository into Vercel or another static host. Use Vite, `npm run bu
 
 ## Data and limitations
 
-- Snapshot checked **4 November 2026**, not live prices.
-- 105 source records: 84 Lofty and 21 Oceanpoint. Oceanpoint reports 77, so its coverage here is incomplete.
+- Listings are re-read from the platforms about hourly (see docs/REFRESH.md); not live prices. First captured 4 November 2026.
+- Source records come from Lofty and Oceanpoint (counts are in src/listings.json). Oceanpoint reports 77 properties but its public list shows fewer, so coverage is incomplete.
 - Original source labels and values are retained. Lofty average yield and Oceanpoint APY are not treated as equivalent metrics or used to rank investments.
 - Exact executable minimums, all property-specific costs, and personal/legal eligibility are not verified. Platform-wide terms are clearly separated from offering-specific terms.
 - Country selection supplies context only, not access approval or filtering.
