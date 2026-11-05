@@ -1265,12 +1265,26 @@ export function App() {
                   <div className="sb-property-body">
                     <div className="sb-property-platform">
                       <span>{l.platform}</span>
-                      <span>{l.status}</span>
                     </div>
                     <h3>{l.name}</h3>
                     <p className="sb-property-location">{l.city}</p>
                     <PropertyBadges listing={l} />
-                    <dl className="sb-property-metrics">
+                    <dl className="sb-property-metrics sb-card-headlines">
+                      <div>
+                        <dt>{l.platform === "Lofty" ? "Price per share" : "Property valuation"}</dt>
+                        <dd>{l.platform === "Lofty" ? l.quote.replace("/share", "") : l.valuation}</dd>
+                        <small>{l.platform === "Lofty" ? "Not the minimum order" : "Not the investment minimum"}</small>
+                      </div>
+                      <div>
+                        <dt>{l.platform === "Lofty" && impliedYieldFor(l) != null ? "Annual rent / value" : `${l.yieldLabel} (${l.platform})`}</dt>
+                        <dd>{l.platform === "Lofty" && impliedYieldFor(l) != null ? `${impliedYieldFor(l)!.toFixed(2)}%` : l.yieldText}</dd>
+                        <small>{l.platform === "Lofty" && impliedYieldFor(l) != null ? "Annual rent ÷ property value" : "Platform-published figure"}</small>
+                      </div>
+                    </dl>
+                    <details className="sb-card-details">
+                      <summary>Property details <span>Figures, fees &amp; sources</span></summary>
+                      <div className="sb-card-detail-content">
+                    <dl className="sb-property-metrics sb-detail-metrics">
                       <div>
                         <dt>
                           {l.platform === "Lofty" ? "Share price" : "Valuation"}
@@ -1335,6 +1349,8 @@ export function App() {
                         </TextLink>
                       </p>
                     )}
+                      </div>
+                    </details>
                     <div className="sb-property-actions">
                       <JoinLink platform={l.platform} />
                       <button
@@ -1358,7 +1374,7 @@ export function App() {
                         </span>
                       </label>
                     </div>
-                    <ReferralNote />
+                    <p className="sb-referral-line sb-card-referral">Referral link · We may earn a reward.</p>
                   </div>
                 </article>
               ))}

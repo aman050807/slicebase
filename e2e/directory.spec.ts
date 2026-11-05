@@ -7,7 +7,10 @@ test("directory, disclosure, comparison and independent calculator", async ({
   await page.locator("#f-platform").selectOption("Oceanpoint");
   await page.getByRole("button", { name: "Show more listings" }).click();
   await expect(page.locator(".sb-property")).toHaveCount(21);
-  await page.locator(".sb-property summary").first().click();
+  await expect(page.locator(".sb-property .sb-detail-metrics").first()).toBeHidden();
+  await page.locator(".sb-card-details > summary").first().click();
+  await expect(page.locator(".sb-property .sb-detail-metrics").first()).toBeVisible();
+  await page.locator(".sb-term-notes > summary").first().click();
   await expect(page.locator(".sb-term-notes").first()).toHaveAttribute(
     "open",
     "",

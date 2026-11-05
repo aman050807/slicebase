@@ -2741,3 +2741,28 @@ a.sb-join-link:hover {
 .sb-calculator-method li {
   margin-bottom: 4px;
 }
+
+/* A quiet first view, with supporting facts available on demand. */
+.sb-card-headlines {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px;
+  padding: 3px 0 22px;
+  border-bottom: 0;
+}
+.sb-card-headlines dt { font-size: 11px; }
+.sb-card-headlines dd { font-size: clamp(21px, 2vw, 27px); line-height: 1.4; }
+.sb-card-headlines small { display: block; margin-top: 5px; font-size: 10px; color: #82766e; line-height: 1.5; }
+.sb-card-details { border-top: 1px solid var(--dir-rule); }
+.sb-card-details > summary {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 10px; padding: 16px 0; min-height: 50px; box-sizing: border-box;
+  cursor: pointer; list-style: none; font-size: 12px; font-weight: 600; color: #40312b;
+}
+.sb-card-details > summary::-webkit-details-marker { display: none; }
+.sb-card-details > summary span { margin-left: auto; font-size: 10px; font-weight: 400; color: #82766e; }
+.sb-card-details > summary::after { content: "+"; font-size: 17px; font-weight: 400; }
+.sb-card-details[open] > summary::after { content: "−"; }
+.sb-card-detail-content { padding: 4px 0 18px; }
+.sb-card-details .sb-detail-metrics dd { font-size: 18px; }
+.sb-property .sb-card-referral { font-size: 10px; margin: 10px 0 0; color: #82766e; line-height: 1.5; }
+.sb-card-details > summary:focus-visible { outline: 2px solid #772e25; outline-offset: 2px; }
