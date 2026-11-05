@@ -1213,7 +1213,10 @@ export function App() {
               </select>
             </div>
           </div>
-          <p className="sb-directory-notice">{ELIGIBILITY_NOTE}</p>
+          <details className="sb-directory-data-notes">
+            <summary>Partial catalogue <span>Coverage &amp; data notes</span></summary>
+            <p className="sb-directory-notice">{ELIGIBILITY_NOTE}</p>
+          </details>
           <div className="sb-result-line">
             <span>
               {results.length} of {LISTINGS.length} listings
