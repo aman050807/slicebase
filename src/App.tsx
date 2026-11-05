@@ -457,6 +457,14 @@ function TermNotes({ listing: l }: { listing: Listing }) {
       {lofty ? (
         <>
           <p>
+            Figures: stated rent / value is calculated from published monthly
+            rent × 12 ÷ property value. Avg yield and the value tag are Lofty's
+            own figures. Our listing data does not state the avg yield's
+            gross/net basis or period. Lofty also lists a separate current yield
+            without a published formula. These measures are different, not
+            forecasts; a higher yield does not mean lower risk.
+          </p>
+          <p>
             Entry: Lofty describes getting started with one share, often about
             $50, but also supports fractional shares. Its pages give differing
             entry descriptions. This listing's executable order minimum,
@@ -1308,9 +1316,8 @@ export function App() {
                     </dl>
                     <p className="sb-yield-note">
                       {l.platform === "Lofty"
-                        ? "\u201Cavg yield\u201D and the value tag are Lofty's own published figures for this listing; whether the yield is gross or net, and over what period, is not stated in our listing data, and Lofty also lists a separate \u201Ccurrent yield\u201D without a published formula. Stated rent / value is our own calculation from the listing's stated rent and published value: annual rent \u00F7 value. The two measure different things; neither is a forecast."
-                        : "APY is Oceanpoint's own published figure, as the platform defines it."}{" "}
-                      A higher yield does not mean lower risk.
+                        ? "Rent / value = annual rent ÷ property value. Avg yield is Lofty's published figure."
+                        : "APY is Oceanpoint's published figure."}
                     </p>
                     <dl className="sb-property-terms">
                       {termsFor(l).map((t) => (
