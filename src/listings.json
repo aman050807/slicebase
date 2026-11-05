@@ -14,7 +14,8 @@
     "source": "https://www.lofty.ai/property_deal/2820-Rucker-Ave_Everett-WA-98201",
     "photo": "lofty-1.jpg",
     "rawMetrics": "$49.90/share · 6.9% avg yield · 7% Overvalued",
-    "valuation": null
+    "valuation": "$3,795,700",
+    "monthlyRent": "$12,500.00"
   },
   {
     "id": 2,
@@ -31,7 +32,8 @@
     "source": "https://www.lofty.ai/property_deal/20-Sederholm-Path_Palm-Coast-FL-32164",
     "photo": "lofty-2.jpg",
     "rawMetrics": "$39.12/share · 11.6% avg yield · 6% Undervalued",
-    "valuation": null
+    "valuation": "$289,600",
+    "monthlyRent": "$2,105.12"
   },
   {
     "id": 3,
@@ -48,7 +50,8 @@
     "source": "https://www.lofty.ai/property_deal/4506-S-Fallwood-Ct_Columbia-MO-65203",
     "photo": "lofty-3.jpg",
     "rawMetrics": "$44.99/share · 15.4% avg yield · 2% Overvalued",
-    "valuation": null
+    "valuation": "$465,150",
+    "monthlyRent": "$2,039.58"
   },
   {
     "id": 4,
@@ -65,7 +68,8 @@
     "source": "https://www.lofty.ai/property_deal/6601-E-Hearn-Rd_Scottsdale-AZ-85254",
     "photo": "lofty-4.jpg",
     "rawMetrics": "$40.60/share · 10.5% avg yield · 18% Undervalued",
-    "valuation": null
+    "valuation": "$2,367,550",
+    "monthlyRent": "$8,057.34"
   },
   {
     "id": 5,
@@ -82,7 +86,8 @@
     "source": "https://www.lofty.ai/property_deal/86-Madison-Ave_Albany-NY-12202",
     "photo": "lofty-5.jpg",
     "rawMetrics": "$18.90/share · 4.1% avg yield · 19% Undervalued",
-    "valuation": null
+    "valuation": "$371,050",
+    "monthlyRent": "$9,491.26"
   },
   {
     "id": 6,
@@ -99,7 +104,8 @@
     "source": "https://www.lofty.ai/property_deal/110-Gardengate-Dr_Harvest-AL-35749",
     "photo": "lofty-6.jpg",
     "rawMetrics": "$34.99/share · 6.3% avg yield · 23% Undervalued",
-    "valuation": null
+    "valuation": "$302,026",
+    "monthlyRent": "$1,829.95"
   },
   {
     "id": 7,
@@ -116,7 +122,8 @@
     "source": "https://www.lofty.ai/property_deal/84-Madison-Ave_Albany-NY-12202",
     "photo": "lofty-7.jpg",
     "rawMetrics": "$44.00/share · 2.2% avg yield · 19% Overvalued",
-    "valuation": null
+    "valuation": "$394,050",
+    "monthlyRent": "$2,281.10"
   },
   {
     "id": 8,
@@ -133,7 +140,8 @@
     "source": "https://www.lofty.ai/property_deal/1317-South-Solano-Dr_Las-Cruces-NM-88001",
     "photo": "lofty-8.jpg",
     "rawMetrics": "$22.47/share · 12.1% avg yield · 2% Undervalued",
-    "valuation": null
+    "valuation": "$761,450",
+    "monthlyRent": "$3,162.59"
   },
   {
     "id": 9,
@@ -150,7 +158,8 @@
     "source": "https://www.lofty.ai/property_deal/333-Illinois-Ave_Lorain-Ohio-44052",
     "photo": "lofty-9.jpg",
     "rawMetrics": "$30.49/share · 5.0% avg yield · 4% Overvalued",
-    "valuation": null
+    "valuation": "$245,399.33",
+    "monthlyRent": "$1,705.00"
   },
   {
     "id": 10,
@@ -167,7 +176,8 @@
     "source": "https://www.lofty.ai/property_deal/1415-Race-St_Cincinnati-OH-45202",
     "photo": "lofty-10.jpg",
     "rawMetrics": "$56.00/share · 14.8% avg yield · 4% Overvalued",
-    "valuation": null
+    "valuation": "$622,250",
+    "monthlyRent": "$3,966.00"
   },
   {
     "id": 11,
@@ -184,7 +194,8 @@
     "source": "https://www.lofty.ai/property_deal/2305-N-156th-Pl_Shoreline-WA-98133",
     "photo": "lofty-11.jpg",
     "rawMetrics": "$59.94/share · 16.8% avg yield · 12% Overvalued",
-    "valuation": null
+    "valuation": "$1,077,900",
+    "monthlyRent": "$6,944.79"
   },
   {
     "id": 12,
@@ -201,7 +212,8 @@
     "source": "https://www.lofty.ai/property_deal/0-E-45Th-St_Jacksonville-FL-32208",
     "photo": "lofty-12.jpg",
     "rawMetrics": "$50.00/share · 7.1% avg yield · Fairly valued",
-    "valuation": null
+    "valuation": "$128,900",
+    "monthlyRent": "$814.42"
   },
   {
     "id": 13,
@@ -218,7 +230,8 @@
     "source": "https://www.lofty.ai/property_deal/5541-S-Peoria-St_Chicago-IL-60621",
     "photo": "lofty-13.jpg",
     "rawMetrics": "$28.95/share · 4.7% avg yield · 32% Undervalued",
-    "valuation": null
+    "valuation": "$273,650",
+    "monthlyRent": "$2,648.00"
   },
   {
     "id": 14,
@@ -235,7 +248,8 @@
     "source": "https://www.lofty.ai/property_deal/2208-Murray-Ave_Atlantic-City-NJ-08401",
     "photo": "lofty-14.jpg",
     "rawMetrics": "$23.74/share · 11.2% avg yield · 5% Overvalued",
-    "valuation": null
+    "valuation": "$627,000",
+    "monthlyRent": "$8,197.92"
   },
   {
     "id": 15,
@@ -252,7 +266,8 @@
     "source": "https://www.lofty.ai/property_deal/217-W-Stone-St_Gibsonburg-OH-43431",
     "photo": "lofty-15.jpg",
     "rawMetrics": "$63.90/share · 12.7% avg yield · 24% Overvalued",
-    "valuation": null
+    "valuation": "$117,450",
+    "monthlyRent": "$1,945.00"
   },
   {
     "id": 16,
@@ -269,7 +284,8 @@
     "source": "https://www.lofty.ai/property_deal/323-E-9th-St_Davenport-IA-52803",
     "photo": "lofty-16.jpg",
     "rawMetrics": "$37.10/share · 8.9% avg yield · 25% Undervalued",
-    "valuation": null
+    "valuation": "$118,300",
+    "monthlyRent": "$1,425.00"
   },
   {
     "id": 17,
@@ -286,7 +302,8 @@
     "source": "https://www.lofty.ai/property_deal/62-Liberty-St_Tiffin-OH-44883",
     "photo": "lofty-17.jpg",
     "rawMetrics": "$38.55/share · 5.5% avg yield · 22% Undervalued",
-    "valuation": null
+    "valuation": "$80,300",
+    "monthlyRent": "$1,250.00"
   },
   {
     "id": 18,
@@ -303,7 +320,8 @@
     "source": "https://www.lofty.ai/property_deal/222-57th-St_Pittsburgh-PA-15201",
     "photo": "lofty-18.jpg",
     "rawMetrics": "$51.94/share · 17.6% avg yield · 3% Overvalued",
-    "valuation": null
+    "valuation": "$432,650",
+    "monthlyRent": "$4,669.22"
   },
   {
     "id": 19,
@@ -320,7 +338,8 @@
     "source": "https://www.lofty.ai/property_deal/581-San-Francisco-St_Las-Cruces-NM-88001",
     "photo": "lofty-19.jpg",
     "rawMetrics": "$43.25/share · 14.8% avg yield · 126% Overvalued",
-    "valuation": null
+    "valuation": "$286,250",
+    "monthlyRent": "$3,081.60"
   },
   {
     "id": 20,
@@ -337,7 +356,8 @@
     "source": "https://www.lofty.ai/property_deal/1821-Donetto-Dr_Leander-TX-78641",
     "photo": "lofty-20.jpg",
     "rawMetrics": "$44.49/share · 13.1% avg yield · 3% Overvalued",
-    "valuation": null
+    "valuation": "$637,700",
+    "monthlyRent": "$420.00"
   },
   {
     "id": 21,
@@ -354,7 +374,8 @@
     "source": "https://www.lofty.ai/property_deal/9-Country-Club-Ln-N_Briarcliff-Manor-NY-10510",
     "photo": "lofty-21.jpg",
     "rawMetrics": "$16.00/share · 3.2% avg yield · 59% Undervalued",
-    "valuation": null
+    "valuation": "$1,963,650",
+    "monthlyRent": "$11,125.65"
   },
   {
     "id": 22,
@@ -371,7 +392,8 @@
     "source": "https://www.lofty.ai/property_deal/88-Madison-Ave_Albany-NY-12202",
     "photo": "lofty-22.jpg",
     "rawMetrics": "$29.81/share · 11.8% avg yield · 40% Undervalued",
-    "valuation": null
+    "valuation": "$375,750",
+    "monthlyRent": "$16,481.78"
   },
   {
     "id": 23,
@@ -388,7 +410,8 @@
     "source": "https://www.lofty.ai/property_deal/5333-Ponte-Tresa-Dr_Austin-TX-78738",
     "photo": "lofty-23.jpg",
     "rawMetrics": "$53.88/share · 13.3% avg yield · 25% Overvalued",
-    "valuation": null
+    "valuation": "$763,150",
+    "monthlyRent": "$3,600.00"
   },
   {
     "id": 24,
@@ -405,7 +428,8 @@
     "source": "https://www.lofty.ai/property_deal/503-Colorado-Street-Unit-4_Lawrence-KS-66044",
     "photo": "lofty-24.jpg",
     "rawMetrics": "$40.43/share · 9.5% avg yield · 14% Undervalued",
-    "valuation": null
+    "valuation": "$148,900",
+    "monthlyRent": "$1,660.00"
   },
   {
     "id": 25,
@@ -422,7 +446,8 @@
     "source": "https://www.lofty.ai/property_deal/29172-Oakwood-St_Inkster-MI-48141",
     "photo": "lofty-25.jpg",
     "rawMetrics": "$30.85/share · 5.5% avg yield · 44% Undervalued",
-    "valuation": null
+    "valuation": "$129,422.93",
+    "monthlyRent": "$1,200.00"
   },
   {
     "id": 26,
@@ -439,7 +464,8 @@
     "source": "https://www.lofty.ai/property_deal/999-Canyon-Rd_Ogden-UT-84404",
     "photo": "lofty-26.jpg",
     "rawMetrics": "$49.50/share · 9.2% avg yield · 14% Overvalued",
-    "valuation": null
+    "valuation": "$543,550",
+    "monthlyRent": "$2,250.00"
   },
   {
     "id": 27,
@@ -456,7 +482,8 @@
     "source": "https://www.lofty.ai/property_deal/723-12th-St_Moline-IL-61265",
     "photo": "lofty-27.jpg",
     "rawMetrics": "$40.00/share · 6.0% avg yield · 13% Undervalued",
-    "valuation": null
+    "valuation": "$146,476.9",
+    "monthlyRent": "$1,575.00"
   },
   {
     "id": 28,
@@ -473,7 +500,8 @@
     "source": "https://www.lofty.ai/property_deal/3427-Sturdevant-St_Davenport-IA-52806",
     "photo": "lofty-28.jpg",
     "rawMetrics": "$52.52/share · 7.0% avg yield · 27% Undervalued",
-    "valuation": null
+    "valuation": "$97,450",
+    "monthlyRent": "$1,110.00"
   },
   {
     "id": 29,
@@ -490,7 +518,8 @@
     "source": "https://www.lofty.ai/property_deal/1190-Ridgetop-Ave_Las-Cruces-NM-88001",
     "photo": "lofty-29.jpg",
     "rawMetrics": "$43.00/share · 17.0% avg yield · 2% Undervalued",
-    "valuation": null
+    "valuation": "$295,200",
+    "monthlyRent": "$1,379.09"
   },
   {
     "id": 30,
@@ -507,7 +536,8 @@
     "source": "https://www.lofty.ai/property_deal/724-3rd-Ave_Watervliet-NY-12189",
     "photo": "lofty-30.jpg",
     "rawMetrics": "$24.25/share · 6.5% avg yield · 15% Undervalued",
-    "valuation": null
+    "valuation": "$236,850",
+    "monthlyRent": "$2,430.00"
   },
   {
     "id": 31,
@@ -524,7 +554,8 @@
     "source": "https://www.lofty.ai/property_deal/3761-Jade-Ave_Las-Cruces-NM-88012",
     "photo": "lofty-31.jpg",
     "rawMetrics": "$48.00/share · 17.6% avg yield · 1% Overvalued",
-    "valuation": null
+    "valuation": "$313,600",
+    "monthlyRent": "$2,912.18"
   },
   {
     "id": 32,
@@ -541,7 +572,8 @@
     "source": "https://www.lofty.ai/property_deal/1411-Clarke-Ave-SW_Roanoke-VA-24016",
     "photo": "lofty-32.jpg",
     "rawMetrics": "$48.99/share · 6.6% avg yield · 2% Undervalued",
-    "valuation": null
+    "valuation": "$362,400",
+    "monthlyRent": "$3,700.00"
   },
   {
     "id": 33,
@@ -558,7 +590,8 @@
     "source": "https://www.lofty.ai/property_deal/1048-Hilton-Rd_Cinnaminson-NJ-08077",
     "photo": "lofty-33.jpg",
     "rawMetrics": "$59.99/share · 7.3% avg yield · 26% Overvalued",
-    "valuation": null
+    "valuation": "$259,800",
+    "monthlyRent": "$1,578.00"
   },
   {
     "id": 34,
@@ -575,7 +608,8 @@
     "source": "https://www.lofty.ai/property_deal/12615-Jackson-Ave_Grandview-MO-64030",
     "photo": "lofty-34.jpg",
     "rawMetrics": "$49.94/share · 12.6% avg yield · 9% Undervalued",
-    "valuation": null
+    "valuation": "$1,352,100",
+    "monthlyRent": "$12,172.00"
   },
   {
     "id": 35,
@@ -592,7 +626,8 @@
     "source": "https://www.lofty.ai/property_deal/2221-E-Chase-St_Baltimore-MD-21213",
     "photo": "lofty-35.jpg",
     "rawMetrics": "$93.00/share · 22.5% avg yield · 86% Overvalued",
-    "valuation": null
+    "valuation": "$279,000",
+    "monthlyRent": "$2,918.11"
   },
   {
     "id": 36,
@@ -609,7 +644,8 @@
     "source": "https://www.lofty.ai/property_deal/800-Embassy-Drive-Unit-202_Austin-TX-78702",
     "photo": "lofty-36.jpg",
     "rawMetrics": "$49.99/share · 6.4% avg yield · 23% Overvalued",
-    "valuation": null
+    "valuation": "$503,900",
+    "monthlyRent": "$2,934.21"
   },
   {
     "id": 37,
@@ -626,7 +662,8 @@
     "source": "https://www.lofty.ai/property_deal/217-McClallen-Dr_Killington-VT-05751",
     "photo": "lofty-37.jpg",
     "rawMetrics": "$39.00/share · 9.8% avg yield · 41% Overvalued",
-    "valuation": null
+    "valuation": "$923,050",
+    "monthlyRent": "$4,504.98"
   },
   {
     "id": 38,
@@ -643,7 +680,8 @@
     "source": "https://www.lofty.ai/property_deal/172-OH-53_McCutchenville-OH-44844",
     "photo": "lofty-38.jpg",
     "rawMetrics": "$45.00/share · 7.3% avg yield · 8% Undervalued",
-    "valuation": null
+    "valuation": "$142,700",
+    "monthlyRent": "$1,266.80"
   },
   {
     "id": 39,
@@ -660,7 +698,8 @@
     "source": "https://www.lofty.ai/property_deal/9901-E-Evans-Ave-Unit-4C_Aurora-CO-80247",
     "photo": "lofty-39.jpg",
     "rawMetrics": "$49.45/share · 14.5% avg yield · 1% Undervalued",
-    "valuation": null
+    "valuation": "$317,850",
+    "monthlyRent": "$1,595.00"
   },
   {
     "id": 40,
@@ -677,7 +716,8 @@
     "source": "https://www.lofty.ai/property_deal/8848-N-95th-St-K_Milwaukee-WI-53224",
     "photo": "lofty-40.jpg",
     "rawMetrics": "$56.49/share · 13.0% avg yield · 12% Overvalued",
-    "valuation": null
+    "valuation": "$68,850",
+    "monthlyRent": "$1,350.00"
   },
   {
     "id": 41,
@@ -694,7 +734,8 @@
     "source": "https://www.lofty.ai/property_deal/13596-SW-Mapleview-Ln_Tigard-Oregon-97224",
     "photo": "lofty-41.jpg",
     "rawMetrics": "$56.39/share · 10.3% avg yield · 8% Overvalued",
-    "valuation": null
+    "valuation": "$658,800",
+    "monthlyRent": "$4,256.86"
   },
   {
     "id": 42,
@@ -711,7 +752,8 @@
     "source": "https://www.lofty.ai/property_deal/10828-Pluton-St_Norwalk-CA-90650",
     "photo": "lofty-42.jpg",
     "rawMetrics": "$55.50/share · 9.1% avg yield · 15% Overvalued",
-    "valuation": null
+    "valuation": "$848,400",
+    "monthlyRent": "$5,000.00"
   },
   {
     "id": 43,
@@ -728,7 +770,8 @@
     "source": "https://www.lofty.ai/property_deal/326-332-S-Alcott-St_Denver-CO-80219",
     "photo": "lofty-43.jpg",
     "rawMetrics": "$24.00/share · 9.0% avg yield · 43% Undervalued",
-    "valuation": null
+    "valuation": "$924,600",
+    "monthlyRent": "$6,040.00"
   },
   {
     "id": 44,
@@ -745,7 +788,8 @@
     "source": "https://www.lofty.ai/property_deal/395-Main-St_Tiffin-OH-44883",
     "photo": "lofty-44.jpg",
     "rawMetrics": "$55.00/share · 12.3% avg yield · 19% Overvalued",
-    "valuation": null
+    "valuation": "$190,200",
+    "monthlyRent": "$400.00"
   },
   {
     "id": 45,
@@ -762,7 +806,8 @@
     "source": "https://www.lofty.ai/property_deal/Tepuy-Juan-Dolio-102-B_Juan-Dolio-San%20Pedro%20de%20Macor%C3%ADs-21000",
     "photo": "lofty-45.jpg",
     "rawMetrics": "$49.97/share · 5.9% avg yield · 0.05% Undervalued",
-    "valuation": null
+    "valuation": "$191,300",
+    "monthlyRent": "$1,548.21"
   },
   {
     "id": 46,
@@ -779,7 +824,8 @@
     "source": "https://www.lofty.ai/property_deal/516-E-2nd-St_The-Dalles-OR-97058",
     "photo": "lofty-46.jpg",
     "rawMetrics": "$450.00/share · 14.2% avg yield · 381% Overvalued",
-    "valuation": null
+    "valuation": "$312,000",
+    "monthlyRent": "$2,500.00"
   },
   {
     "id": 47,
@@ -796,7 +842,8 @@
     "source": "https://www.lofty.ai/property_deal/5604-Brownfield-Dr-(32-Units)_Lubbock-TX-79414",
     "photo": "lofty-47.jpg",
     "rawMetrics": "$14.38/share · 8.4% avg yield · 44% Overvalued",
-    "valuation": null
+    "valuation": "$3,493,600",
+    "monthlyRent": "$13,592.20"
   },
   {
     "id": 48,
@@ -813,7 +860,8 @@
     "source": "https://www.lofty.ai/property_deal/8201-Madison-Ave_Cleveland-Ohio-44102",
     "photo": "lofty-48.jpg",
     "rawMetrics": "$35.49/share · 6.8% avg yield · 18% Undervalued",
-    "valuation": null
+    "valuation": "$433,100",
+    "monthlyRent": "$2,945.09"
   },
   {
     "id": 49,
@@ -830,7 +878,8 @@
     "source": "https://www.lofty.ai/property_deal/755-Robinwood-Dr_Florissant-MO-63033",
     "photo": "lofty-49.jpg",
     "rawMetrics": "$14.33/share · 1.8% avg yield · 75% Undervalued",
-    "valuation": null
+    "valuation": "$127,050",
+    "monthlyRent": "$1,345.00"
   },
   {
     "id": 50,
@@ -847,7 +896,8 @@
     "source": "https://www.lofty.ai/property_deal/917-Pawnee-Ave_Memphis-TN-38109",
     "photo": "lofty-50.jpg",
     "rawMetrics": "$33.49/share · 7.2% avg yield · 37% Undervalued",
-    "valuation": null
+    "valuation": "$122,677.8",
+    "monthlyRent": "$0.00"
   },
   {
     "id": 51,
@@ -864,7 +914,8 @@
     "source": "https://www.lofty.ai/property_deal/25-Circle-Dr_Dixmoor-IL-60426",
     "photo": "lofty-51.jpg",
     "rawMetrics": "$15.40/share · 4.2% avg yield · 70% Undervalued",
-    "valuation": null
+    "valuation": "$145,264.88",
+    "monthlyRent": "$859.35"
   },
   {
     "id": 52,
@@ -881,7 +932,8 @@
     "source": "https://www.lofty.ai/property_deal/542-Sumner-St_Akron-OH-44304",
     "photo": "lofty-52.jpg",
     "rawMetrics": "$10.87/share · 3.0% avg yield · 68% Undervalued",
-    "valuation": null
+    "valuation": "$142,643.76",
+    "monthlyRent": "$1,095.00"
   },
   {
     "id": 53,
@@ -898,7 +950,8 @@
     "source": "https://www.lofty.ai/property_deal/566-Nash-St_Akron-OH-44306",
     "photo": "lofty-53.jpg",
     "rawMetrics": "$12.59/share · 2.1% avg yield · 74% Undervalued",
-    "valuation": null
+    "valuation": "$105,952.32",
+    "monthlyRent": "$973.00"
   },
   {
     "id": 54,
@@ -915,7 +968,8 @@
     "source": "https://www.lofty.ai/property_deal/7542-and-7656-S-Colfax-Ave_Chicago-IL-60649",
     "photo": "lofty-54.jpg",
     "rawMetrics": "$17.99/share · 3.5% avg yield · 64% Undervalued",
-    "valuation": null
+    "valuation": "$755,388",
+    "monthlyRent": "$0.00"
   },
   {
     "id": 55,
@@ -932,7 +986,8 @@
     "source": "https://www.lofty.ai/property_deal/9583-Pagewood-Ave_St.-Louis-MO-63114",
     "photo": "lofty-55.jpg",
     "rawMetrics": "$17.03/share · 7.7% avg yield · 64% Undervalued",
-    "valuation": null
+    "valuation": "$130,109.98",
+    "monthlyRent": "$1,275.00"
   },
   {
     "id": 56,
@@ -949,7 +1004,8 @@
     "source": "https://www.lofty.ai/property_deal/2489-Charlene-Ct_Macon-GA-31206",
     "photo": "lofty-56.jpg",
     "rawMetrics": "$17.00/share · 8.2% avg yield · 57% Undervalued",
-    "valuation": null
+    "valuation": "$228,500",
+    "monthlyRent": "$0.00"
   },
   {
     "id": 57,
@@ -966,7 +1022,8 @@
     "source": "https://www.lofty.ai/property_deal/8143-S-Sangamon-St_Chicago-IL-60620",
     "photo": "lofty-57.jpg",
     "rawMetrics": "$17.71/share · 4.0% avg yield · 8% Undervalued",
-    "valuation": null
+    "valuation": "$331,176.98",
+    "monthlyRent": "$2,798.50"
   },
   {
     "id": 58,
@@ -983,7 +1040,8 @@
     "source": "https://www.lofty.ai/property_deal/3976-Stillwood-Dr_Memphis-TN-38128",
     "photo": "lofty-58.jpg",
     "rawMetrics": "$26.39/share · 5.6% avg yield · 49% Undervalued",
-    "valuation": null
+    "valuation": "$203,787.05",
+    "monthlyRent": "$1,135.00"
   },
   {
     "id": 59,
@@ -1000,7 +1058,8 @@
     "source": "https://www.lofty.ai/property_deal/27-Pillar-Ln_Palm-Coast-FL-32164",
     "photo": "lofty-59.jpg",
     "rawMetrics": "$20.00/share · 9.8% avg yield · 49% Undervalued",
-    "valuation": null
+    "valuation": "$457,450",
+    "monthlyRent": "$2,800.00"
   },
   {
     "id": 60,
@@ -1017,7 +1076,8 @@
     "source": "https://www.lofty.ai/property_deal/Ohio-3-Property-Package_Akron-Ohio-44117",
     "photo": "lofty-60.jpg",
     "rawMetrics": "$19.55/share · 2.9% avg yield · 60% Undervalued",
-    "valuation": null
+    "valuation": "$304,860",
+    "monthlyRent": "$0.00"
   },
   {
     "id": 61,
@@ -1034,7 +1094,8 @@
     "source": "https://www.lofty.ai/property_deal/14720-Ohio-Ave_Cleveland-OH-44128",
     "photo": "lofty-61.jpg",
     "rawMetrics": "$38.19/share · 5.5% avg yield · 31% Undervalued",
-    "valuation": null
+    "valuation": "$131,341.61",
+    "monthlyRent": "$1,325.00"
   },
   {
     "id": 62,
@@ -1051,7 +1112,8 @@
     "source": "https://www.lofty.ai/property_deal/2094-W-34th-Place_Cleveland-OH-44113",
     "photo": "lofty-62.jpg",
     "rawMetrics": "$13.03/share · 3.7% avg yield · 74% Undervalued",
-    "valuation": null
+    "valuation": "$194,100",
+    "monthlyRent": "$0.00"
   },
   {
     "id": 63,
@@ -1068,7 +1130,8 @@
     "source": "https://www.lofty.ai/property_deal/8202-Laurel-Ave_Raytown-MO-64138",
     "photo": "lofty-63.jpg",
     "rawMetrics": "$36.00/share · 7.7% avg yield · 0.32% Overvalued",
-    "valuation": null
+    "valuation": "$209,550",
+    "monthlyRent": "$1,510.00"
   },
   {
     "id": 64,
@@ -1102,7 +1165,8 @@
     "source": "https://www.lofty.ai/property_deal/927-Euclid-Ave-Apt-10_Miami-Beach-FL-33139",
     "photo": "lofty-65.jpg",
     "rawMetrics": "$23.09/share · 3.0% avg yield · 53% Undervalued",
-    "valuation": null
+    "valuation": "$484,599.4",
+    "monthlyRent": "$2,800.00"
   },
   {
     "id": 66,
@@ -1119,7 +1183,8 @@
     "source": "https://www.lofty.ai/property_deal/1278-E-187th-St_Cleveland-OH-44110",
     "photo": "lofty-66.jpg",
     "rawMetrics": "$8.48/share · 4.5% avg yield · 83% Undervalued",
-    "valuation": null
+    "valuation": "$91,604.08",
+    "monthlyRent": "$950.00"
   },
   {
     "id": 67,
@@ -1136,7 +1201,8 @@
     "source": "https://www.lofty.ai/property_deal/6422-Mount-Ave_St.-Louis-MO-63121",
     "photo": "lofty-67.jpg",
     "rawMetrics": "$27.84/share · 5.3% avg yield · 58% Undervalued",
-    "valuation": null
+    "valuation": "$104,100",
+    "monthlyRent": "$1,100.00"
   },
   {
     "id": 68,
@@ -1153,7 +1219,8 @@
     "source": "https://www.lofty.ai/property_deal/1456-W-85th-St_Cleveland-OH-44102",
     "photo": "lofty-68.jpg",
     "rawMetrics": "$31.03/share · 1.9% avg yield · 24% Undervalued",
-    "valuation": null
+    "valuation": "$212,100",
+    "monthlyRent": "$2,245.62"
   },
   {
     "id": 69,
@@ -1170,7 +1237,8 @@
     "source": "https://www.lofty.ai/property_deal/15-Wilshire-Blvd_Lubbock-TX-79416",
     "photo": "lofty-69.jpg",
     "rawMetrics": "$37.49/share · 9.3% avg yield · 12% Undervalued",
-    "valuation": null
+    "valuation": "$402,500",
+    "monthlyRent": "$0.00"
   },
   {
     "id": 70,
@@ -1187,7 +1255,8 @@
     "source": "https://www.lofty.ai/property_deal/432-W-Peebles-Rd_Memphis-TN-38109",
     "photo": "lofty-70.jpg",
     "rawMetrics": "$16.29/share · 7.5% avg yield · 63% Undervalued",
-    "valuation": null
+    "valuation": "$94,861",
+    "monthlyRent": "$0.00"
   },
   {
     "id": 71,
@@ -1204,7 +1273,8 @@
     "source": "https://www.lofty.ai/property_deal/1677-Walker-Ave_Memphis-TN-38114",
     "photo": "lofty-71.jpg",
     "rawMetrics": "$29.66/share · 2.0% avg yield · 40% Undervalued",
-    "valuation": null
+    "valuation": "$213,684.95",
+    "monthlyRent": "$1,430.00"
   },
   {
     "id": 72,
@@ -1221,7 +1291,8 @@
     "source": "https://www.lofty.ai/property_deal/3493-W-119th-St_Cleveland-OH-44111",
     "photo": "lofty-72.jpg",
     "rawMetrics": "$39.84/share · 4.1% avg yield · 23% Undervalued",
-    "valuation": null
+    "valuation": "$108,963",
+    "monthlyRent": "$1,245.00"
   },
   {
     "id": 73,
@@ -1238,7 +1309,8 @@
     "source": "https://www.lofty.ai/property_deal/15555-Millard-Ave_Markham-IL-60428",
     "photo": "lofty-73.jpg",
     "rawMetrics": "$13.80/share · 2.7% avg yield · 72% Undervalued",
-    "valuation": null
+    "valuation": "$153,250",
+    "monthlyRent": "$0.00"
   },
   {
     "id": 74,
@@ -1255,7 +1327,8 @@
     "source": "https://www.lofty.ai/property_deal/615-Rose-Ln_Davenport-IA-52802",
     "photo": "lofty-74.jpg",
     "rawMetrics": "$41.98/share · 5.1% avg yield · 25% Undervalued",
-    "valuation": null
+    "valuation": "$74,940",
+    "monthlyRent": "$1,050.00"
   },
   {
     "id": 75,
@@ -1272,7 +1345,8 @@
     "source": "https://www.lofty.ai/property_deal/85-104-Alawa-Pl_Waianae-HI-96792",
     "photo": "lofty-75.jpg",
     "rawMetrics": "$28.90/share · 9.0% avg yield · 34% Undervalued",
-    "valuation": null
+    "valuation": "$733,450",
+    "monthlyRent": "$1,865.76"
   },
   {
     "id": 76,
@@ -1289,7 +1363,8 @@
     "source": "https://www.lofty.ai/property_deal/9634-S-Green-St_Chicago-IL-60643",
     "photo": "lofty-76.jpg",
     "rawMetrics": "$27.00/share · 2.4% avg yield · 46% Undervalued",
-    "valuation": null
+    "valuation": "$187,697.91",
+    "monthlyRent": "$0.00"
   },
   {
     "id": 77,
@@ -1306,7 +1381,8 @@
     "source": "https://www.lofty.ai/property_deal/14705-Fairland-Dr_Pflugerville-TX-78660",
     "photo": "lofty-77.jpg",
     "rawMetrics": "$24.00/share · 9.4% avg yield · 48% Undervalued",
-    "valuation": null
+    "valuation": "$453,450",
+    "monthlyRent": "$2,400.00"
   },
   {
     "id": 78,
@@ -1323,7 +1399,8 @@
     "source": "https://www.lofty.ai/property_deal/428-Cross-St_Akron-OH-44311",
     "photo": "lofty-78.jpg",
     "rawMetrics": "$28.00/share · 2.6% avg yield · 33% Undervalued",
-    "valuation": null
+    "valuation": "$279,236.7",
+    "monthlyRent": "$1,802.42"
   },
   {
     "id": 79,
@@ -1340,7 +1417,8 @@
     "source": "https://www.lofty.ai/property_deal/3878-Windermere-Rd_Memphis-TN-38128",
     "photo": "lofty-79.jpg",
     "rawMetrics": "$22.49/share · 2.4% avg yield · 41% Undervalued",
-    "valuation": null
+    "valuation": "$131,033.63",
+    "monthlyRent": "$0.00"
   },
   {
     "id": 80,
@@ -1357,7 +1435,8 @@
     "source": "https://www.lofty.ai/property_deal/3514-W-123rd-St_Cleveland-OH-44111",
     "photo": "lofty-80.jpg",
     "rawMetrics": "$42.00/share · 5.2% avg yield · 23% Undervalued",
-    "valuation": null
+    "valuation": "$136,614.67",
+    "monthlyRent": "$1,100.00"
   },
   {
     "id": 81,
@@ -1374,7 +1453,8 @@
     "source": "https://www.lofty.ai/property_deal/61622-El-Reposo-St_Joshua-Tree-CA-92252",
     "photo": "lofty-81.jpg",
     "rawMetrics": "$50.00/share · 11.8% avg yield · Fairly valued",
-    "valuation": null
+    "valuation": "$562,800",
+    "monthlyRent": "$3,286.11"
   },
   {
     "id": 82,
@@ -1408,7 +1488,8 @@
     "source": "https://www.lofty.ai/property_deal/1106-29th-Ave_Rock-Island-IL-61201",
     "photo": "lofty-83.jpg",
     "rawMetrics": "$55.74/share · 7.6% avg yield · 11% Overvalued",
-    "valuation": null
+    "valuation": "$82,732.16",
+    "monthlyRent": "$1,378.00"
   },
   {
     "id": 84,
@@ -1425,7 +1506,8 @@
     "source": "https://www.lofty.ai/property_deal/51-St-Clair-St_Tiffin-OH-44883",
     "photo": "lofty-84.jpg",
     "rawMetrics": "$50.00/share · 3.9% avg yield · Fairly valued",
-    "valuation": null
+    "valuation": "$137,250",
+    "monthlyRent": "$0.00"
   },
   {
     "id": 85,

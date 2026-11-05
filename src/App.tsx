@@ -236,6 +236,7 @@ type Listing = {
   source: string;
   assetSource?: string;
   asset?: string;
+  monthlyRent?: string;
   valuation: string | null;
   rawMetrics: string | null;
 };
@@ -877,9 +878,10 @@ export function App() {
             2026. &ldquo;Indexed&rdquo; counts only listings captured in this
             directory, as published - a few listings are multi-property
             packages, DAOs or individual units of one building. Per-listing
-            valuations are not published in our Lofty snapshot, so the
-            valuation total above covers Oceanpoint listings only. Oceanpoint
-            sectors are read from each listing's own title. A secondary
+            values and monthly rents are published per listing on Lofty's
+            own pages and are now shown on the cards, refreshed 5 Nov 2026;
+            the valuation total above still covers the 21 Oceanpoint listings
+            only. Oceanpoint sectors are read from each listing's own title. A secondary
             market does not guarantee a buyer or your price.{" "}
             <TextLink href="https://oceanpoint.fi/stats">
               Oceanpoint stats ↗
@@ -1278,6 +1280,18 @@ export function App() {
                           <dd>{l.asset}</dd>
                         </div>
                       )}
+                      {l.platform === "Lofty" && l.valuation && (
+                        <div>
+                          <dt>Property value (Lofty)</dt>
+                          <dd>{l.valuation}</dd>
+                        </div>
+                      )}
+                      {l.platform === "Lofty" && l.monthlyRent && (
+                        <div>
+                          <dt>Monthly rent (Lofty)</dt>
+                          <dd>{l.monthlyRent}</dd>
+                        </div>
+                      )}
                     </dl>
                     <p className="sb-yield-note">
                       {l.platform === "Lofty"
@@ -1295,7 +1309,10 @@ export function App() {
                     </dl>
                     <TermNotes listing={l} />
                     <p className="sb-source-line">
-                      Captured 4 Nov 2026 · direct property link under Terms,
+                      {l.platform === "Lofty"
+                        ? "Captured 4 Nov 2026; value and rent refreshed 5 Nov"
+                        : "Captured 4 Nov 2026"}{" "}
+                      · direct property link under Terms,
                       scope &amp; sources
                       {l.assetSource && (
                         <>
