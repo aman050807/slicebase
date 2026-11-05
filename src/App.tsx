@@ -1157,14 +1157,7 @@ export function App() {
             </div>
           </div>
           <p className="sb-index-note">
-            Listings captured 4 Nov 2026; page last reviewed 5 Nov 2026.{" "}
-            <TextLink href="https://www.lofty.ai/marketplace">
-              Lofty marketplace ↗
-            </TextLink>{" "}
-            ·{" "}
-            <TextLink href="https://oceanpoint.fi/stats">
-              Oceanpoint stats ↗
-            </TextLink>
+            Listings captured 4 Nov 2026; page last reviewed 5 Nov 2026.
           </p>
           <div className="sb-controls">
             <div className="sb-control">
