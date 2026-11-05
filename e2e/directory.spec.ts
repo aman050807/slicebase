@@ -91,6 +91,9 @@ test('clarity cleanup keeps secondary detail on demand and metrics explicit', as
   await expect(page.locator('.sb-compare-strip')).toHaveCount(0);
   await expect(page.locator('.sb-card-status').first()).toContainText('Secondary market');
   await expect(page.locator('.sb-card-headlines').first()).toContainText('Annual rent / value');
+  await expect(page.locator('.sb-calc-property-hint')).toHaveCount(0);
+  await expect(page.locator('.sb-calc-property')).not.toContainText('Listing context');
+  await expect(page.getByRole('combobox', {name:'Choose a listing for calculator inputs'})).toBeVisible();
   await expect(page.locator('.sb-calc-scenarios .sb-calc-table')).toBeHidden();
   await page.locator('.sb-calc-scenarios > summary').click();
   await expect(page.locator('.sb-calc-scenarios .sb-calc-table')).toBeVisible();

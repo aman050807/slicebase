@@ -1353,11 +1353,8 @@ export function App() {
                   </button>
                 </div>
                 <label className="sb-calc-property">
-                  Listing context
-                  <span className="sb-calc-property-hint">
-                    Pre-fills stated fees and rent / value where available. All inputs are editable.
-                  </span>
                   <select
+                    aria-label="Choose a listing for calculator inputs"
                     value={calcId}
                     onChange={(e) => {
                       const l = LISTINGS.find(
