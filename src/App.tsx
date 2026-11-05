@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { scrollToSection } from "./scroll";
+import { installWheelGlide, scrollToSection } from "./scroll";
 import { TextLink } from "./components/TextLink";
 import "./style.css";
 import brandSymbol from "./photos/slicebase-symbol.png";
@@ -380,6 +380,7 @@ function TermNotes({ listing: l }: { listing: Listing }) {
 }
 
 export function App() {
+  useEffect(() => installWheelGlide(), []);
   useEffect(() => {
     const onSectionLink = (event: MouseEvent) => {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;

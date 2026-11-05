@@ -195,3 +195,27 @@ for (const width of [390, 1330]) {
     await expect.poll(()=>page.locator('#income').evaluate(e=>e.getBoundingClientRect().top)).toBeLessThan(180);
   });
 }
+
+test('wheel input glides progressively and reverses promptly', async ({page}) => {
+  await page.goto('/');
+  await page.mouse.move(700,400);
+  await page.mouse.wheel(0,600);
+  await page.waitForTimeout(100);
+  const early = await page.evaluate(()=>scrollY);
+  expect(early).toBeGreaterThan(0);
+  expect(early).toBeLessThan(480);
+  await expect.poll(()=>page.evaluate(()=>scrollY)).toBeGreaterThan(500);
+  await page.waitForTimeout(600);
+  const end = await page.evaluate(()=>scrollY);
+  expect(end).toBeLessThanOrEqual(511);
+  await page.mouse.wheel(0,-300);
+  await expect.poll(()=>page.evaluate(()=>scrollY)).toBeLessThan(end-200);
+});
+
+test('wheel glide is disabled with reduced motion', async ({page}) => {
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await page.goto('/');
+  await page.mouse.move(700,400);
+  await page.mouse.wheel(0,600);
+  await expect.poll(()=>page.evaluate(()=>scrollY)).toBeGreaterThanOrEqual(599);
+});
