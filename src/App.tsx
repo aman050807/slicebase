@@ -235,6 +235,7 @@ type Listing = {
   yieldText: string;
   source: string;
   assetSource?: string;
+  asset?: string;
   valuation: string | null;
   rawMetrics: string | null;
 };
@@ -278,6 +279,13 @@ function sectorFor(l: Listing): string {
     return "Residential";
   return "Type not disclosed";
 }
+/** Lofty publishes an over/undervaluation tag per listing, measured against
+ *  its own estimate; it is the platform's label, not a Slicebase view. */
+function loftyValueTag(l: Listing): string | null {
+  if (!l.rawMetrics) return null;
+  const parts = l.rawMetrics.split("\u00b7").map((x) => x.trim());
+  return parts.length === 3 ? parts[2] : null;
+}
 function liquidityFor(l: Listing): { text: string; live: boolean } {
   if (l.platform === "Lofty")
     return { text: "Secondary market: Lofty exchange", live: true };
@@ -286,6 +294,26 @@ function liquidityFor(l: Listing): { text: string; live: boolean } {
   if (l.status === "LISTED")
     return { text: "Listed; not yet trading", live: false };
   return { text: "Not yet trading", live: false };
+}
+/** Platform-stated transaction fees, checked 4 Nov 2026 (see each card's
+ *  Terms, scope & sources). Applied to the invested amount with no change in
+ *  property value; estimates only, never a listing forecast. */
+function platformFeesFor(l: Listing): {
+  buyPct: number;
+  sellPct: number;
+  note: string;
+} {
+  if (l.platform === "Lofty")
+    return {
+      buyPct: 2.5,
+      sellPct: 3,
+      note: "Lofty states 2.5% on purchases and 3% on sales; applied here to the invested amount with no change in property value. Market orders can add a separate 2.5% market-maker fee, not included. Property, payment or network costs may also apply.",
+    };
+  return {
+    buyPct: 1.5,
+    sellPct: 1.5,
+    note: "Oceanpoint states a 1.5% transaction fee; applied here to both the purchase and a later sale of the invested amount. Network gas and any property or issuer costs are extra and not included.",
+  };
 }
 function PropertyBadges({ listing: l }: { listing: Listing }) {
   const liq = liquidityFor(l);
@@ -307,7 +335,7 @@ const COUNTRIES = [
 ];
 
 const ELIGIBILITY_NOTE =
-  "Snapshot: 4 Nov 2026. 84 Lofty listings and 21 Oceanpoint listings captured from their catalogues. Oceanpoint reports 77 properties; 56 are not captured in this view, so coverage is incomplete. Quotes and status can change. Platform terms below are checked separately from property metrics. Exact order minimums and full property costs remain unverified. Country selection is context only, not an eligibility filter.";
+  "Snapshot: 4 Nov 2026. 84 Lofty listings and 21 Oceanpoint listings captured from their catalogs. Oceanpoint reports 77 properties; 56 are not captured in this view, so coverage is incomplete. Quotes and status can change. Platform terms below are checked separately from property metrics. Exact order minimums and full property costs remain unverified. Country selection is context only, not an eligibility filter.";
 
 type Term = { label: string; value: string };
 function termsFor(l: Listing): Term[] {
@@ -320,6 +348,12 @@ function termsFor(l: Listing): Term[] {
       value: lofty
         ? "2.5% buy / 3% sell; market-order fee also applies"
         : "1.5% transaction fee; gas extra",
+    },
+    {
+      label: "Ownership structure",
+      value: lofty
+        ? "LLC property interests, per Lofty's structure"
+        : "BSPT property tokens, per Oceanpoint's structure",
     },
     {
       label: "Exit / resale",
@@ -546,6 +580,9 @@ export function App() {
   const [years, setYears] = useState("5");
   const [upfront, setUpfront] = useState("0");
   const [annualFees, setAnnualFees] = useState("0");
+  const [includeFees, setIncludeFees] = useState(true);
+  const calcListing = LISTINGS.find((l) => l.id === calcId) ?? LISTINGS[0];
+  const calcFees = platformFeesFor(calcListing);
   const calculatorRef = useRef<HTMLElement>(null);
   const numeric = [amount, rate, years, upfront, annualFees].map(Number);
   const validCalc =
@@ -562,7 +599,10 @@ export function App() {
   const [a, r, t, u, f] = numeric;
   const gross = (a * r) / 100;
   const annual = gross - f;
-  const income = annual * t - u;
+  const platformFeeEstimate = includeFees
+    ? (a * (calcFees.buyPct + calcFees.sellPct)) / 100
+    : 0;
+  const income = annual * t - u - platformFeeEstimate;
   const goalNumeric = [goal, rate, annualFees].map(Number);
   const validGoal =
     [goal, rate, annualFees].every((v) => v.trim() !== "") &&
@@ -672,7 +712,7 @@ export function App() {
               <span>A clearer choice.</span>
             </h1>
             <p className="sb-sub">
-              Compare tokenised properties across platforms. See the costs,
+              Compare tokenized properties across platforms. See the costs,
               terms and risks before you invest.
             </p>
             <div className="sb-actions">
@@ -789,8 +829,8 @@ export function App() {
               <span>Yields, fees and terms in one view</span>
             </li>
             <li>
-              <strong>Eligibility first</strong>
-              <span>Check access rules before investing</span>
+              <strong>Access rules up front</strong>
+              <span>Eligibility and restrictions flagged on every card</span>
             </li>
             <li>
               <strong>Independent by design</strong>
@@ -830,24 +870,16 @@ export function App() {
                 Oceanpoint listings, USD)
               </span>
             </div>
-            <div>
-              <strong>$100M+</strong>
-              <span>invested on Lofty's marketplace, platform-reported</span>
-            </div>
           </div>
           <p className="sb-index-note">
-            Checked 5 Nov 2026. &ldquo;Indexed&rdquo; counts only listings
-            captured in this directory, as published - a few listings are
-            multi-property packages, DAOs or individual units of one
-            building. The Lofty figure is Lofty's own
-            marketplace total, not Slicebase coverage; per-listing valuations
-            are not published in our Lofty snapshot. Oceanpoint sectors are
-            read from each listing's own title. A secondary market does not
-            guarantee a buyer or your price.{" "}
-            <TextLink href="https://www.lofty.ai/how-it-works">
-              Lofty figures ↗
-            </TextLink>{" "}
-            ·{" "}
+            Listings captured 4 Nov 2026; this page last reviewed 5 Nov
+            2026. &ldquo;Indexed&rdquo; counts only listings captured in this
+            directory, as published - a few listings are multi-property
+            packages, DAOs or individual units of one building. Per-listing
+            valuations are not published in our Lofty snapshot, so the
+            valuation total above covers Oceanpoint listings only. Oceanpoint
+            sectors are read from each listing's own title. A secondary
+            market does not guarantee a buyer or your price.{" "}
             <TextLink href="https://oceanpoint.fi/stats">
               Oceanpoint stats ↗
             </TextLink>
@@ -866,7 +898,9 @@ export function App() {
                 Run it from an investment amount, or backward from a monthly
                 income goal. The 8% starting rate is an example, not a listing
                 forecast. Platform APY and avg yield are never loaded as
-                cash-income assumptions.
+                cash-income assumptions. Platform-stated transaction fees are
+                included by default; turn them off below to see income before
+                fees.
               </p>
             </div>
             <div className="sb-calculator-layout">
@@ -893,6 +927,10 @@ export function App() {
                 </div>
                 <label className="sb-calc-property">
                   Property context
+                  <span className="sb-calc-property-hint">
+                    Sets which platform's stated fees are estimated below.
+                    Platform yields are never loaded into this calculator.
+                  </span>
                   <select
                     value={calcId}
                     onChange={(e) => {
@@ -909,6 +947,26 @@ export function App() {
                     ))}
                   </select>
                 </label>
+                {calcMode === "invest" && (
+                  <div className="sb-calc-fees">
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={includeFees}
+                        onChange={(e) => setIncludeFees(e.target.checked)}
+                      />
+                      <span>
+                        Include {calcListing.platform}&apos;s stated transaction
+                        fees: {calcFees.buyPct}% buy + {calcFees.sellPct}% sell
+                        {validCalc && includeFees
+                          ? ` (about ${money(platformFeeEstimate)} on ${money(a)})`
+                          : ""}
+                        .
+                      </span>
+                    </label>
+                    <p>{calcFees.note}</p>
+                  </div>
+                )}
                 {(calcMode === "invest"
                   ? [
                       [
@@ -974,9 +1032,10 @@ export function App() {
                   <p>
                     No reinvestment, tax or change in property value is
                     included. Income can fall to zero and capital can be lost.
-                    Costs start at $0 as placeholders, not verified fee-free
-                    terms. Enter only costs not already included in the income
-                    rate to avoid counting them twice.
+                    The cost fields stay at $0 for any extra costs you know
+                    of; platform transaction fees are already included above
+                    unless you turn them off. Enter only costs not already
+                    counted, to avoid counting them twice.
                   </p>
                 ) : (
                   <p>
@@ -984,7 +1043,10 @@ export function App() {
                     assumption, solved for the investment instead. The result is
                     an estimate, not a plan or a forecast. Income can fall to
                     zero and capital can be lost. Upfront costs are not included
-                    in the result; add them separately.
+                    in the result; add them separately. Platform transaction
+                    fees are not included either - on {calcListing.platform}{" "}
+                    they run about {calcFees.buyPct + calcFees.sellPct}% of the
+                    amount invested across a purchase and later sale.
                   </p>
                 )}
               </div>
@@ -1041,9 +1103,15 @@ export function App() {
                         <dt>Income before costs, over period</dt>
                         <dd>{money(gross * t)}</dd>
                       </div>
+                      {includeFees && (
+                        <div>
+                          <dt>Estimated platform transaction fees</dt>
+                          <dd>{money(platformFeeEstimate)}</dd>
+                        </div>
+                      )}
                       <div>
-                        <dt>Total entered costs</dt>
-                        <dd>{money(u + f * t)}</dd>
+                        <dt>Total costs, including fees</dt>
+                        <dd>{money(u + f * t + platformFeeEstimate)}</dd>
                       </div>
                     </dl>
                     <p>
@@ -1073,7 +1141,11 @@ export function App() {
                 forecast. Actual income can be lower or zero, and capital can be
                 lost. In goal mode, required investment = (12 × monthly goal +
                 annual costs) × 100 ÷ annual rate; every limit above applies
-                unchanged.
+                unchanged. When platform transaction fees are included, the
+                selected platform's stated buy and sell percentages (see the
+                card's Terms, scope & sources) are applied to the investment
+                and deducted from period income; the sale fee assumes no
+                change in property value.
               </p>
             </details>
           </section>
@@ -1132,7 +1204,9 @@ export function App() {
           </div>
           <p className="sb-directory-notice">{ELIGIBILITY_NOTE}</p>
           <div className="sb-result-line">
-            <span>{results.length} listings · 105 captured</span>
+            <span>
+              {results.length} of {LISTINGS.length} listings
+            </span>
             <button
               type="button"
               onClick={() => {
@@ -1191,7 +1265,25 @@ export function App() {
                         <dt>{l.yieldLabel}</dt>
                         <dd>{l.yieldText}</dd>
                       </div>
+                      {l.platform === "Lofty" && loftyValueTag(l) && (
+                        <div>
+                          <dt>Lofty value tag</dt>
+                          <dd>{loftyValueTag(l)}</dd>
+                        </div>
+                      )}
+                      {l.platform !== "Lofty" && l.asset && (
+                        <div>
+                          <dt>Token</dt>
+                          <dd>{l.asset}</dd>
+                        </div>
+                      )}
                     </dl>
+                    <p className="sb-yield-note">
+                      {l.platform === "Lofty"
+                        ? "\u201Cavg yield\u201D and the value tag are Lofty's own published figures for this listing; whether the yield is gross or net, and over what period, is not stated in our snapshot."
+                        : "APY is Oceanpoint's own published figure, as the platform defines it."}{" "}
+                      A higher yield does not mean lower risk.
+                    </p>
                     <dl className="sb-property-terms">
                       {termsFor(l).map((t) => (
                         <div key={t.label}>
@@ -1202,7 +1294,7 @@ export function App() {
                     </dl>
                     <TermNotes listing={l} />
                     <p className="sb-source-line">
-                      Checked 4 Nov 2026 · direct property link under Terms,
+                      Captured 4 Nov 2026 · direct property link under Terms,
                       scope &amp; sources
                       {l.assetSource && (
                         <>
@@ -1257,7 +1349,10 @@ export function App() {
               </button>
             </div>
           )}
-          <div className="sb-selection" aria-live="polite">
+          <div
+            className={`sb-selection sb-compare-strip${picked.length ? " is-live" : ""}`}
+            aria-live="polite"
+          >
             <div>
               <strong>{picked.length} of 3 selected</strong>
               <span>
@@ -1421,9 +1516,10 @@ export function App() {
               </summary>
               <div className="sb-question-answer">
                 <p>
-                  Yes. These records and photos were captured from Lofty and
-                  Oceanpoint on 4 Nov 2026. They are snapshots, not live offers
-                  or independently verified investment advice. Oceanpoint
+                  These records and photos were captured from Lofty and
+                  Oceanpoint's live marketplaces on 4 Nov 2026. They are dated
+                  snapshots, not live offers or independently verified
+                  investment advice. Oceanpoint
                   coverage is incomplete: 21 captured against 77 reported. Check
                   the source for current availability, terms and eligibility.
                 </p>
@@ -1490,7 +1586,7 @@ export function App() {
                   No. Compare the costs, rental assumptions, ownership rights
                   and resale limits as well as yield. A stated yield is an
                   estimate, not a guarantee. You can lose income and capital.
-                  Slicebase helps you compare; it does not provide personalised
+                  Slicebase helps you compare; it does not provide personalized
                   investment advice.
                 </p>
               </div>
@@ -1559,7 +1655,7 @@ export function App() {
         <div className="sb-footer-info">
           <p>
             Independent by design.
-            <br />A comparison directory for tokenised real estate.
+            <br />A comparison directory for tokenized real estate.
             <br />
             No custody. No investment advice.
           </p>
@@ -1580,7 +1676,8 @@ export function App() {
             Listing facts and one photo per property are sourced from Lofty and
             Oceanpoint, checked 4 Nov 2026. 84 Lofty and 21 Oceanpoint records
             captured; Oceanpoint reports 77, so its coverage is incomplete. Not
-            live quotes. No partnership is implied. Fractional property carries
+            live quotes. The platforms do not sponsor or endorse Slicebase.
+            Fractional property carries
             risk, including loss of capital.
           </p>
         </div>
