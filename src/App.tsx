@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { scrollToSection } from "./scroll";
 import { TextLink } from "./components/TextLink";
 import "./style.css";
 import brandSymbol from "./photos/slicebase-symbol.png";
@@ -379,6 +380,21 @@ function TermNotes({ listing: l }: { listing: Listing }) {
 }
 
 export function App() {
+  useEffect(() => {
+    const onSectionLink = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href^="#"]') : null;
+      if (!link || link.target === "_blank") return;
+      const hash = link.getAttribute("href");
+      const target = hash && hash.length > 1 ? document.getElementById(decodeURIComponent(hash.slice(1))) : null;
+      if (!target || !hash) return;
+      event.preventDefault();
+      if (location.hash !== hash) history.pushState(null, "", hash);
+      requestAnimationFrame(() => scrollToSection(target));
+    };
+    document.addEventListener("click", onSectionLink);
+    return () => document.removeEventListener("click", onSectionLink);
+  }, []);
   const [menuOpen, setMenuOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
@@ -406,7 +422,7 @@ export function App() {
     const heading = comparisonHeadingRef.current;
     if (!heading) return;
     heading.focus({ preventScroll: true });
-    heading.scrollIntoView({ block: "start", behavior: "instant" });
+    scrollToSection(heading);
   }, [compareOpen]);
 
   const results = useMemo(() => {
@@ -657,18 +673,14 @@ export function App() {
   };
   const openCalculator = (listing: Listing) => {
     applyListing(listing);
-    calculatorRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+    if (calculatorRef.current) scrollToSection(calculatorRef.current);
   };
   const compareAnother = () => {
     setPicked((prev) =>
       prev.includes(calcId) ? prev : [calcId, ...prev].slice(0, 3),
     );
-    document
-      .getElementById("compare")
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const directory = document.getElementById("compare");
+    if (directory) scrollToSection(directory);
   };
   const copyScenarioLink = () => {
     if (typeof window === "undefined") return;

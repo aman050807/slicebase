@@ -158,7 +158,7 @@ for (const width of [390, 1330]) {
     await expect(heading).toBeFocused();
     await expect(heading).toBeInViewport();
     expect(await heading.evaluate(e=>e.getBoundingClientRect().top)).toBeGreaterThanOrEqual(0);
-    expect(await heading.evaluate(e=>e.getBoundingClientRect().top)).toBeLessThan(150);
+    await expect.poll(() => heading.evaluate(e=>e.getBoundingClientRect().top)).toBeLessThan(150);
     await expect(page.locator('.sb-comparison-options article')).toHaveCount(2);
     await page.getByRole('button', {name:'Hide comparison', exact:true}).click();
     await expect(page.locator('.sb-comparison')).toHaveCount(0);
@@ -169,5 +169,29 @@ for (const width of [390, 1330]) {
     await expect(heading).toBeFocused();
     await expect(heading).toBeInViewport();
     await expect(page.locator('.sb-comparison-options article')).toHaveCount(3);
+  });
+}
+
+test('comparison scroll respects reduced motion', async ({page}) => {
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await page.goto('/');
+  await page.locator('.sb-property input').nth(7).check();
+  await page.locator('.sb-property input').nth(8).check();
+  await page.getByRole('button', {name:'Compare selected', exact:true}).click();
+  const heading = page.getByRole('heading', {name:'Your comparison', exact:true});
+  await expect(heading).toBeFocused();
+  await expect(heading).toBeInViewport();
+});
+
+for (const width of [390, 1330]) {
+  test(`site section links use eased scrolling at ${width}px`, async ({page}) => {
+    await page.setViewportSize({width,height:844});
+    await page.goto('/');
+    await page.locator('.sb-hero a[href="#income"]').click();
+    await page.waitForTimeout(250);
+    const midway = await page.evaluate(()=>scrollY);
+    expect(midway).toBeGreaterThan(0);
+    expect(await page.locator('#income').evaluate(e=>e.getBoundingClientRect().top)).toBeGreaterThan(500);
+    await expect.poll(()=>page.locator('#income').evaluate(e=>e.getBoundingClientRect().top)).toBeLessThan(180);
   });
 }
