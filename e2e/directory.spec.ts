@@ -85,6 +85,9 @@ test('clarity cleanup keeps secondary detail on demand and metrics explicit', as
   await expect(page.locator('#methodology')).toHaveCount(0);
   await expect(page.locator('.sb-below-hero')).toHaveCount(0);
   await expect(page.locator('.sb-index-banner')).toBeHidden();
+  await expect(page.locator('.sb-metric-guide')).toHaveCount(0);
+  await expect(page.locator('.sb-directory-data-notes > summary')).not.toContainText('Partial catalogue');
+  await expect(page.locator('.sb-result-line')).not.toContainText('Not live quotes');
   await expect(page.locator('.sb-compare-strip')).toHaveCount(0);
   await expect(page.locator('.sb-card-status').first()).toContainText('Secondary market');
   await expect(page.locator('.sb-card-headlines').first()).toContainText('Annual rent / value');

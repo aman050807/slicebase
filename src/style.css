@@ -2817,3 +2817,5 @@ a.sb-join-link:hover {
 .sb-hero-value-scope { font-size: 10px; }
 @media (max-width: 959px) { .sb-hero-visual { max-width: 350px; } }
 @media (min-width: 960px) { .sb-hero-visual { max-width: min(450px, calc((100svh - 245px) * .7931)); } }
+
+.sb-result-line > button { margin-left: auto; }

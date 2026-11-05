@@ -1015,7 +1015,7 @@ export function App() {
             </div>
           </div>
           <details id="coverage-notes" className="sb-directory-data-notes">
-            <summary>Partial catalogue <span>Coverage &amp; data notes</span></summary>
+            <summary><span>Coverage &amp; data notes</span></summary>
             <p className="sb-directory-notice">The hero total is {compactMoney(HERO_VALUE_STATS.total)} in platform-published USD property valuations across {HERO_VALUE_STATS.count} indexed properties with values, excluding delisted records. It is not money invested or managed by Slicebase. Catalogue totals below include retained delisted records.</p>
           <div className="sb-index-banner">
             <div>
@@ -1038,13 +1038,7 @@ export function App() {
           </p>
             <p className="sb-directory-notice">{ELIGIBILITY_NOTE}</p>
           </details>
-          <p className="sb-metric-guide">
-            Rent / value, avg yield and APY use different bases. They are not like-for-like returns.
-          </p>
           <div className="sb-result-line">
-            <span>
-              {results.length} listings · Refreshed {REFRESHED} · Not live quotes
-            </span>
             <button
               type="button"
               onClick={() => {
