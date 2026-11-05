@@ -418,7 +418,7 @@ const REFERRAL: Record<string, { url: string; perk: string }> = {
 function ReferralNote() {
   return (
     <p className="sb-referral-line">
-      &ldquo;Join&rdquo; opens the platform&rsquo;s sign-up page via a referral
+      The platform button opens its sign-up page via a referral
       link; Slicebase may earn a reward. The source link stays direct.
     </p>
   );
@@ -434,7 +434,7 @@ function JoinLink({ platform }: { platform: string }) {
       target="_blank"
       rel="sponsored noopener noreferrer"
     >
-      Join {platform} &#8599;
+      {platform === "Lofty" ? "Invest now" : `Join ${platform}`} &#8599;
     </a>
   );
 }
@@ -2698,7 +2698,7 @@ export function App() {
               target="_blank"
               rel="sponsored noopener noreferrer"
             >
-              Join Lofty <span aria-hidden="true">↗</span>
+              Invest now <span aria-hidden="true">↗</span>
             </a>
             <a
               className="sb-footer-action"
