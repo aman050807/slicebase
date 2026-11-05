@@ -650,7 +650,6 @@ export function App() {
             />
           </a>
           <nav className="sb-nav-desktop" aria-label="Primary">
-            <a href="#compare">Listings</a>
             <a href="#how">How it works</a>
             <a href="#income">Calculator</a>
             <a href="#faq">FAQ</a>
@@ -736,7 +735,7 @@ export function App() {
                 Run the numbers <span aria-hidden="true">&rarr;</span>
               </a>
               <a className="sb-quiet-link" href="#how">
-                How it works
+                How it works <span aria-hidden="true">&rarr;</span>
               </a>
             </div>
           </div>
@@ -841,8 +840,8 @@ export function App() {
               <span>Yields, fees and terms in one view</span>
             </li>
             <li>
-              <strong>Access rules on every card</strong>
-              <span>The stated baseline: 18+, KYC, sanctions and local rules</span>
+              <strong>Access rules shown</strong>
+              <span>Platform-stated: 18+, KYC, sanctions, local rules</span>
             </li>
             <li>
               <strong>Rankings never paid for</strong>
