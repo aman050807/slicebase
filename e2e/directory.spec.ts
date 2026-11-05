@@ -55,3 +55,15 @@ for (const width of [390, 1280]) {
     await page.locator('#top').scrollIntoViewIfNeeded();
   });
 }
+
+test("default first twelve mix platforms without overriding explicit sorting", async ({page}) => {
+  await page.goto("/");
+  const platforms = page.locator(".sb-property-platform");
+  await expect(platforms).toHaveCount(12);
+  expect((await platforms.allTextContents()).filter(t=>t.includes("Lofty"))).toHaveLength(6);
+  expect((await platforms.allTextContents()).filter(t=>t.includes("Oceanpoint"))).toHaveLength(6);
+  await page.locator("#f-sort").selectOption("min");
+  expect((await platforms.allTextContents()).every(t=>t.includes("Lofty"))).toBe(true);
+  await page.locator("#f-platform").selectOption("Oceanpoint");
+  expect((await platforms.allTextContents()).every(t=>t.includes("Oceanpoint"))).toBe(true);
+});

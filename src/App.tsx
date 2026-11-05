@@ -580,7 +580,7 @@ export function App() {
   const [country, setCountry] = useState("us");
   const [platform, setPlatform] = useState("all");
   const [maxMin, setMaxMin] = useState(10000);
-  const [sort, setSort] = useState("min");
+  const [sort, setSort] = useState("mixed");
   const [visibleCount, setVisibleCount] = useState(12);
   useEffect(() => setVisibleCount(12), [platform, maxMin, sort]);
   const [picked, setPicked] = useState<number[]>([]);
@@ -602,6 +602,15 @@ export function App() {
               a.id - b.id
             : a.id - b.id,
     );
+    if (sort === "mixed" && platform === "all") {
+      const lofty = rows.filter((l) => l.platform === "Lofty");
+      const oceanpoint = rows.filter((l) => l.platform === "Oceanpoint");
+      rows = [];
+      for (let i = 0; i < Math.max(lofty.length, oceanpoint.length); i++) {
+        if (lofty[i]) rows.push(lofty[i]);
+        if (oceanpoint[i]) rows.push(oceanpoint[i]);
+      }
+    }
     return rows;
   }, [platform, maxMin, sort]);
 
@@ -1206,6 +1215,7 @@ export function App() {
                 value={sort}
                 onChange={(e) => setSort(e.target.value)}
               >
+                <option value="mixed">Both platforms</option>
                 <option value="min">Source order</option>
                 <option value="name">Listing name</option>
                 <option value="platform">Platform</option>
@@ -1226,7 +1236,7 @@ export function App() {
               onClick={() => {
                 setPlatform("all");
                 setMaxMin(10000);
-                setSort("min");
+                setSort("mixed");
                 setCountry("us");
               }}
             >
