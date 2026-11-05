@@ -18,7 +18,7 @@ test("directory, disclosure, comparison and independent calculator", async ({
     .getByRole("button", { name: "Compare selected", exact: true })
     .click();
   await expect(page.locator(".sb-comparison-options article")).toHaveCount(2);
-  await expect(page.getByRole("spinbutton").nth(1)).toHaveValue("3.9518");
+  await expect(page.getByRole("spinbutton").nth(1)).toHaveValue("3.95");
   await page.locator("#f-min").selectOption("50");
   await expect(page.locator(".sb-empty")).toBeVisible();
   await page.getByRole("button", { name: "Reset filters" }).click();

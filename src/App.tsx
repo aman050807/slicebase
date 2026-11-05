@@ -263,7 +263,7 @@ const impliedYieldFor = (l: Listing): number | null => {
 /** Rate display with meaningful decimals only: 8 stays "8", 3.95 stays
  *  "3.95". */
 const fmtRate = (v: number): string =>
-  v.toFixed(4).replace(/\.?0+$/, "");
+  v.toFixed(2).replace(/\.?0+$/, "");
 type FieldDef = [
   string,
   string,
@@ -640,7 +640,7 @@ export function App() {
         const iy = impliedYieldFor(
           LISTINGS.find((l) => l.id === initialCalcId) ?? LISTINGS[0],
         );
-        return iy != null ? iy.toFixed(4) : "8";
+        return iy != null ? iy.toFixed(2) : "8";
       })(),
   );
   const [years, setYears] = useState(qpNum("y", 1, 30) ?? "5");
@@ -727,8 +727,11 @@ export function App() {
   const gridRates = useMemo(() => {
     const round2 = (v: number) => Math.round(v * 100) / 100;
     const raw = [round2(r + 2), r, Math.max(round2(r - 2), 0.25)];
-    if (impliedYield != null && Math.abs(impliedYield - r) >= 0.005)
-      raw.push(impliedYield);
+    /** The listing-stated column computes at the same 2-decimal ratio it
+     *  displays; the exact source ratio is disclosed in the assumptions
+     *  accordion. */
+    const iy2 = impliedYield != null ? round2(impliedYield) : null;
+    if (iy2 != null && Math.abs(iy2 - r) >= 0.005) raw.push(iy2);
     raw.sort((x, y) => y - x);
     const dedup: number[] = [];
     raw.forEach((v) => {
@@ -771,7 +774,7 @@ export function App() {
   const applyListing = (listing: Listing) => {
     setCalcId(listing.id);
     const iy = impliedYieldFor(listing);
-    if (iy != null) setRate(iy.toFixed(4));
+    if (iy != null) setRate(iy.toFixed(2));
   };
   const openCalculator = (listing: Listing) => {
     applyListing(listing);
@@ -1147,6 +1150,326 @@ export function App() {
               Oceanpoint stats ↗
             </TextLink>
           </p>
+          <div className="sb-controls">
+            <div className="sb-control">
+              <label htmlFor="f-country">Country context</label>
+              <select
+                id="f-country"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+              >
+                {COUNTRIES.map((c) => (
+                  <option key={c.code} value={c.code}>
+                    {c.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="sb-control">
+              <label htmlFor="f-platform">Platform</label>
+              <select
+                id="f-platform"
+                value={platform}
+                onChange={(e) => setPlatform(e.target.value)}
+              >
+                <option value="all">All platforms</option>
+                <option>Lofty</option>
+                <option>Oceanpoint</option>
+              </select>
+            </div>
+            <div className="sb-control">
+              <label htmlFor="f-min">Minimum up to</label>
+              <select
+                id="f-min"
+                value={maxMin}
+                onChange={(e) => setMaxMin(Number(e.target.value))}
+              >
+                <option value={10000}>Any amount</option>
+                <option value={50}>$50</option>
+                <option value={100}>$100</option>
+                <option value={500}>$500</option>
+              </select>
+            </div>
+            <div className="sb-control">
+              <label htmlFor="f-sort">Sort by</label>
+              <select
+                id="f-sort"
+                value={sort}
+                onChange={(e) => setSort(e.target.value)}
+              >
+                <option value="min">Source order</option>
+                <option value="name">Listing name</option>
+                <option value="platform">Platform</option>
+                <option value="yield">Stated rent / value</option>
+              </select>
+            </div>
+          </div>
+          <p className="sb-directory-notice">{ELIGIBILITY_NOTE}</p>
+          <div className="sb-result-line">
+            <span>
+              {results.length} of {LISTINGS.length} listings
+            </span>
+            <button
+              type="button"
+              onClick={() => {
+                setPlatform("all");
+                setMaxMin(10000);
+                setSort("min");
+                setCountry("us");
+              }}
+            >
+              Reset filters
+            </button>
+          </div>
+          {results.length === 0 ? (
+            <p className="sb-empty">
+              No verified minimums match this filter. Reset to see the captured
+              listings.
+            </p>
+          ) : (
+            <div className="sb-results">
+              {results.slice(0, visibleCount).map((l) => (
+                <article
+                  key={l.id}
+                  className={`sb-property${picked.includes(l.id) ? " is-picked" : ""}`}
+                >
+                  <div className="sb-property-image">
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      width="800"
+                      height="520"
+                      src={homeImages[l.id - 1]}
+                      alt={`${l.name}, photo from ${l.platform}`}
+                    />
+                    <span>
+                      {l.platform} photo · {String(l.id).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <div className="sb-property-body">
+                    <div className="sb-property-platform">
+                      <span>{l.platform}</span>
+                      <span>{l.status}</span>
+                    </div>
+                    <h3>{l.name}</h3>
+                    <p className="sb-property-location">{l.city}</p>
+                    <PropertyBadges listing={l} />
+                    <dl className="sb-property-metrics">
+                      <div>
+                        <dt>
+                          {l.platform === "Lofty" ? "Share price" : "Valuation"}
+                        </dt>
+                        <dd>
+                          {l.platform === "Lofty" ? l.quote : l.valuation}
+                        </dd>
+                      </div>
+                      {impliedYieldFor(l) != null && (
+                        <div>
+                          <dt>Stated rent / value</dt>
+                          <dd>{impliedYieldFor(l)!.toFixed(2)}%</dd>
+                        </div>
+                      )}
+                      <div>
+                        <dt>{l.yieldLabel} (platform&apos;s own)</dt>
+                        <dd>{l.yieldText}</dd>
+                      </div>
+                      {l.platform === "Lofty" && loftyValueTag(l) && (
+                        <div>
+                          <dt>Lofty value tag</dt>
+                          <dd>{loftyValueTag(l)}</dd>
+                        </div>
+                      )}
+                      {l.platform !== "Lofty" && l.asset && (
+                        <div>
+                          <dt>Token</dt>
+                          <dd>{l.asset}</dd>
+                        </div>
+                      )}
+                      {l.platform === "Lofty" && l.valuation && (
+                        <div>
+                          <dt>Property value (Lofty)</dt>
+                          <dd>{l.valuation}</dd>
+                        </div>
+                      )}
+                      {l.platform === "Lofty" && l.monthlyRent && (
+                        <div>
+                          <dt>Monthly rent (Lofty)</dt>
+                          <dd>{l.monthlyRent}</dd>
+                        </div>
+                      )}
+                    </dl>
+                    <p className="sb-yield-note">
+                      {l.platform === "Lofty"
+                        ? "\u201Cavg yield\u201D and the value tag are Lofty's own published figures for this listing; whether the yield is gross or net, and over what period, is not stated in our listing data, and Lofty also lists a separate \u201Ccurrent yield\u201D without a published formula. Stated rent / value is our own calculation from the listing's stated rent and published value: annual rent \u00F7 value. The two measure different things; neither is a forecast."
+                        : "APY is Oceanpoint's own published figure, as the platform defines it."}{" "}
+                      A higher yield does not mean lower risk.
+                    </p>
+                    <dl className="sb-property-terms">
+                      {termsFor(l).map((t) => (
+                        <div key={t.label}>
+                          <dt>{t.label}</dt>
+                          <dd>{t.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                    <TermNotes listing={l} />
+                    <p className="sb-source-line">
+                      {l.platform === "Lofty"
+                        ? "Captured 4 Nov 2026; value and rent refreshed 5 Nov"
+                        : "Captured 4 Nov 2026"}{" "}
+                      · direct property link under Terms,
+                      scope &amp; sources
+                      {l.assetSource && (
+                        <>
+                          {" "}
+                          ·{" "}
+                          <TextLink href={l.assetSource}>
+                            Token contract ↗
+                          </TextLink>
+                        </>
+                      )}
+                    </p>
+                    <div className="sb-property-actions">
+                      <JoinLink platform={l.platform} />
+                      <button
+                        type="button"
+                        className="file-hover-underline"
+                        onClick={() => openCalculator(l)}
+                      >
+                        Run the numbers ↗
+                      </button>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={picked.includes(l.id)}
+                          onChange={() => togglePick(l.id)}
+                          disabled={
+                            !picked.includes(l.id) && picked.length >= 3
+                          }
+                        />
+                        <span>
+                          {picked.includes(l.id) ? "Selected" : "Compare"}
+                        </span>
+                      </label>
+                    </div>
+                    <ReferralNote />
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+          {visibleCount < results.length && (
+            <div className="sb-selection">
+              <span>
+                Showing {Math.min(visibleCount, results.length)} of{" "}
+                {results.length} results
+              </span>
+              <button
+                type="button"
+                onClick={() => setVisibleCount((n) => n + 12)}
+              >
+                Show more listings
+              </button>
+            </div>
+          )}
+          <div
+            className={`sb-selection sb-compare-strip${picked.length ? " is-live" : ""}`}
+            aria-live="polite"
+          >
+            <div>
+              <strong>{picked.length} of 3 selected</strong>
+              <span>
+                {picked.length < 2
+                  ? "Choose 2-3 listings to compare."
+                  : "Compare the trade-offs, not just the yield."}
+              </span>
+            </div>
+            <div>
+              <button
+                type="button"
+                disabled={picked.length < 2}
+                onClick={() => setCompareOpen(!compareOpen)}
+              >
+                {compareOpen ? "Hide comparison" : "Compare selected"}
+              </button>
+              {picked.length > 0 && (
+                <button
+                  type="button"
+                  className="sb-text-button"
+                  onClick={() => {
+                    setPicked([]);
+                    setCompareOpen(false);
+                  }}
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+          </div>
+          {compareOpen && pickedListings.length >= 2 && (
+            <div className="sb-comparison">
+              <div className="sb-comparison-heading">
+                <h3>Your comparison</h3>
+                <p>
+                  No overall score. Lower entry cost does not mean lower risk.
+                </p>
+              </div>
+              <div className="sb-comparison-options">
+                {pickedListings.map((l) => (
+                  <article key={l.id}>
+                    <p className="sb-property-platform">
+                      {String(l.id).padStart(2, "0")} · {l.platform}
+                    </p>
+                    <h4>{l.name}</h4>
+                    <dl>
+                      <div>
+                        <dt>
+                          {l.platform === "Lofty" ? "Share price" : "Valuation"}
+                        </dt>
+                        <dd>
+                          {l.platform === "Lofty" ? l.quote : l.valuation}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>{l.yieldLabel}</dt>
+                        <dd>{l.yieldText}</dd>
+                      </div>
+                      <div>
+                        <dt>Property type</dt>
+                        <dd>{l.type}</dd>
+                      </div>
+                      <div>
+                        <dt>Location</dt>
+                        <dd>{l.city}</dd>
+                      </div>
+                      {termsFor(l).map((t) => (
+                        <div key={t.label}>
+                          <dt>{t.label}</dt>
+                          <dd>{t.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                    <TermNotes listing={l} />
+                    <p className="sb-comparison-join">
+                      <JoinLink platform={l.platform} />
+                    </p>
+                    <button type="button" onClick={() => openCalculator(l)}>
+                      Run the numbers ↗
+                    </button>
+                    <ReferralNote />
+                  </article>
+                ))}
+              </div>
+              <p className="sb-comparison-note">
+                Before choosing: verify total fees, occupancy assumptions,
+                ownership rights, country restrictions and how you can sell.
+                These are dated source records, not independently audited
+                investments. Platform metric definitions differ; APY and avg
+                yield are not directly comparable. A higher stated yield is not
+                evidence of a better investment.
+              </p>
+            </div>
+          )}
           <section
             id="income"
             ref={calculatorRef}
@@ -1157,17 +1480,24 @@ export function App() {
               <p className="sb-eyebrow">Run the numbers</p>
               <h3 id="calculator-title">What would you actually get back?</h3>
               <p>
-                Estimate your own net result, separate from platform metrics.
-                Start from an investment amount, or work back from a monthly
-                goal. Where the selected listing publishes rent and a value,
-                the rate starts at that stated rent / value ratio -
-                platform-stated, as published, not a forecast - and otherwise
-                at an 8% example. Edit every field freely; platform
-                avg-yield metrics (avg yield, APY) are never used as the
-                income rate. Platform-stated fees are
-                included by default; turn them off below to see income before
-                fees.
+                Estimate your own net result on your own assumptions, before
+                fees. The rate starts at the listing&apos;s stated rent /
+                value ratio; edit every field freely.
               </p>
+              <details className="sb-calc-notes">
+                <summary>(i) What this uses</summary>
+                <p>
+                  Start from an investment amount, or work back from a
+                  monthly goal. Where the selected listing publishes rent and
+                  a value, the rate starts at that stated rent / value ratio
+                  - platform-stated, as published, not a forecast - and
+                  otherwise at an 8% example. Platform avg-yield metrics (avg
+                  yield, APY) are never used as the income rate.
+                  Platform-stated fees are included by default; turn them off
+                  below to see income before fees. Nothing here is a
+                  prediction or advice; it is arithmetic on your inputs.
+                </p>
+              </details>
             </div>
             <div className="sb-calculator-layout">
               <div className="sb-calculator-inputs">
@@ -1237,10 +1567,11 @@ export function App() {
                   {impliedYield != null && (
                     <p className="sb-calc-rate-hint">
                       This listing&apos;s stated rent / value is{" "}
-                      {impliedYield.toFixed(4)}% - platform-stated, as
+                      {impliedYield.toFixed(2)}% - platform-stated, as
                       published (rent before any management or other costs;
-                      add those under Annual costs), not a forecast. The rate
-                      starts there when you pick the listing; edit it freely.
+                      add those under Annual costs), not a forecast; the exact
+                      ratio is in Assumptions and calculation. The rate
+                      starts here when you pick the listing; edit it freely.
                     </p>
                   )}
                 </fieldset>
@@ -1323,6 +1654,21 @@ export function App() {
                           ],
                         ]
                       ).map((f) => renderField(f as FieldDef))}
+                      <div className="sb-calc-chips">
+                        <span>Editable examples, not current rates:</span>{" "}
+                        <button
+                          type="button"
+                          onClick={() => setCompareRate("4")}
+                        >
+                          Savings 4%
+                        </button>{" "}
+                        <button
+                          type="button"
+                          onClick={() => setCompareRate("5")}
+                        >
+                          Bond 5%
+                        </button>
+                      </div>
                     </>
                   )}
                 </fieldset>
@@ -1539,11 +1885,13 @@ export function App() {
                     <div className="sb-calc-next">
                       {calcListing.source && (
                         <a
+                          className="sb-calc-next-primary"
                           href={calcListing.source}
                           target="_blank"
                           rel="noreferrer"
                         >
                           Check this listing on {calcListing.platform} ↗
+                          (direct link)
                         </a>
                       )}
                       <button type="button" onClick={compareAnother}>
@@ -1579,16 +1927,24 @@ export function App() {
                   <thead>
                     <tr>
                       <th></th>
-                      {gridRates.map((grr, i) => (
-                        <th key={i}>
-                          Income at {fmtRate(grr)}%
-                          {Math.abs(grr - r) < 0.005 ? " (your rate)" : ""}
-                          {impliedYield != null &&
-                          Math.abs(grr - impliedYield) < 0.05
-                            ? "*"
-                            : ""}
-                        </th>
-                      ))}
+                      {gridRates.map((grr, i) => {
+                        const isUser = Math.abs(grr - r) < 0.005;
+                        const isListing =
+                          impliedYield != null &&
+                          Math.abs(
+                            grr - Math.round(impliedYield * 100) / 100,
+                          ) < 0.005;
+                        return (
+                          <th key={i}>
+                            Income at {fmtRate(grr)}%
+                            {isListing
+                              ? " (listing-stated*)"
+                              : isUser
+                                ? " (your rate)"
+                                : ""}
+                          </th>
+                        );
+                      })}
                     </tr>
                   </thead>
                   <tbody>
@@ -1616,21 +1972,9 @@ export function App() {
                   </tbody>
                 </table>
                 </div>
-                <label className="sb-calc-vchg">
-                  Value change to test (%)
-                  <input
-                    type="number"
-                    inputMode="decimal"
-                    min="0"
-                    max="40"
-                    step="any"
-                    value={valueChg}
-                    onChange={(e) => setValueChg(e.target.value)}
-                  />
-                </label>
                 <p>
                   {impliedYield != null
-                    ? `*The starred column is the selected listing's stated rent vs its published value (exact ratio ${impliedYield.toFixed(4)}%, used as shown), platform-stated and not a forecast. `
+                    ? `*The starred column is the selected listing's stated rent vs its published value (source ratio ${impliedYield.toFixed(4)}%, shown and used at ${(Math.round(impliedYield * 100) / 100).toFixed(2)}%), platform-stated and not a forecast. `
                     : ""}
                   Scenario illustrations from your inputs and the stated fees.
                   Informational only, not investment advice.
@@ -1648,7 +1992,7 @@ export function App() {
                 </figcaption>
                 <div className="sb-chart-frame">
                   <svg
-                    viewBox="0 0 560 170"
+                    viewBox="0 0 560 150"
                     role="img"
                     aria-label="Line chart with three paths for the cumulative net position: property value down, unchanged and up, with a shaded band between them"
                     onMouseMove={(e) => {
@@ -1657,7 +2001,7 @@ export function App() {
                       const n = seriesMid.length;
                       const mi = Math.min(
                         Math.max(
-                          Math.round(((fx - 44) / (560 - 44 - 64)) * (n - 1)),
+                          Math.round(((fx - 44) / (560 - 44 - 110)) * (n - 1)),
                           0,
                         ),
                         n - 1,
@@ -1668,9 +2012,9 @@ export function App() {
                   >
                     {(() => {
                       const W = 560;
-                      const H = 170;
+                      const H = 150;
                       const PL = 44;
-                      const PR = 64;
+                      const PR = 110;
                       const PT = 10;
                       const PB = 24;
                       const n = seriesMid.length;
@@ -1699,7 +2043,7 @@ export function App() {
                       const yTicks: number[] = [];
                       for (
                         let v = Math.ceil(lo / step) * step;
-                        v <= hi;
+                        v <= hi + step * 0.6;
                         v += step
                       ) {
                         const rv = Math.round(v * 100) / 100;
@@ -1772,43 +2116,65 @@ export function App() {
                                 className="leader"
                                 points={`${X(beMonth)},${Y(0) - 4} ${Math.min(X(beMonth) + 12, W - PR - 148)},${Math.max(Y(0) - 16, PT + 6)}`}
                               />
+                              <rect
+                                className="be-chip"
+                                x={Math.min(X(beMonth) + 14, W - PR - 146) - 3}
+                                y={Math.max(Y(0) - 16, PT + 6) - 5}
+                                width="150"
+                                height="12"
+                                rx="2"
+                              />
                               <text
                                 className="be-note"
                                 x={Math.min(X(beMonth) + 14, W - PR - 146)}
-                                y={Math.max(Y(0) - 16, PT + 6) + 3}
+                                y={Math.max(Y(0) - 16, PT + 6) + 4}
                               >
                                 Up-front costs covered, about month{" "}
                                 {Math.round(beMonth)}
                               </text>
                             </g>
                           )}
-                          <text
-                            x={W - 4}
-                            y={Y(seriesMid[n - 1]) + 3}
-                            textAnchor="end"
-                          >
-                            {money(seriesMid[n - 1])}
-                          </text>
-                          {cvNum > 0 && (
-                            <>
+                          {(() => {
+                            const ends = [
+                              ...(cvNum > 0
+                                ? [
+                                    {
+                                      t: `Up ${cvNum}% ${money(seriesHigh[n - 1])}`,
+                                      y: Y(seriesHigh[n - 1]),
+                                      cls: "band-label",
+                                    },
+                                  ]
+                                : []),
+                              {
+                                t: `Unchanged ${money(seriesMid[n - 1])}`,
+                                y: Y(seriesMid[n - 1]),
+                                cls: "",
+                              },
+                              ...(cvNum > 0
+                                ? [
+                                    {
+                                      t: `Down ${cvNum}% ${money(seriesLow[n - 1])}`,
+                                      y: Y(seriesLow[n - 1]),
+                                      cls: "band-label",
+                                    },
+                                  ]
+                                : []),
+                            ].sort((p, q) => p.y - q.y);
+                            for (let k = 1; k < ends.length; k++)
+                              if (ends[k].y < ends[k - 1].y + 11)
+                                ends[k].y = ends[k - 1].y + 11;
+                            return ends.map((e) => (
                               <text
-                                className="band-label"
+                                key={e.t}
+                                className={e.cls || undefined}
                                 x={W - 4}
-                                y={Y(seriesHigh[n - 1]) + 3}
+                                y={e.y + 3}
                                 textAnchor="end"
                               >
-                                {money(seriesHigh[n - 1])}
+                                {e.t}
                               </text>
-                              <text
-                                className="band-label"
-                                x={W - 4}
-                                y={Y(seriesLow[n - 1]) + 3}
-                                textAnchor="end"
-                              >
-                                {money(seriesLow[n - 1])}
-                              </text>
-                            </>
-                          )}
+                            ));
+                          })()}
                         </>
                       );
                     })()}
@@ -1899,7 +2265,7 @@ export function App() {
                                 <td>{money(scenario(r, 0, lBuy, lSell).net)}</td>
                                 <td>
                                   {iy != null
-                                    ? `${money(scenario(iy, 0, lBuy, lSell).net)} (${iy.toFixed(4)}%)`
+                                    ? `${money(scenario(Math.round(iy * 100) / 100, 0, lBuy, lSell).net)} (${iy.toFixed(2)}%)`
                                     : "Figures not published"}
                                 </td>
                               </tr>
@@ -1918,7 +2284,7 @@ export function App() {
                   </>
                 ) : (
                   <p>
-                    Tick 2-3 listings on the cards below to see their net
+                    Tick 2-3 listings on the cards above to see their net
                     outcome side by side here, on the same investment and
                     settings.
                   </p>
@@ -1970,11 +2336,20 @@ export function App() {
                 </li>
               </ol>
               <p>
+                Stated rent / value = monthly rent x 12, divided by the
+                listing&apos;s published value, from the listing&apos;s own
+                figures. The exact source ratio (
+                {impliedYield != null ? `${impliedYield.toFixed(4)}%` : "3.9518%"}{" "}
+                for the selected listing) is shown and used rounded to 2
+                decimals, so the rate you see is the rate the math uses.
+              </p>
+              <p>
                 Fees use the selected platform's stated percentages; Lofty's
                 2.5% market-order fee is optional and off by default. The
                 stress table moves your rate ±2 points and adds the selected
-                listing's stated rent / value at its exact ratio where
-                published - platform-stated, never a forecast. The chart
+                listing's stated rent / value at the same displayed
+                2-decimal ratio where published - platform-stated, never a
+                forecast. The chart
                 charges the buy fee and upfront costs up front and applies
                 the sell fee at sale. Oceanpoint APY and Lofty avg yield are
                 not treated as equivalent cash-income rates. The math lives
@@ -1984,320 +2359,6 @@ export function App() {
               </p>
             </details>
           </section>
-          <div className="sb-controls">
-            <div className="sb-control">
-              <label htmlFor="f-country">Country context</label>
-              <select
-                id="f-country"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-              >
-                {COUNTRIES.map((c) => (
-                  <option key={c.code} value={c.code}>
-                    {c.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="sb-control">
-              <label htmlFor="f-platform">Platform</label>
-              <select
-                id="f-platform"
-                value={platform}
-                onChange={(e) => setPlatform(e.target.value)}
-              >
-                <option value="all">All platforms</option>
-                <option>Lofty</option>
-                <option>Oceanpoint</option>
-              </select>
-            </div>
-            <div className="sb-control">
-              <label htmlFor="f-min">Minimum up to</label>
-              <select
-                id="f-min"
-                value={maxMin}
-                onChange={(e) => setMaxMin(Number(e.target.value))}
-              >
-                <option value={10000}>Any amount</option>
-                <option value={50}>$50</option>
-                <option value={100}>$100</option>
-                <option value={500}>$500</option>
-              </select>
-            </div>
-            <div className="sb-control">
-              <label htmlFor="f-sort">Sort by</label>
-              <select
-                id="f-sort"
-                value={sort}
-                onChange={(e) => setSort(e.target.value)}
-              >
-                <option value="min">Source order</option>
-                <option value="name">Listing name</option>
-                <option value="platform">Platform</option>
-                <option value="yield">Stated rent / value</option>
-              </select>
-            </div>
-          </div>
-          <p className="sb-directory-notice">{ELIGIBILITY_NOTE}</p>
-          <div className="sb-result-line">
-            <span>
-              {results.length} of {LISTINGS.length} listings
-            </span>
-            <button
-              type="button"
-              onClick={() => {
-                setPlatform("all");
-                setMaxMin(10000);
-                setSort("min");
-                setCountry("us");
-              }}
-            >
-              Reset filters
-            </button>
-          </div>
-          {results.length === 0 ? (
-            <p className="sb-empty">
-              No verified minimums match this filter. Reset to see the captured
-              listings.
-            </p>
-          ) : (
-            <div className="sb-results">
-              {results.slice(0, visibleCount).map((l) => (
-                <article
-                  key={l.id}
-                  className={`sb-property${picked.includes(l.id) ? " is-picked" : ""}`}
-                >
-                  <div className="sb-property-image">
-                    <img
-                      loading="lazy"
-                      decoding="async"
-                      width="800"
-                      height="520"
-                      src={homeImages[l.id - 1]}
-                      alt={`${l.name}, photo from ${l.platform}`}
-                    />
-                    <span>
-                      {l.platform} photo · {String(l.id).padStart(2, "0")}
-                    </span>
-                  </div>
-                  <div className="sb-property-body">
-                    <div className="sb-property-platform">
-                      <span>{l.platform}</span>
-                      <span>{l.status}</span>
-                    </div>
-                    <h3>{l.name}</h3>
-                    <p className="sb-property-location">{l.city}</p>
-                    <PropertyBadges listing={l} />
-                    <dl className="sb-property-metrics">
-                      <div>
-                        <dt>
-                          {l.platform === "Lofty" ? "Share price" : "Valuation"}
-                        </dt>
-                        <dd>
-                          {l.platform === "Lofty" ? l.quote : l.valuation}
-                        </dd>
-                      </div>
-                      <div>
-                        <dt>{l.yieldLabel}</dt>
-                        <dd>{l.yieldText}</dd>
-                      </div>
-                      {l.platform === "Lofty" && loftyValueTag(l) && (
-                        <div>
-                          <dt>Lofty value tag</dt>
-                          <dd>{loftyValueTag(l)}</dd>
-                        </div>
-                      )}
-                      {l.platform !== "Lofty" && l.asset && (
-                        <div>
-                          <dt>Token</dt>
-                          <dd>{l.asset}</dd>
-                        </div>
-                      )}
-                      {l.platform === "Lofty" && l.valuation && (
-                        <div>
-                          <dt>Property value (Lofty)</dt>
-                          <dd>{l.valuation}</dd>
-                        </div>
-                      )}
-                      {l.platform === "Lofty" && l.monthlyRent && (
-                        <div>
-                          <dt>Monthly rent (Lofty)</dt>
-                          <dd>{l.monthlyRent}</dd>
-                        </div>
-                      )}
-                    </dl>
-                    <p className="sb-yield-note">
-                      {l.platform === "Lofty"
-                        ? "\u201Cavg yield\u201D and the value tag are Lofty's own published figures for this listing; whether the yield is gross or net, and over what period, is not stated in our listing data."
-                        : "APY is Oceanpoint's own published figure, as the platform defines it."}{" "}
-                      A higher yield does not mean lower risk.
-                    </p>
-                    <dl className="sb-property-terms">
-                      {termsFor(l).map((t) => (
-                        <div key={t.label}>
-                          <dt>{t.label}</dt>
-                          <dd>{t.value}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                    <TermNotes listing={l} />
-                    <p className="sb-source-line">
-                      {l.platform === "Lofty"
-                        ? "Captured 4 Nov 2026; value and rent refreshed 5 Nov"
-                        : "Captured 4 Nov 2026"}{" "}
-                      · direct property link under Terms,
-                      scope &amp; sources
-                      {l.assetSource && (
-                        <>
-                          {" "}
-                          ·{" "}
-                          <TextLink href={l.assetSource}>
-                            Token contract ↗
-                          </TextLink>
-                        </>
-                      )}
-                    </p>
-                    <div className="sb-property-actions">
-                      <JoinLink platform={l.platform} />
-                      <button
-                        type="button"
-                        className="file-hover-underline"
-                        onClick={() => openCalculator(l)}
-                      >
-                        Run the numbers ↗
-                      </button>
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={picked.includes(l.id)}
-                          onChange={() => togglePick(l.id)}
-                          disabled={
-                            !picked.includes(l.id) && picked.length >= 3
-                          }
-                        />
-                        <span>
-                          {picked.includes(l.id) ? "Selected" : "Compare"}
-                        </span>
-                      </label>
-                    </div>
-                    <ReferralNote />
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
-          {visibleCount < results.length && (
-            <div className="sb-selection">
-              <span>
-                Showing {Math.min(visibleCount, results.length)} of{" "}
-                {results.length} results
-              </span>
-              <button
-                type="button"
-                onClick={() => setVisibleCount((n) => n + 12)}
-              >
-                Show more listings
-              </button>
-            </div>
-          )}
-          <div
-            className={`sb-selection sb-compare-strip${picked.length ? " is-live" : ""}`}
-            aria-live="polite"
-          >
-            <div>
-              <strong>{picked.length} of 3 selected</strong>
-              <span>
-                {picked.length < 2
-                  ? "Choose 2-3 listings to compare."
-                  : "Compare the trade-offs, not just the yield."}
-              </span>
-            </div>
-            <div>
-              <button
-                type="button"
-                disabled={picked.length < 2}
-                onClick={() => setCompareOpen(!compareOpen)}
-              >
-                {compareOpen ? "Hide comparison" : "Compare selected"}
-              </button>
-              {picked.length > 0 && (
-                <button
-                  type="button"
-                  className="sb-text-button"
-                  onClick={() => {
-                    setPicked([]);
-                    setCompareOpen(false);
-                  }}
-                >
-                  Clear
-                </button>
-              )}
-            </div>
-          </div>
-          {compareOpen && pickedListings.length >= 2 && (
-            <div className="sb-comparison">
-              <div className="sb-comparison-heading">
-                <h3>Your comparison</h3>
-                <p>
-                  No overall score. Lower entry cost does not mean lower risk.
-                </p>
-              </div>
-              <div className="sb-comparison-options">
-                {pickedListings.map((l) => (
-                  <article key={l.id}>
-                    <p className="sb-property-platform">
-                      {String(l.id).padStart(2, "0")} · {l.platform}
-                    </p>
-                    <h4>{l.name}</h4>
-                    <dl>
-                      <div>
-                        <dt>
-                          {l.platform === "Lofty" ? "Share price" : "Valuation"}
-                        </dt>
-                        <dd>
-                          {l.platform === "Lofty" ? l.quote : l.valuation}
-                        </dd>
-                      </div>
-                      <div>
-                        <dt>{l.yieldLabel}</dt>
-                        <dd>{l.yieldText}</dd>
-                      </div>
-                      <div>
-                        <dt>Property type</dt>
-                        <dd>{l.type}</dd>
-                      </div>
-                      <div>
-                        <dt>Location</dt>
-                        <dd>{l.city}</dd>
-                      </div>
-                      {termsFor(l).map((t) => (
-                        <div key={t.label}>
-                          <dt>{t.label}</dt>
-                          <dd>{t.value}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                    <TermNotes listing={l} />
-                    <p className="sb-comparison-join">
-                      <JoinLink platform={l.platform} />
-                    </p>
-                    <button type="button" onClick={() => openCalculator(l)}>
-                      Run the numbers ↗
-                    </button>
-                    <ReferralNote />
-                  </article>
-                ))}
-              </div>
-              <p className="sb-comparison-note">
-                Before choosing: verify total fees, occupancy assumptions,
-                ownership rights, country restrictions and how you can sell.
-                These are dated source records, not independently audited
-                investments. Platform metric definitions differ; APY and avg
-                yield are not directly comparable. A higher stated yield is not
-                evidence of a better investment.
-              </p>
-            </div>
-          )}
         </section>
 
         <section id="how" className="sb-section">

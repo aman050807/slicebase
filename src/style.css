@@ -2388,6 +2388,14 @@ a.sb-join-link:hover {
   height: auto;
   display: block;
 }
+.sb-calc-chart svg text {
+  font-size: 7px;
+  fill: #4a403b;
+}
+.sb-calc-chart svg rect.be-chip {
+  fill: #fff;
+  opacity: 0.92;
+}
 .sb-calc-chart .line {
   stroke: #6f2923;
   stroke-width: 2;
@@ -2433,11 +2441,18 @@ a.sb-join-link:hover {
   margin: 0;
   text-align: right;
 }
-.sb-calc-check {
+.sb-calculator-inputs label.sb-calc-check {
   display: flex;
   gap: 8px;
   align-items: flex-start;
   font-size: 12.5px;
+}
+.sb-calculator-inputs input[type="checkbox"] {
+  accent-color: #6f2923;
+  margin-top: 2px;
+  width: 15px;
+  height: 15px;
+  flex: none;
 }
 @media (max-width: 700px) {
   .sb-calc-tiles {
@@ -2485,9 +2500,10 @@ a.sb-join-link:hover {
 }
 @media (max-width: 700px) {
   .sb-calc-chart svg text {
-    font-size: 15px;
+    font-size: 13px;
   }
-  .sb-calc-chart svg .be-note {
+  .sb-calc-chart svg .be-note,
+  .sb-calc-chart svg rect.be-chip {
     display: none;
   }
   .sb-calc-chart-legend {
@@ -2548,16 +2564,6 @@ a.sb-join-link:hover {
   color: #b3402f;
   font-weight: 600;
 }
-.sb-calc-vchg {
-  display: block;
-  font-size: 12px;
-  color: #716762;
-  margin-top: 10px;
-}
-.sb-calc-vchg input {
-  margin-left: 8px;
-  width: 90px;
-}
 .sb-calc-next {
   display: flex;
   flex-wrap: wrap;
@@ -2578,6 +2584,15 @@ a.sb-join-link:hover {
 .sb-calc-next a:hover,
 .sb-calc-next button:hover {
   border-color: #6f2923;
+}
+.sb-calc-next a.sb-calc-next-primary {
+  background: #6f2923;
+  border-color: #6f2923;
+  color: #fff;
+  font-weight: 600;
+}
+.sb-calc-next a.sb-calc-next-primary:hover {
+  background: #5d211c;
 }
 .sb-calc-next-note {
   font-size: 10.5px;
@@ -2638,6 +2653,43 @@ a.sb-join-link:hover {
 }
 .sb-chart-sliders input[type="range"] {
   width: 100%;
+  accent-color: #6f2923;
+}
+.sb-calc-notes {
+  font-size: 12px;
+  color: #716762;
+  margin: 8px 0;
+}
+.sb-calc-notes summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #5d534e;
+}
+.sb-calc-notes p {
+  margin: 6px 0 0;
+  line-height: 1.7;
+}
+.sb-calc-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #716762;
+}
+.sb-calc-chips button {
+  border: 1px solid var(--dir-rule, #d8cfc8);
+  border-radius: 999px;
+  background: #fff;
+  color: #6f2923;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 11px;
+  cursor: pointer;
+}
+.sb-calc-chips button:hover {
+  border-color: #6f2923;
 }
 .sb-calculator-method ol {
   font-size: 12px;
