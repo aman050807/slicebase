@@ -3,6 +3,7 @@ import { TextLink } from "./components/TextLink";
 import "./style.css";
 import brandSymbol from "./photos/slicebase-symbol.png";
 import listingData from "./listings.json";
+import meta from "./meta.json";
 import {
   calcScenario,
   feeBreakEvenMonths,
@@ -13,218 +14,14 @@ import {
   seriesBreakEvenMonth,
   irrAnnualPct,
 } from "./calc";
-import photo0 from "./photos/listings/lofty-1.jpg";
-import photo1 from "./photos/listings/lofty-2.jpg";
-import photo2 from "./photos/listings/lofty-3.jpg";
-import photo3 from "./photos/listings/lofty-4.jpg";
-import photo4 from "./photos/listings/lofty-5.jpg";
-import photo5 from "./photos/listings/lofty-6.jpg";
-import photo6 from "./photos/listings/lofty-7.jpg";
-import photo7 from "./photos/listings/lofty-8.jpg";
-import photo8 from "./photos/listings/lofty-9.jpg";
-import photo9 from "./photos/listings/lofty-10.jpg";
-import photo10 from "./photos/listings/lofty-11.jpg";
-import photo11 from "./photos/listings/lofty-12.jpg";
-import photo12 from "./photos/listings/lofty-13.jpg";
-import photo13 from "./photos/listings/lofty-14.jpg";
-import photo14 from "./photos/listings/lofty-15.jpg";
-import photo15 from "./photos/listings/lofty-16.jpg";
-import photo16 from "./photos/listings/lofty-17.jpg";
-import photo17 from "./photos/listings/lofty-18.jpg";
-import photo18 from "./photos/listings/lofty-19.jpg";
-import photo19 from "./photos/listings/lofty-20.jpg";
-import photo20 from "./photos/listings/lofty-21.jpg";
-import photo21 from "./photos/listings/lofty-22.jpg";
-import photo22 from "./photos/listings/lofty-23.jpg";
-import photo23 from "./photos/listings/lofty-24.jpg";
-import photo24 from "./photos/listings/lofty-25.jpg";
-import photo25 from "./photos/listings/lofty-26.jpg";
-import photo26 from "./photos/listings/lofty-27.jpg";
-import photo27 from "./photos/listings/lofty-28.jpg";
-import photo28 from "./photos/listings/lofty-29.jpg";
-import photo29 from "./photos/listings/lofty-30.jpg";
-import photo30 from "./photos/listings/lofty-31.jpg";
-import photo31 from "./photos/listings/lofty-32.jpg";
-import photo32 from "./photos/listings/lofty-33.jpg";
-import photo33 from "./photos/listings/lofty-34.jpg";
-import photo34 from "./photos/listings/lofty-35.jpg";
-import photo35 from "./photos/listings/lofty-36.jpg";
-import photo36 from "./photos/listings/lofty-37.jpg";
-import photo37 from "./photos/listings/lofty-38.jpg";
-import photo38 from "./photos/listings/lofty-39.jpg";
-import photo39 from "./photos/listings/lofty-40.jpg";
-import photo40 from "./photos/listings/lofty-41.jpg";
-import photo41 from "./photos/listings/lofty-42.jpg";
-import photo42 from "./photos/listings/lofty-43.jpg";
-import photo43 from "./photos/listings/lofty-44.jpg";
-import photo44 from "./photos/listings/lofty-45.jpg";
-import photo45 from "./photos/listings/lofty-46.jpg";
-import photo46 from "./photos/listings/lofty-47.jpg";
-import photo47 from "./photos/listings/lofty-48.jpg";
-import photo48 from "./photos/listings/lofty-49.jpg";
-import photo49 from "./photos/listings/lofty-50.jpg";
-import photo50 from "./photos/listings/lofty-51.jpg";
-import photo51 from "./photos/listings/lofty-52.jpg";
-import photo52 from "./photos/listings/lofty-53.jpg";
-import photo53 from "./photos/listings/lofty-54.jpg";
-import photo54 from "./photos/listings/lofty-55.jpg";
-import photo55 from "./photos/listings/lofty-56.jpg";
-import photo56 from "./photos/listings/lofty-57.jpg";
-import photo57 from "./photos/listings/lofty-58.jpg";
-import photo58 from "./photos/listings/lofty-59.jpg";
-import photo59 from "./photos/listings/lofty-60.jpg";
-import photo60 from "./photos/listings/lofty-61.jpg";
-import photo61 from "./photos/listings/lofty-62.jpg";
-import photo62 from "./photos/listings/lofty-63.jpg";
-import photo63 from "./photos/listings/lofty-64.jpg";
-import photo64 from "./photos/listings/lofty-65.jpg";
-import photo65 from "./photos/listings/lofty-66.jpg";
-import photo66 from "./photos/listings/lofty-67.jpg";
-import photo67 from "./photos/listings/lofty-68.jpg";
-import photo68 from "./photos/listings/lofty-69.jpg";
-import photo69 from "./photos/listings/lofty-70.jpg";
-import photo70 from "./photos/listings/lofty-71.jpg";
-import photo71 from "./photos/listings/lofty-72.jpg";
-import photo72 from "./photos/listings/lofty-73.jpg";
-import photo73 from "./photos/listings/lofty-74.jpg";
-import photo74 from "./photos/listings/lofty-75.jpg";
-import photo75 from "./photos/listings/lofty-76.jpg";
-import photo76 from "./photos/listings/lofty-77.jpg";
-import photo77 from "./photos/listings/lofty-78.jpg";
-import photo78 from "./photos/listings/lofty-79.jpg";
-import photo79 from "./photos/listings/lofty-80.jpg";
-import photo80 from "./photos/listings/lofty-81.jpg";
-import photo81 from "./photos/listings/lofty-82.jpg";
-import photo82 from "./photos/listings/lofty-83.jpg";
-import photo83 from "./photos/listings/lofty-84.jpg";
-import photo84 from "./photos/listings/ocean-1.jpg";
-import photo85 from "./photos/listings/ocean-2.jpg";
-import photo86 from "./photos/listings/ocean-3.jpg";
-import photo87 from "./photos/listings/ocean-4.jpg";
-import photo88 from "./photos/listings/ocean-5.jpg";
-import photo89 from "./photos/listings/ocean-6.jpg";
-import photo90 from "./photos/listings/ocean-7.jpg";
-import photo91 from "./photos/listings/ocean-8.jpg";
-import photo92 from "./photos/listings/ocean-9.jpg";
-import photo93 from "./photos/listings/ocean-10.jpg";
-import photo94 from "./photos/listings/ocean-11.jpg";
-import photo95 from "./photos/listings/ocean-12.jpg";
-import photo96 from "./photos/listings/ocean-13.jpg";
-import photo97 from "./photos/listings/ocean-14.jpg";
-import photo98 from "./photos/listings/ocean-15.jpg";
-import photo99 from "./photos/listings/ocean-16.jpg";
-import photo100 from "./photos/listings/ocean-17.jpg";
-import photo101 from "./photos/listings/ocean-18.jpg";
-import photo102 from "./photos/listings/ocean-19.jpg";
-import photo103 from "./photos/listings/ocean-20.jpg";
-import photo104 from "./photos/listings/ocean-21.jpg";
-const homeImages = [
-  photo0,
-  photo1,
-  photo2,
-  photo3,
-  photo4,
-  photo5,
-  photo6,
-  photo7,
-  photo8,
-  photo9,
-  photo10,
-  photo11,
-  photo12,
-  photo13,
-  photo14,
-  photo15,
-  photo16,
-  photo17,
-  photo18,
-  photo19,
-  photo20,
-  photo21,
-  photo22,
-  photo23,
-  photo24,
-  photo25,
-  photo26,
-  photo27,
-  photo28,
-  photo29,
-  photo30,
-  photo31,
-  photo32,
-  photo33,
-  photo34,
-  photo35,
-  photo36,
-  photo37,
-  photo38,
-  photo39,
-  photo40,
-  photo41,
-  photo42,
-  photo43,
-  photo44,
-  photo45,
-  photo46,
-  photo47,
-  photo48,
-  photo49,
-  photo50,
-  photo51,
-  photo52,
-  photo53,
-  photo54,
-  photo55,
-  photo56,
-  photo57,
-  photo58,
-  photo59,
-  photo60,
-  photo61,
-  photo62,
-  photo63,
-  photo64,
-  photo65,
-  photo66,
-  photo67,
-  photo68,
-  photo69,
-  photo70,
-  photo71,
-  photo72,
-  photo73,
-  photo74,
-  photo75,
-  photo76,
-  photo77,
-  photo78,
-  photo79,
-  photo80,
-  photo81,
-  photo82,
-  photo83,
-  photo84,
-  photo85,
-  photo86,
-  photo87,
-  photo88,
-  photo89,
-  photo90,
-  photo91,
-  photo92,
-  photo93,
-  photo94,
-  photo95,
-  photo96,
-  photo97,
-  photo98,
-  photo99,
-  photo100,
-  photo101,
-  photo102,
-  photo103,
-  photo104,
-];
+const photoModules = import.meta.glob("./photos/listings/*.{jpg,jpeg,png,webp}", {
+  eager: true,
+  import: "default",
+}) as Record<string, string>;
+const photoByFile: Record<string, string> = {};
+for (const [path, url] of Object.entries(photoModules)) {
+  photoByFile[path.split("/").pop() as string] = url;
+}
 const money = (n: number) =>
   new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -249,8 +46,29 @@ type Listing = {
   monthlyRent?: string;
   valuation: string | null;
   rawMetrics: string | null;
+  photo: string;
+  delisted?: boolean;
+  delistedAt?: string;
+  checkedAt?: string;
 };
 const LISTINGS = listingData as Listing[];
+const dayFmt = (iso: string) =>
+  new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "Asia/Kolkata",
+  }).format(new Date(iso.length === 10 ? iso + "T12:00:00+05:30" : iso));
+const CAPTURED = dayFmt(meta.capturedAt);
+// Freshness claim = the OLDER of the two platform refreshes, so the page
+// never implies a platform was re-read when only the other one was.
+const REFRESHED = dayFmt(
+  [meta.loftyRefreshedAt, meta.oceanpointRefreshedAt].sort()[0],
+);
+const N_LOFTY = LISTINGS.filter((l) => l.platform === "Lofty").length;
+const N_OCEAN = LISTINGS.filter((l) => l.platform === "Oceanpoint").length;
+const N_ALL = LISTINGS.length;
+const N_OCEAN_MISSING = Math.max(0, meta.oceanpointReported - N_OCEAN);
 const valuationNumber = (v: string | null) =>
   v ? Number(v.replace(/[^0-9.]/g, "")) : 0;
 /** Stated gross rent vs published value for a listing; null when the
@@ -316,6 +134,8 @@ function loftyValueTag(l: Listing): string | null {
   return parts.length === 3 ? parts[2] : null;
 }
 function liquidityFor(l: Listing): { text: string; live: boolean } {
+  if (l.delisted)
+    return { text: "No longer shown on the platform marketplace", live: false };
   if (l.platform === "Lofty")
     return { text: "Secondary market: Lofty exchange", live: true };
   if (l.status === "TRADING")
@@ -365,7 +185,7 @@ const COUNTRIES = [
 ];
 
 const ELIGIBILITY_NOTE =
-  "Last updated: 4 Nov 2026. 84 Lofty listings and 21 Oceanpoint listings collected from their catalogs. Oceanpoint reports 77 properties; 56 are not captured in this view, so coverage is incomplete. Quotes and status can change. Platform terms below are checked separately from property metrics. Exact order minimums and full property costs remain unverified. Country selection is context only, not an eligibility filter.";
+  `Last updated: ${REFRESHED}. ${N_LOFTY} Lofty listings and ${N_OCEAN} Oceanpoint listings collected from their catalogs. Oceanpoint reports ${meta.oceanpointReported} properties; ${N_OCEAN_MISSING} are not captured in this view, so coverage is incomplete. Quotes and status can change. Platform terms below are checked separately from property metrics. Exact order minimums and full property costs remain unverified. Country selection is context only, not an eligibility filter.`;
 
 type Term = { label: string; value: string };
 function termsFor(l: Listing): Term[] {
@@ -1197,7 +1017,7 @@ export function App() {
             </div>
           </div>
           <p className="sb-index-note">
-            Listings captured 4 Nov 2026; page last reviewed 5 Nov 2026.
+            Listings first captured {CAPTURED}; last refreshed {REFRESHED}.
           </p>
           <div className="sb-controls">
             <div className="sb-control">
@@ -1292,13 +1112,14 @@ export function App() {
                       decoding="async"
                       width="800"
                       height="520"
-                      src={homeImages[l.id - 1]}
+                      src={photoByFile[l.photo]}
                       alt={`${l.name}, photo from ${l.platform}`}
                     />
                   </div>
                   <div className="sb-property-body">
                     <div className="sb-property-platform">
                       <span>{l.platform}</span>
+                      {l.delisted && <span>No longer listed</span>}
                     </div>
                     <h3>{l.name}</h3>
                     <p className="sb-property-location">{l.city}</p>
@@ -2558,10 +2379,10 @@ export function App() {
               <div className="sb-question-answer">
                 <p>
                   These records and photos were captured from Lofty and
-                  Oceanpoint's live marketplaces on 4 Nov 2026. They are dated
+                  Oceanpoint's live marketplaces and refreshed on {REFRESHED}. They are dated
                   records, not live offers or independently verified
                   investment advice. Oceanpoint
-                  coverage is incomplete: 21 captured against 77 reported. Check
+                  coverage is incomplete: {N_OCEAN} captured against {meta.oceanpointReported} reported. Check
                   the source for current availability, terms and eligibility.
                 </p>
               </div>
@@ -2674,10 +2495,10 @@ export function App() {
           <h2>How the data is collected.</h2>
           <p className="sb-info-text">
             Listing facts and one photo per property are collected from the
-            platforms&apos; own public pages. This directory was captured on 4
-            Nov 2026; per-listing values and monthly rents were refreshed from
-            Lofty&apos;s property pages on 5 Nov 2026. It covers 84 Lofty and
-            21 Oceanpoint listings; Oceanpoint reports 77 properties, so that
+            platforms&apos; own public pages. This directory was first captured on {CAPTURED}
+            and is re-read from the platforms&apos; public pages about hourly;
+            the last refresh was {REFRESHED}. It covers {N_LOFTY} Lofty and
+            {N_OCEAN} Oceanpoint listings; Oceanpoint reports {meta.oceanpointReported} properties, so that
             coverage is incomplete. Platform-stated fees (checked 5 Nov 2026)
             come from the platforms&apos; own pages and are linked on every
             card. Figures labeled as a platform&apos;s own (avg yield, value
@@ -2694,8 +2515,8 @@ export function App() {
               packages, DAOs or individual units of one building.
             </li>
             <li>
-              The valuation total covers the 103 of 105 listings that publish
-              a value (82 Lofty, 21 Oceanpoint); 2 Lofty DAOs publish none.
+              The valuation total covers the {LISTINGS.filter((l) => valuationNumber(l.valuation) > 0).length} of {N_ALL} listings that publish
+              a value; the rest publish none.
             </li>
             <li>
               Lofty publishes a sector per listing; Oceanpoint does not, so
@@ -2767,8 +2588,8 @@ export function App() {
           <span>Source records · Informational only</span>
           <p>
             Listing facts and one photo per property are sourced from Lofty and
-            Oceanpoint, checked 4 Nov 2026. 84 Lofty and 21 Oceanpoint records
-            captured; Oceanpoint reports 77, so its coverage is incomplete. Not
+            Oceanpoint, refreshed {REFRESHED}. {N_LOFTY} Lofty and {N_OCEAN} Oceanpoint records
+            captured; Oceanpoint reports {meta.oceanpointReported}, so its coverage is incomplete. Not
             live quotes. Referral links may earn us rewards. Data reuse
             permission does not imply endorsement. Fractional property
             carries

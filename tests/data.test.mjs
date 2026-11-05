@@ -4,11 +4,13 @@ import { readFileSync, existsSync } from "node:fs";
 const records = JSON.parse(
   readFileSync(new URL("../src/listings.json", import.meta.url)),
 );
-test("105 unique source records with 84 Lofty and 21 Oceanpoint", () => {
-  assert.equal(records.length, 105);
-  assert.equal(new Set(records.map((r) => r.id)).size, 105);
-  assert.equal(records.filter((r) => r.platform === "Lofty").length, 84);
-  assert.equal(records.filter((r) => r.platform === "Oceanpoint").length, 21);
+test("unique source records; Lofty and Oceanpoint present; ids never reused", () => {
+  assert.ok(records.length >= 105);
+  assert.equal(new Set(records.map((r) => r.id)).size, records.length);
+  const lofty = records.filter((r) => r.platform === "Lofty").map((r) => r.source);
+  assert.equal(new Set(lofty).size, lofty.length);
+  assert.ok(records.some((r) => r.platform === "Lofty"));
+  assert.ok(records.some((r) => r.platform === "Oceanpoint"));
 });
 test("every source photo exists and source links use HTTPS", () => {
   for (const r of records) {

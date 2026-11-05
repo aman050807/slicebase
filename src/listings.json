@@ -8,14 +8,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$49.90/share",
+    "quote": "$50.01/share",
     "yieldLabel": "avg yield",
     "yieldText": "6.9%",
     "source": "https://www.lofty.ai/property_deal/2820-Rucker-Ave_Everett-WA-98201",
     "photo": "lofty-1.jpg",
-    "rawMetrics": "$49.90/share · 6.9% avg yield · 7% Overvalued",
+    "rawMetrics": "$50.01/share · 6.9% avg yield · 7% Overvalued",
     "valuation": "$3,795,700",
-    "monthlyRent": "$12,500.00"
+    "monthlyRent": "$12,500.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 2,
@@ -33,7 +34,8 @@
     "photo": "lofty-2.jpg",
     "rawMetrics": "$39.12/share · 11.6% avg yield · 6% Undervalued",
     "valuation": "$289,600",
-    "monthlyRent": "$2,105.12"
+    "monthlyRent": "$2,105.12",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 3,
@@ -44,14 +46,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$44.99/share",
+    "quote": "$45.00/share",
     "yieldLabel": "avg yield",
     "yieldText": "15.4%",
     "source": "https://www.lofty.ai/property_deal/4506-S-Fallwood-Ct_Columbia-MO-65203",
     "photo": "lofty-3.jpg",
-    "rawMetrics": "$44.99/share · 15.4% avg yield · 2% Overvalued",
+    "rawMetrics": "$45.00/share · 15.4% avg yield · 2% Overvalued",
     "valuation": "$465,150",
-    "monthlyRent": "$2,039.58"
+    "monthlyRent": "$2,039.58",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 4,
@@ -69,7 +72,8 @@
     "photo": "lofty-4.jpg",
     "rawMetrics": "$40.60/share · 10.5% avg yield · 18% Undervalued",
     "valuation": "$2,367,550",
-    "monthlyRent": "$8,057.34"
+    "monthlyRent": "$8,057.34",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 5,
@@ -87,7 +91,8 @@
     "photo": "lofty-5.jpg",
     "rawMetrics": "$18.90/share · 4.1% avg yield · 19% Undervalued",
     "valuation": "$371,050",
-    "monthlyRent": "$9,491.26"
+    "monthlyRent": "$9,491.26",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 6,
@@ -105,7 +110,8 @@
     "photo": "lofty-6.jpg",
     "rawMetrics": "$34.99/share · 6.3% avg yield · 23% Undervalued",
     "valuation": "$302,026",
-    "monthlyRent": "$1,829.95"
+    "monthlyRent": "$1,829.95",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 7,
@@ -123,7 +129,8 @@
     "photo": "lofty-7.jpg",
     "rawMetrics": "$44.00/share · 2.2% avg yield · 19% Overvalued",
     "valuation": "$394,050",
-    "monthlyRent": "$2,281.10"
+    "monthlyRent": "$2,281.10",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 8,
@@ -141,7 +148,8 @@
     "photo": "lofty-8.jpg",
     "rawMetrics": "$22.47/share · 12.1% avg yield · 2% Undervalued",
     "valuation": "$761,450",
-    "monthlyRent": "$3,162.59"
+    "monthlyRent": "$3,162.59",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 9,
@@ -159,7 +167,8 @@
     "photo": "lofty-9.jpg",
     "rawMetrics": "$30.49/share · 5.0% avg yield · 4% Overvalued",
     "valuation": "$245,399.33",
-    "monthlyRent": "$1,705.00"
+    "monthlyRent": "$1,705.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 10,
@@ -170,14 +179,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$56.00/share",
+    "quote": "$56.20/share",
     "yieldLabel": "avg yield",
     "yieldText": "14.8%",
     "source": "https://www.lofty.ai/property_deal/1415-Race-St_Cincinnati-OH-45202",
     "photo": "lofty-10.jpg",
-    "rawMetrics": "$56.00/share · 14.8% avg yield · 4% Overvalued",
+    "rawMetrics": "$56.20/share · 14.8% avg yield · 4% Overvalued",
     "valuation": "$622,250",
-    "monthlyRent": "$3,966.00"
+    "monthlyRent": "$3,966.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 11,
@@ -195,7 +205,8 @@
     "photo": "lofty-11.jpg",
     "rawMetrics": "$59.94/share · 16.8% avg yield · 12% Overvalued",
     "valuation": "$1,077,900",
-    "monthlyRent": "$6,944.79"
+    "monthlyRent": "$6,944.79",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 12,
@@ -213,7 +224,8 @@
     "photo": "lofty-12.jpg",
     "rawMetrics": "$50.00/share · 7.1% avg yield · Fairly valued",
     "valuation": "$128,900",
-    "monthlyRent": "$814.42"
+    "monthlyRent": "$814.42",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 13,
@@ -231,7 +243,8 @@
     "photo": "lofty-13.jpg",
     "rawMetrics": "$28.95/share · 4.7% avg yield · 32% Undervalued",
     "valuation": "$273,650",
-    "monthlyRent": "$2,648.00"
+    "monthlyRent": "$2,648.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 14,
@@ -249,7 +262,8 @@
     "photo": "lofty-14.jpg",
     "rawMetrics": "$23.74/share · 11.2% avg yield · 5% Overvalued",
     "valuation": "$627,000",
-    "monthlyRent": "$8,197.92"
+    "monthlyRent": "$8,197.92",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 15,
@@ -267,7 +281,8 @@
     "photo": "lofty-15.jpg",
     "rawMetrics": "$63.90/share · 12.7% avg yield · 24% Overvalued",
     "valuation": "$117,450",
-    "monthlyRent": "$1,945.00"
+    "monthlyRent": "$1,945.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 16,
@@ -285,7 +300,8 @@
     "photo": "lofty-16.jpg",
     "rawMetrics": "$37.10/share · 8.9% avg yield · 25% Undervalued",
     "valuation": "$118,300",
-    "monthlyRent": "$1,425.00"
+    "monthlyRent": "$1,425.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 17,
@@ -303,7 +319,8 @@
     "photo": "lofty-17.jpg",
     "rawMetrics": "$38.55/share · 5.5% avg yield · 22% Undervalued",
     "valuation": "$80,300",
-    "monthlyRent": "$1,250.00"
+    "monthlyRent": "$1,250.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 18,
@@ -321,7 +338,8 @@
     "photo": "lofty-18.jpg",
     "rawMetrics": "$51.94/share · 17.6% avg yield · 3% Overvalued",
     "valuation": "$432,650",
-    "monthlyRent": "$4,669.22"
+    "monthlyRent": "$4,669.22",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 19,
@@ -339,7 +357,8 @@
     "photo": "lofty-19.jpg",
     "rawMetrics": "$43.25/share · 14.8% avg yield · 126% Overvalued",
     "valuation": "$286,250",
-    "monthlyRent": "$3,081.60"
+    "monthlyRent": "$3,081.60",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 20,
@@ -357,7 +376,8 @@
     "photo": "lofty-20.jpg",
     "rawMetrics": "$44.49/share · 13.1% avg yield · 3% Overvalued",
     "valuation": "$637,700",
-    "monthlyRent": "$420.00"
+    "monthlyRent": "$420.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 21,
@@ -368,14 +388,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$16.00/share",
+    "quote": "$15.00/share",
     "yieldLabel": "avg yield",
     "yieldText": "3.2%",
     "source": "https://www.lofty.ai/property_deal/9-Country-Club-Ln-N_Briarcliff-Manor-NY-10510",
     "photo": "lofty-21.jpg",
-    "rawMetrics": "$16.00/share · 3.2% avg yield · 59% Undervalued",
+    "rawMetrics": "$15.00/share · 3.2% avg yield · 61% Undervalued",
     "valuation": "$1,963,650",
-    "monthlyRent": "$11,125.65"
+    "monthlyRent": "$11,125.65",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 22,
@@ -393,7 +414,8 @@
     "photo": "lofty-22.jpg",
     "rawMetrics": "$29.81/share · 11.8% avg yield · 40% Undervalued",
     "valuation": "$375,750",
-    "monthlyRent": "$16,481.78"
+    "monthlyRent": "$16,481.78",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 23,
@@ -411,7 +433,8 @@
     "photo": "lofty-23.jpg",
     "rawMetrics": "$53.88/share · 13.3% avg yield · 25% Overvalued",
     "valuation": "$763,150",
-    "monthlyRent": "$3,600.00"
+    "monthlyRent": "$3,600.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 24,
@@ -429,7 +452,8 @@
     "photo": "lofty-24.jpg",
     "rawMetrics": "$40.43/share · 9.5% avg yield · 14% Undervalued",
     "valuation": "$148,900",
-    "monthlyRent": "$1,660.00"
+    "monthlyRent": "$1,660.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 25,
@@ -447,7 +471,8 @@
     "photo": "lofty-25.jpg",
     "rawMetrics": "$30.85/share · 5.5% avg yield · 44% Undervalued",
     "valuation": "$129,422.93",
-    "monthlyRent": "$1,200.00"
+    "monthlyRent": "$1,200.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 26,
@@ -465,7 +490,8 @@
     "photo": "lofty-26.jpg",
     "rawMetrics": "$49.50/share · 9.2% avg yield · 14% Overvalued",
     "valuation": "$543,550",
-    "monthlyRent": "$2,250.00"
+    "monthlyRent": "$2,250.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 27,
@@ -483,7 +509,8 @@
     "photo": "lofty-27.jpg",
     "rawMetrics": "$40.00/share · 6.0% avg yield · 13% Undervalued",
     "valuation": "$146,476.9",
-    "monthlyRent": "$1,575.00"
+    "monthlyRent": "$1,575.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 28,
@@ -501,7 +528,8 @@
     "photo": "lofty-28.jpg",
     "rawMetrics": "$52.52/share · 7.0% avg yield · 27% Undervalued",
     "valuation": "$97,450",
-    "monthlyRent": "$1,110.00"
+    "monthlyRent": "$1,110.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 29,
@@ -519,7 +547,8 @@
     "photo": "lofty-29.jpg",
     "rawMetrics": "$43.00/share · 17.0% avg yield · 2% Undervalued",
     "valuation": "$295,200",
-    "monthlyRent": "$1,379.09"
+    "monthlyRent": "$1,379.09",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 30,
@@ -530,14 +559,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$24.25/share",
+    "quote": "$24.00/share",
     "yieldLabel": "avg yield",
     "yieldText": "6.5%",
     "source": "https://www.lofty.ai/property_deal/724-3rd-Ave_Watervliet-NY-12189",
     "photo": "lofty-30.jpg",
-    "rawMetrics": "$24.25/share · 6.5% avg yield · 15% Undervalued",
+    "rawMetrics": "$24.00/share · 6.5% avg yield · 15% Undervalued",
     "valuation": "$236,850",
-    "monthlyRent": "$2,430.00"
+    "monthlyRent": "$2,430.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 31,
@@ -555,7 +585,8 @@
     "photo": "lofty-31.jpg",
     "rawMetrics": "$48.00/share · 17.6% avg yield · 1% Overvalued",
     "valuation": "$313,600",
-    "monthlyRent": "$2,912.18"
+    "monthlyRent": "$2,912.18",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 32,
@@ -573,7 +604,8 @@
     "photo": "lofty-32.jpg",
     "rawMetrics": "$48.99/share · 6.6% avg yield · 2% Undervalued",
     "valuation": "$362,400",
-    "monthlyRent": "$3,700.00"
+    "monthlyRent": "$3,700.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 33,
@@ -591,7 +623,8 @@
     "photo": "lofty-33.jpg",
     "rawMetrics": "$59.99/share · 7.3% avg yield · 26% Overvalued",
     "valuation": "$259,800",
-    "monthlyRent": "$1,578.00"
+    "monthlyRent": "$1,578.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 34,
@@ -609,7 +642,8 @@
     "photo": "lofty-34.jpg",
     "rawMetrics": "$49.94/share · 12.6% avg yield · 9% Undervalued",
     "valuation": "$1,352,100",
-    "monthlyRent": "$12,172.00"
+    "monthlyRent": "$12,172.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 35,
@@ -627,7 +661,8 @@
     "photo": "lofty-35.jpg",
     "rawMetrics": "$93.00/share · 22.5% avg yield · 86% Overvalued",
     "valuation": "$279,000",
-    "monthlyRent": "$2,918.11"
+    "monthlyRent": "$2,918.11",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 36,
@@ -645,7 +680,8 @@
     "photo": "lofty-36.jpg",
     "rawMetrics": "$49.99/share · 6.4% avg yield · 23% Overvalued",
     "valuation": "$503,900",
-    "monthlyRent": "$2,934.21"
+    "monthlyRent": "$2,934.21",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 37,
@@ -663,7 +699,8 @@
     "photo": "lofty-37.jpg",
     "rawMetrics": "$39.00/share · 9.8% avg yield · 41% Overvalued",
     "valuation": "$923,050",
-    "monthlyRent": "$4,504.98"
+    "monthlyRent": "$4,504.98",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 38,
@@ -681,7 +718,8 @@
     "photo": "lofty-38.jpg",
     "rawMetrics": "$45.00/share · 7.3% avg yield · 8% Undervalued",
     "valuation": "$142,700",
-    "monthlyRent": "$1,266.80"
+    "monthlyRent": "$1,266.80",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 39,
@@ -699,7 +737,8 @@
     "photo": "lofty-39.jpg",
     "rawMetrics": "$49.45/share · 14.5% avg yield · 1% Undervalued",
     "valuation": "$317,850",
-    "monthlyRent": "$1,595.00"
+    "monthlyRent": "$1,595.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 40,
@@ -717,7 +756,8 @@
     "photo": "lofty-40.jpg",
     "rawMetrics": "$56.49/share · 13.0% avg yield · 12% Overvalued",
     "valuation": "$68,850",
-    "monthlyRent": "$1,350.00"
+    "monthlyRent": "$1,350.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 41,
@@ -735,7 +775,8 @@
     "photo": "lofty-41.jpg",
     "rawMetrics": "$56.39/share · 10.3% avg yield · 8% Overvalued",
     "valuation": "$658,800",
-    "monthlyRent": "$4,256.86"
+    "monthlyRent": "$4,256.86",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 42,
@@ -753,7 +794,8 @@
     "photo": "lofty-42.jpg",
     "rawMetrics": "$55.50/share · 9.1% avg yield · 15% Overvalued",
     "valuation": "$848,400",
-    "monthlyRent": "$5,000.00"
+    "monthlyRent": "$5,000.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 43,
@@ -771,7 +813,8 @@
     "photo": "lofty-43.jpg",
     "rawMetrics": "$24.00/share · 9.0% avg yield · 43% Undervalued",
     "valuation": "$924,600",
-    "monthlyRent": "$6,040.00"
+    "monthlyRent": "$6,040.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 44,
@@ -789,7 +832,8 @@
     "photo": "lofty-44.jpg",
     "rawMetrics": "$55.00/share · 12.3% avg yield · 19% Overvalued",
     "valuation": "$190,200",
-    "monthlyRent": "$400.00"
+    "monthlyRent": "$400.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 45,
@@ -807,7 +851,8 @@
     "photo": "lofty-45.jpg",
     "rawMetrics": "$49.97/share · 5.9% avg yield · 0.05% Undervalued",
     "valuation": "$191,300",
-    "monthlyRent": "$1,548.21"
+    "monthlyRent": "$1,548.21",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 46,
@@ -825,7 +870,8 @@
     "photo": "lofty-46.jpg",
     "rawMetrics": "$450.00/share · 14.2% avg yield · 381% Overvalued",
     "valuation": "$312,000",
-    "monthlyRent": "$2,500.00"
+    "monthlyRent": "$2,500.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 47,
@@ -836,14 +882,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$14.38/share",
+    "quote": "$14.22/share",
     "yieldLabel": "avg yield",
     "yieldText": "8.4%",
     "source": "https://www.lofty.ai/property_deal/5604-Brownfield-Dr-(32-Units)_Lubbock-TX-79414",
     "photo": "lofty-47.jpg",
-    "rawMetrics": "$14.38/share · 8.4% avg yield · 44% Overvalued",
+    "rawMetrics": "$14.22/share · 8.4% avg yield · 43% Overvalued",
     "valuation": "$3,493,600",
-    "monthlyRent": "$13,592.20"
+    "monthlyRent": "$13,592.20",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 48,
@@ -854,14 +901,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$35.49/share",
+    "quote": "$35.90/share",
     "yieldLabel": "avg yield",
     "yieldText": "6.8%",
     "source": "https://www.lofty.ai/property_deal/8201-Madison-Ave_Cleveland-Ohio-44102",
     "photo": "lofty-48.jpg",
-    "rawMetrics": "$35.49/share · 6.8% avg yield · 18% Undervalued",
+    "rawMetrics": "$35.90/share · 6.8% avg yield · 18% Undervalued",
     "valuation": "$433,100",
-    "monthlyRent": "$2,945.09"
+    "monthlyRent": "$2,945.09",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 49,
@@ -879,7 +927,8 @@
     "photo": "lofty-49.jpg",
     "rawMetrics": "$14.33/share · 1.8% avg yield · 75% Undervalued",
     "valuation": "$127,050",
-    "monthlyRent": "$1,345.00"
+    "monthlyRent": "$1,345.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 50,
@@ -897,7 +946,8 @@
     "photo": "lofty-50.jpg",
     "rawMetrics": "$33.49/share · 7.2% avg yield · 37% Undervalued",
     "valuation": "$122,677.8",
-    "monthlyRent": "$0.00"
+    "monthlyRent": "$0.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 51,
@@ -908,14 +958,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$15.40/share",
+    "quote": "$18.73/share",
     "yieldLabel": "avg yield",
     "yieldText": "4.2%",
     "source": "https://www.lofty.ai/property_deal/25-Circle-Dr_Dixmoor-IL-60426",
     "photo": "lofty-51.jpg",
-    "rawMetrics": "$15.40/share · 4.2% avg yield · 70% Undervalued",
+    "rawMetrics": "$18.73/share · 4.2% avg yield · 63% Undervalued",
     "valuation": "$145,264.88",
-    "monthlyRent": "$859.35"
+    "monthlyRent": "$859.35",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 52,
@@ -933,7 +984,8 @@
     "photo": "lofty-52.jpg",
     "rawMetrics": "$10.87/share · 3.0% avg yield · 68% Undervalued",
     "valuation": "$142,643.76",
-    "monthlyRent": "$1,095.00"
+    "monthlyRent": "$1,095.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 53,
@@ -944,14 +996,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$12.59/share",
+    "quote": "$17.00/share",
     "yieldLabel": "avg yield",
     "yieldText": "2.1%",
     "source": "https://www.lofty.ai/property_deal/566-Nash-St_Akron-OH-44306",
     "photo": "lofty-53.jpg",
-    "rawMetrics": "$12.59/share · 2.1% avg yield · 74% Undervalued",
+    "rawMetrics": "$17.00/share · 2.1% avg yield · 66% Undervalued",
     "valuation": "$105,952.32",
-    "monthlyRent": "$973.00"
+    "monthlyRent": "$973.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 54,
@@ -962,14 +1015,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$17.99/share",
+    "quote": "$16.98/share",
     "yieldLabel": "avg yield",
     "yieldText": "3.5%",
     "source": "https://www.lofty.ai/property_deal/7542-and-7656-S-Colfax-Ave_Chicago-IL-60649",
     "photo": "lofty-54.jpg",
-    "rawMetrics": "$17.99/share · 3.5% avg yield · 64% Undervalued",
+    "rawMetrics": "$16.98/share · 3.5% avg yield · 66% Undervalued",
     "valuation": "$755,388",
-    "monthlyRent": "$0.00"
+    "monthlyRent": "$0.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 55,
@@ -987,7 +1041,8 @@
     "photo": "lofty-55.jpg",
     "rawMetrics": "$17.03/share · 7.7% avg yield · 64% Undervalued",
     "valuation": "$130,109.98",
-    "monthlyRent": "$1,275.00"
+    "monthlyRent": "$1,275.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 56,
@@ -1023,7 +1078,8 @@
     "photo": "lofty-57.jpg",
     "rawMetrics": "$17.71/share · 4.0% avg yield · 8% Undervalued",
     "valuation": "$331,176.98",
-    "monthlyRent": "$2,798.50"
+    "monthlyRent": "$2,798.50",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 58,
@@ -1034,14 +1090,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$26.39/share",
+    "quote": "$25.49/share",
     "yieldLabel": "avg yield",
     "yieldText": "5.6%",
     "source": "https://www.lofty.ai/property_deal/3976-Stillwood-Dr_Memphis-TN-38128",
     "photo": "lofty-58.jpg",
-    "rawMetrics": "$26.39/share · 5.6% avg yield · 49% Undervalued",
+    "rawMetrics": "$25.49/share · 5.6% avg yield · 51% Undervalued",
     "valuation": "$203,787.05",
-    "monthlyRent": "$1,135.00"
+    "monthlyRent": "$1,135.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 59,
@@ -1059,7 +1116,8 @@
     "photo": "lofty-59.jpg",
     "rawMetrics": "$20.00/share · 9.8% avg yield · 49% Undervalued",
     "valuation": "$457,450",
-    "monthlyRent": "$2,800.00"
+    "monthlyRent": "$2,800.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 60,
@@ -1070,14 +1128,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$19.55/share",
+    "quote": "$16.00/share",
     "yieldLabel": "avg yield",
     "yieldText": "2.9%",
     "source": "https://www.lofty.ai/property_deal/Ohio-3-Property-Package_Akron-Ohio-44117",
     "photo": "lofty-60.jpg",
-    "rawMetrics": "$19.55/share · 2.9% avg yield · 60% Undervalued",
+    "rawMetrics": "$16.00/share · 2.9% avg yield · 68% Undervalued",
     "valuation": "$304,860",
-    "monthlyRent": "$0.00"
+    "monthlyRent": "$0.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 61,
@@ -1095,7 +1154,8 @@
     "photo": "lofty-61.jpg",
     "rawMetrics": "$38.19/share · 5.5% avg yield · 31% Undervalued",
     "valuation": "$131,341.61",
-    "monthlyRent": "$1,325.00"
+    "monthlyRent": "$1,325.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 62,
@@ -1106,14 +1166,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$13.03/share",
+    "quote": "$13.02/share",
     "yieldLabel": "avg yield",
     "yieldText": "3.7%",
     "source": "https://www.lofty.ai/property_deal/2094-W-34th-Place_Cleveland-OH-44113",
     "photo": "lofty-62.jpg",
-    "rawMetrics": "$13.03/share · 3.7% avg yield · 74% Undervalued",
+    "rawMetrics": "$13.02/share · 3.7% avg yield · 74% Undervalued",
     "valuation": "$194,100",
-    "monthlyRent": "$0.00"
+    "monthlyRent": "$0.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 63,
@@ -1131,7 +1192,8 @@
     "photo": "lofty-63.jpg",
     "rawMetrics": "$36.00/share · 7.7% avg yield · 0.32% Overvalued",
     "valuation": "$209,550",
-    "monthlyRent": "$1,510.00"
+    "monthlyRent": "$1,510.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 64,
@@ -1148,7 +1210,8 @@
     "source": "https://www.lofty.ai/property_deal/Earl-DAO_--",
     "photo": "lofty-64.jpg",
     "rawMetrics": "$45.00/share · 13.3% avg yield · 5% Overvalued",
-    "valuation": null
+    "valuation": null,
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 65,
@@ -1159,14 +1222,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$23.09/share",
+    "quote": "$16.75/share",
     "yieldLabel": "avg yield",
     "yieldText": "3.0%",
     "source": "https://www.lofty.ai/property_deal/927-Euclid-Ave-Apt-10_Miami-Beach-FL-33139",
     "photo": "lofty-65.jpg",
-    "rawMetrics": "$23.09/share · 3.0% avg yield · 53% Undervalued",
+    "rawMetrics": "$16.75/share · 3.0% avg yield · 66% Undervalued",
     "valuation": "$484,599.4",
-    "monthlyRent": "$2,800.00"
+    "monthlyRent": "$2,800.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 66,
@@ -1177,14 +1241,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$8.48/share",
+    "quote": "$24.40/share",
     "yieldLabel": "avg yield",
     "yieldText": "4.5%",
     "source": "https://www.lofty.ai/property_deal/1278-E-187th-St_Cleveland-OH-44110",
     "photo": "lofty-66.jpg",
-    "rawMetrics": "$8.48/share · 4.5% avg yield · 83% Undervalued",
+    "rawMetrics": "$24.40/share · 4.5% avg yield · 51% Undervalued",
     "valuation": "$91,604.08",
-    "monthlyRent": "$950.00"
+    "monthlyRent": "$950.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 67,
@@ -1202,7 +1267,8 @@
     "photo": "lofty-67.jpg",
     "rawMetrics": "$27.84/share · 5.3% avg yield · 58% Undervalued",
     "valuation": "$104,100",
-    "monthlyRent": "$1,100.00"
+    "monthlyRent": "$1,100.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 68,
@@ -1220,7 +1286,8 @@
     "photo": "lofty-68.jpg",
     "rawMetrics": "$31.03/share · 1.9% avg yield · 24% Undervalued",
     "valuation": "$212,100",
-    "monthlyRent": "$2,245.62"
+    "monthlyRent": "$2,245.62",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 69,
@@ -1238,7 +1305,8 @@
     "photo": "lofty-69.jpg",
     "rawMetrics": "$37.49/share · 9.3% avg yield · 12% Undervalued",
     "valuation": "$402,500",
-    "monthlyRent": "$0.00"
+    "monthlyRent": "$0.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 70,
@@ -1249,14 +1317,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$16.29/share",
+    "quote": "$15.00/share",
     "yieldLabel": "avg yield",
     "yieldText": "7.5%",
     "source": "https://www.lofty.ai/property_deal/432-W-Peebles-Rd_Memphis-TN-38109",
     "photo": "lofty-70.jpg",
-    "rawMetrics": "$16.29/share · 7.5% avg yield · 63% Undervalued",
+    "rawMetrics": "$15.00/share · 7.5% avg yield · 66% Undervalued",
     "valuation": "$94,861",
-    "monthlyRent": "$0.00"
+    "monthlyRent": "$0.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 71,
@@ -1267,14 +1336,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$29.66/share",
+    "quote": "$29.64/share",
     "yieldLabel": "avg yield",
     "yieldText": "2.0%",
     "source": "https://www.lofty.ai/property_deal/1677-Walker-Ave_Memphis-TN-38114",
     "photo": "lofty-71.jpg",
-    "rawMetrics": "$29.66/share · 2.0% avg yield · 40% Undervalued",
+    "rawMetrics": "$29.64/share · 2.0% avg yield · 40% Undervalued",
     "valuation": "$213,684.95",
-    "monthlyRent": "$1,430.00"
+    "monthlyRent": "$1,430.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 72,
@@ -1292,7 +1362,8 @@
     "photo": "lofty-72.jpg",
     "rawMetrics": "$39.84/share · 4.1% avg yield · 23% Undervalued",
     "valuation": "$108,963",
-    "monthlyRent": "$1,245.00"
+    "monthlyRent": "$1,245.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 73,
@@ -1303,14 +1374,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$13.80/share",
+    "quote": "$13.89/share",
     "yieldLabel": "avg yield",
     "yieldText": "2.7%",
     "source": "https://www.lofty.ai/property_deal/15555-Millard-Ave_Markham-IL-60428",
     "photo": "lofty-73.jpg",
-    "rawMetrics": "$13.80/share · 2.7% avg yield · 72% Undervalued",
+    "rawMetrics": "$13.89/share · 2.7% avg yield · 72% Undervalued",
     "valuation": "$153,250",
-    "monthlyRent": "$0.00"
+    "monthlyRent": "$0.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 74,
@@ -1328,7 +1400,8 @@
     "photo": "lofty-74.jpg",
     "rawMetrics": "$41.98/share · 5.1% avg yield · 25% Undervalued",
     "valuation": "$74,940",
-    "monthlyRent": "$1,050.00"
+    "monthlyRent": "$1,050.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 75,
@@ -1339,14 +1412,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$28.90/share",
+    "quote": "$17.00/share",
     "yieldLabel": "avg yield",
     "yieldText": "9.0%",
     "source": "https://www.lofty.ai/property_deal/85-104-Alawa-Pl_Waianae-HI-96792",
     "photo": "lofty-75.jpg",
-    "rawMetrics": "$28.90/share · 9.0% avg yield · 34% Undervalued",
+    "rawMetrics": "$17.00/share · 9.0% avg yield · 61% Undervalued",
     "valuation": "$733,450",
-    "monthlyRent": "$1,865.76"
+    "monthlyRent": "$1,865.76",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 76,
@@ -1364,7 +1438,8 @@
     "photo": "lofty-76.jpg",
     "rawMetrics": "$27.00/share · 2.4% avg yield · 46% Undervalued",
     "valuation": "$187,697.91",
-    "monthlyRent": "$0.00"
+    "monthlyRent": "$0.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 77,
@@ -1382,7 +1457,8 @@
     "photo": "lofty-77.jpg",
     "rawMetrics": "$24.00/share · 9.4% avg yield · 48% Undervalued",
     "valuation": "$453,450",
-    "monthlyRent": "$2,400.00"
+    "monthlyRent": "$2,400.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 78,
@@ -1400,7 +1476,8 @@
     "photo": "lofty-78.jpg",
     "rawMetrics": "$28.00/share · 2.6% avg yield · 33% Undervalued",
     "valuation": "$279,236.7",
-    "monthlyRent": "$1,802.42"
+    "monthlyRent": "$1,802.42",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 79,
@@ -1418,7 +1495,8 @@
     "photo": "lofty-79.jpg",
     "rawMetrics": "$22.49/share · 2.4% avg yield · 41% Undervalued",
     "valuation": "$131,033.63",
-    "monthlyRent": "$0.00"
+    "monthlyRent": "$0.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 80,
@@ -1436,7 +1514,8 @@
     "photo": "lofty-80.jpg",
     "rawMetrics": "$42.00/share · 5.2% avg yield · 23% Undervalued",
     "valuation": "$136,614.67",
-    "monthlyRent": "$1,100.00"
+    "monthlyRent": "$1,100.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 81,
@@ -1454,7 +1533,8 @@
     "photo": "lofty-81.jpg",
     "rawMetrics": "$50.00/share · 11.8% avg yield · Fairly valued",
     "valuation": "$562,800",
-    "monthlyRent": "$3,286.11"
+    "monthlyRent": "$3,286.11",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 82,
@@ -1471,7 +1551,8 @@
     "source": "https://www.lofty.ai/property_deal/Universal-Lending-DAO-(ULD)_Sheridan-Wyoming-82801",
     "photo": "lofty-82.jpg",
     "rawMetrics": "$51.97/share · 6.3% avg yield · 16% Undervalued",
-    "valuation": null
+    "valuation": null,
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 83,
@@ -1482,14 +1563,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$55.74/share",
+    "quote": "$51.64/share",
     "yieldLabel": "avg yield",
     "yieldText": "7.6%",
     "source": "https://www.lofty.ai/property_deal/1106-29th-Ave_Rock-Island-IL-61201",
     "photo": "lofty-83.jpg",
-    "rawMetrics": "$55.74/share · 7.6% avg yield · 11% Overvalued",
+    "rawMetrics": "$51.64/share · 7.6% avg yield · 3% Overvalued",
     "valuation": "$82,732.16",
-    "monthlyRent": "$1,378.00"
+    "monthlyRent": "$1,378.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 84,
@@ -1507,7 +1589,8 @@
     "photo": "lofty-84.jpg",
     "rawMetrics": "$50.00/share · 3.9% avg yield · Fairly valued",
     "valuation": "$137,250",
-    "monthlyRent": "$0.00"
+    "monthlyRent": "$0.00",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 85,
@@ -1526,7 +1609,8 @@
     "photo": "ocean-1.jpg",
     "rawMetrics": null,
     "valuation": "$23,000",
-    "asset": "BSPT-OCN-0"
+    "asset": "BSPT-OCN-0",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 86,
@@ -1545,7 +1629,8 @@
     "photo": "ocean-2.jpg",
     "rawMetrics": null,
     "valuation": "$950,000",
-    "asset": "BSPT-OCN-1"
+    "asset": "BSPT-OCN-1",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 87,
@@ -1564,7 +1649,8 @@
     "photo": "ocean-3.jpg",
     "rawMetrics": null,
     "valuation": "$764,000",
-    "asset": "BSPT-OCN-15"
+    "asset": "BSPT-OCN-15",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 88,
@@ -1583,7 +1669,8 @@
     "photo": "ocean-4.jpg",
     "rawMetrics": null,
     "valuation": "$705,000",
-    "asset": "BSPT-OCN-3"
+    "asset": "BSPT-OCN-3",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 89,
@@ -1602,7 +1689,8 @@
     "photo": "ocean-5.jpg",
     "rawMetrics": null,
     "valuation": "$1,170,000",
-    "asset": "BSPT-OCN-25"
+    "asset": "BSPT-OCN-25",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 90,
@@ -1621,7 +1709,8 @@
     "photo": "ocean-6.jpg",
     "rawMetrics": null,
     "valuation": "$2,175,000",
-    "asset": "BSPT-OCN-16"
+    "asset": "BSPT-OCN-16",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 91,
@@ -1640,7 +1729,8 @@
     "photo": "ocean-7.jpg",
     "rawMetrics": null,
     "valuation": "$475,000",
-    "asset": "BSPT-OCN-11"
+    "asset": "BSPT-OCN-11",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 92,
@@ -1659,7 +1749,8 @@
     "photo": "ocean-8.jpg",
     "rawMetrics": null,
     "valuation": "$1,475,000",
-    "asset": "BSPT-OCN-10"
+    "asset": "BSPT-OCN-10",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 93,
@@ -1678,7 +1769,8 @@
     "photo": "ocean-9.jpg",
     "rawMetrics": null,
     "valuation": "$2,650,000",
-    "asset": "BSPT-OCN-9"
+    "asset": "BSPT-OCN-9",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 94,
@@ -1697,7 +1789,8 @@
     "photo": "ocean-10.jpg",
     "rawMetrics": null,
     "valuation": "$640,000",
-    "asset": "BSPT-OCN-4"
+    "asset": "BSPT-OCN-4",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 95,
@@ -1716,7 +1809,8 @@
     "photo": "ocean-11.jpg",
     "rawMetrics": null,
     "valuation": "$540,000",
-    "asset": "BSPT-OCN-2"
+    "asset": "BSPT-OCN-2",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 96,
@@ -1735,7 +1829,8 @@
     "photo": "ocean-12.jpg",
     "rawMetrics": null,
     "valuation": "$1,190,000",
-    "asset": "BSPT-OCN-5"
+    "asset": "BSPT-OCN-5",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 97,
@@ -1754,7 +1849,8 @@
     "photo": "ocean-13.jpg",
     "rawMetrics": null,
     "valuation": "$279,411",
-    "asset": "BSPT-OCN-44"
+    "asset": "BSPT-OCN-44",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 98,
@@ -1773,7 +1869,8 @@
     "photo": "ocean-14.jpg",
     "rawMetrics": null,
     "valuation": "$1,805,123",
-    "asset": "BSPT-OCN-39"
+    "asset": "BSPT-OCN-39",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 99,
@@ -1792,7 +1889,8 @@
     "photo": "ocean-15.jpg",
     "rawMetrics": null,
     "valuation": "$186,201",
-    "asset": "BSPT-OCN-47"
+    "asset": "BSPT-OCN-47",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 100,
@@ -1811,7 +1909,8 @@
     "photo": "ocean-16.jpg",
     "rawMetrics": null,
     "valuation": "$692,197",
-    "asset": "BSPT-OCN-46"
+    "asset": "BSPT-OCN-46",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 101,
@@ -1830,7 +1929,8 @@
     "photo": "ocean-17.jpg",
     "rawMetrics": null,
     "valuation": "$262,821",
-    "asset": "BSPT-OCN-45"
+    "asset": "BSPT-OCN-45",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 102,
@@ -1849,7 +1949,8 @@
     "photo": "ocean-18.jpg",
     "rawMetrics": null,
     "valuation": "$204,756",
-    "asset": "BSPT-OCN-43"
+    "asset": "BSPT-OCN-43",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 103,
@@ -1868,7 +1969,8 @@
     "photo": "ocean-19.jpg",
     "rawMetrics": null,
     "valuation": "$249,396",
-    "asset": "BSPT-OCN-42"
+    "asset": "BSPT-OCN-42",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 104,
@@ -1887,7 +1989,8 @@
     "photo": "ocean-20.jpg",
     "rawMetrics": null,
     "valuation": "$234,880",
-    "asset": "BSPT-OCN-41"
+    "asset": "BSPT-OCN-41",
+    "checkedAt": "2026-11-05"
   },
   {
     "id": 105,
@@ -1906,6 +2009,7 @@
     "photo": "ocean-21.jpg",
     "rawMetrics": null,
     "valuation": "$184,236",
-    "asset": "BSPT-OCN-40"
+    "asset": "BSPT-OCN-40",
+    "checkedAt": "2026-11-05"
   }
 ]
