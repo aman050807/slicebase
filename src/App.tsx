@@ -3,6 +3,16 @@ import { TextLink } from "./components/TextLink";
 import "./style.css";
 import brandSymbol from "./photos/slicebase-symbol.png";
 import listingData from "./listings.json";
+import {
+  calcScenario,
+  feeBreakEvenMonths,
+  annualizedNetPct,
+  sensitivityPer10Pct,
+  valueFallBreakEven,
+  chartSeries,
+  seriesBreakEvenMonth,
+  irrAnnualPct,
+} from "./calc";
 import photo0 from "./photos/listings/lofty-1.jpg";
 import photo1 from "./photos/listings/lofty-2.jpg";
 import photo2 from "./photos/listings/lofty-3.jpg";
@@ -243,6 +253,24 @@ type Listing = {
 const LISTINGS = listingData as Listing[];
 const valuationNumber = (v: string | null) =>
   v ? Number(v.replace(/[^0-9.]/g, "")) : 0;
+/** Stated gross rent vs published value for a listing; null when the
+ *  listing does not publish both figures. */
+const impliedYieldFor = (l: Listing): number | null => {
+  const lv = valuationNumber(l.valuation);
+  const lr = l.monthlyRent ? Number(l.monthlyRent.replace(/[^0-9.]/g, "")) : 0;
+  return lv > 0 && lr > 0 ? (lr * 12 * 100) / lv : null;
+};
+/** Rate display with meaningful decimals only: 8 stays "8", 3.95 stays
+ *  "3.95". */
+const fmtRate = (v: number): string =>
+  v.toFixed(2).replace(/\.?0+$/, "");
+type FieldDef = [
+  string,
+  string,
+  React.Dispatch<React.SetStateAction<string>>,
+  string,
+  string,
+];
 const compactMoney = (n: number) =>
   n >= 1000000 ? `$${(n / 1000000).toFixed(1)}M` : money(n);
 const INDEX_STATS = (() => {
@@ -561,7 +589,10 @@ export function App() {
         ? a.platform.localeCompare(b.platform) || a.id - b.id
         : sort === "name"
           ? a.name.localeCompare(b.name)
-          : a.id - b.id,
+          : sort === "yield"
+            ? (impliedYieldFor(b) ?? -1) - (impliedYieldFor(a) ?? -1) ||
+              a.id - b.id
+            : a.id - b.id,
     );
     return rows;
   }, [platform, maxMin, sort]);
@@ -574,23 +605,62 @@ export function App() {
     });
   };
 
-  const [calcId, setCalcId] = useState(1);
-  const [calcMode, setCalcMode] = useState<"invest" | "goal">("invest");
-  const [goal, setGoal] = useState("500");
-  const [amount, setAmount] = useState("1000");
-  const [rate, setRate] = useState("8");
-  const [years, setYears] = useState("5");
-  const [upfront, setUpfront] = useState("0");
-  const [annualFees, setAnnualFees] = useState("0");
-  const [includeFees, setIncludeFees] = useState(true);
+  /** Scenario links restore the calculator from the query string. */
+  const calcParams = useMemo(
+    () =>
+      typeof window === "undefined"
+        ? new URLSearchParams()
+        : new URLSearchParams(window.location.search),
+    [],
+  );
+  const qpNum = (k: string, lo: number, hi: number): string | null => {
+    const v = calcParams.get(k);
+    if (v == null || v.trim() === "") return null;
+    const n = Number(v);
+    return Number.isFinite(n) && n >= lo && n <= hi ? String(n) : null;
+  };
+  const initialCalcId = (() => {
+    const id = qpNum("l", 1, 100000);
+    return id != null && LISTINGS.some((l) => l.id === Number(id))
+      ? Number(id)
+      : 1;
+  })();
+  const [calcId, setCalcId] = useState(initialCalcId);
+  const [calcMode, setCalcMode] = useState<"invest" | "goal">(
+    calcParams.get("mode") === "goal" ? "goal" : "invest",
+  );
+  const [goal, setGoal] = useState(qpNum("g", 1, 1000000) ?? "500");
+  const [amount, setAmount] = useState(qpNum("a", 1, 100000000) ?? "1000");
+  /** The rate starts at the selected listing's stated rent / value where
+   *  published (platform-stated, not a forecast); otherwise an 8% example. */
+  const [rate, setRate] = useState(
+    () =>
+      qpNum("r", 0, 100) ??
+      (() => {
+        const iy = impliedYieldFor(
+          LISTINGS.find((l) => l.id === initialCalcId) ?? LISTINGS[0],
+        );
+        return iy != null ? iy.toFixed(2) : "8";
+      })(),
+  );
+  const [years, setYears] = useState(qpNum("y", 1, 30) ?? "5");
+  const [upfront, setUpfront] = useState(qpNum("u", 0, 100000000) ?? "0");
+  const [annualFees, setAnnualFees] = useState(qpNum("c", 0, 100000000) ?? "0");
+  const [includeFees, setIncludeFees] = useState(calcParams.get("fees") !== "0");
   const calcListing = LISTINGS.find((l) => l.id === calcId) ?? LISTINGS[0];
   const calcFees = platformFeesFor(calcListing);
   const calculatorRef = useRef<HTMLElement>(null);
-  const [sellAtEnd, setSellAtEnd] = useState(true);
-  const [includeMarketFee, setIncludeMarketFee] = useState(false);
-  const [taxRate, setTaxRate] = useState("0");
-  const [compareRate, setCompareRate] = useState("");
-  const [chartView, setChartView] = useState<"line" | "bars">("line");
+  const [sellAtEnd, setSellAtEnd] = useState(calcParams.get("sell") !== "0");
+  const [includeMarketFee, setIncludeMarketFee] = useState(
+    calcParams.get("mkt") === "1",
+  );
+  const [taxRate, setTaxRate] = useState(qpNum("tax", 0, 99) ?? "0");
+  const [compareRate, setCompareRate] = useState(qpNum("cmp", 0, 100) ?? "");
+  const [valueChg, setValueChg] = useState("10");
+  const [copied, setCopied] = useState(false);
+  const [chartTip, setChartTip] = useState<{ i: number; px: number } | null>(
+    null,
+  );
   const numeric = [amount, rate, years, upfront, annualFees].map(Number);
   const validCalc =
     [amount, rate, years, upfront, annualFees].every((v) => v.trim() !== "") &&
@@ -622,94 +692,64 @@ export function App() {
     Number.isFinite(cmpNum) &&
     cmpNum >= 0 &&
     cmpNum <= 100;
-  /** Net outcome of one scenario at income rate rr with the property value
-   *  changing by dv (fraction) over the holding period. Sale at the end is
-   *  optional; the sell fee is charged on the sale value. */
+  /** All calculator math lives in src/calc.ts (pure, unit-tested); this
+   *  wrapper keeps the per-listing fee overrides used by the side-by-side
+   *  table. */
+  const calcInp = {
+    amount: a,
+    ratePct: r,
+    years: t,
+    upfront: u,
+    annualCosts: f,
+    buyPct: buyEff,
+    sellPct: sellEff,
+    includeFees,
+    sellAtEnd,
+    taxPct: tn,
+  };
   const scenario = (
     rr: number,
     dv: number,
     buyPctE: number = buyEff,
     sellPctE: number = sellEff,
-  ) => {
-    const buyFee = includeFees ? (a * buyPctE) / 100 : 0;
-    const saleValue = a * (1 + dv);
-    const sellFee =
-      sellAtEnd && includeFees ? (saleValue * sellPctE) / 100 : 0;
-    const annualNet = ((a * rr) / 100) * (1 - tn / 100) - f;
-    const periodIncome = annualNet * t - u;
-    const totalIn = a + buyFee;
-    const saleNet = sellAtEnd ? saleValue - sellFee : 0;
-    const totalBack = periodIncome + saleNet;
-    /** Sold at end: net = income + sale proceeds - investment - fees.
-     *  Held: the principal is still owned, so net = income - fees. */
-    const net = periodIncome + saleNet - buyFee - (sellAtEnd ? a : 0);
-    return {
-      buyFee,
-      sellFee,
-      saleValue,
-      annualNet,
-      periodIncome,
-      totalIn,
-      saleNet,
-      totalBack,
-      net,
-    };
-  };
+  ) =>
+    calcScenario({ ...calcInp, buyPct: buyPctE, sellPct: sellPctE }, rr, dv);
   const base = scenario(r, 0);
   const oneTimeCosts = base.buyFee + base.sellFee + u;
-  const breakEvenMonths =
-    base.annualNet > 0 ? (oneTimeCosts / base.annualNet) * 12 : null;
-  const annualizedNet =
-    base.totalIn > 0 ? (base.net / base.totalIn / t) * 100 : 0;
-  const sensitivity10 =
-    0.1 * a * (1 - (sellAtEnd && includeFees ? sellEff : 0) / 100);
-  const listingVal = valuationNumber(calcListing.valuation);
-  const listingRent = calcListing.monthlyRent
-    ? Number(calcListing.monthlyRent.replace(/[^0-9.]/g, ""))
-    : 0;
-  const impliedYield =
-    listingVal > 0 && listingRent > 0
-      ? (listingRent * 12 * 100) / listingVal
-      : null;
-  /** Same stated rent-vs-published-value ratio for any listing; null when
-   *  the listing does not publish both figures. */
-  const impliedYieldFor = (l: Listing): number | null => {
-    const lv = valuationNumber(l.valuation);
-    const lr = l.monthlyRent ? Number(l.monthlyRent.replace(/[^0-9.]/g, "")) : 0;
-    return lv > 0 && lr > 0 ? (lr * 12 * 100) / lv : null;
-  };
-  /** Stated-figure rate rounded to one decimal so the grid header and the
-   *  cell math use exactly the same rate. */
-  const gridMid = impliedYield != null ? Math.round(impliedYield * 10) / 10 : r;
-  const gridRates = [gridMid + 2, gridMid, Math.max(gridMid - 2, 0.25)];
+  const breakEvenMonths = feeBreakEvenMonths(base, u);
+  const annualizedNet = annualizedNetPct(base, t);
+  const irrNet = irrAnnualPct(calcInp, base);
+  const valueFall = valueFallBreakEven(calcInp);
+  const sensitivity10 = sensitivityPer10Pct(calcInp);
+  const impliedYield = impliedYieldFor(calcListing);
+  /** Stress-table columns: the user's own rate ±2 points, plus the selected
+   *  listing's stated rent / value at its exact ratio when published. */
+  const gridRates = useMemo(() => {
+    const raw = [r + 2, r, Math.max(r - 2, 0.25)];
+    if (impliedYield != null) raw.push(impliedYield);
+    raw.sort((x, y) => y - x);
+    const dedup: number[] = [];
+    raw.forEach((v) => {
+      if (!dedup.some((d) => Math.abs(d - v) < 0.05)) dedup.push(v);
+    });
+    return dedup;
+  }, [r, impliedYield]);
+  /** Value-change magnitude tested in the stress table and chart band. */
+  const cvNum = Math.min(Math.max(Number(valueChg) || 0, 0), 40);
   const gridRows: { label: string; dv: number }[] = [
-    { label: "Value down 10%", dv: -0.1 },
+    { label: `Value down ${cvNum}%`, dv: -cvNum / 100 },
     { label: "Value unchanged", dv: 0 },
-    { label: "Value up 10%", dv: 0.1 },
+    { label: `Value up ${cvNum}%`, dv: cvNum / 100 },
   ];
   const cmpGain = validCmp ? (a * cmpNum * t) / 100 : null;
-  const chartPoints: number[] = [];
-  if (validCalc) {
-    const mCount = Math.max(Math.round(t * 12), 12);
-    const hurdle = (includeFees ? base.buyFee + base.sellFee : 0) + u;
-    for (let m = 0; m <= mCount; m++) {
-      let pos = -hurdle + (base.annualNet * m) / 12;
-      /** Sell fee is already counted in the hurdle; at the end add only the
-       *  value change on sale (zero when the value is unchanged). */
-      if (sellAtEnd && m === mCount) pos += base.saleValue - a;
-      chartPoints.push(pos);
-    }
-  }
-  const breakEvenIdx = chartPoints.findIndex((v) => v >= 0);
-  const breakEvenMonth =
-    breakEvenIdx > 0
-      ? breakEvenIdx -
-        1 +
-        (chartPoints[breakEvenIdx] > chartPoints[breakEvenIdx - 1]
-          ? -chartPoints[breakEvenIdx - 1] /
-            (chartPoints[breakEvenIdx] - chartPoints[breakEvenIdx - 1])
-          : 0)
-      : null;
+  /** Chart series with honest fee timing: the buy fee and upfront costs
+   *  are charged up front; the sell fee and any value change land at
+   *  sale, in the final month. */
+  const seriesLow = validCalc ? chartSeries(calcInp, -cvNum / 100) : [];
+  const seriesMid = validCalc ? chartSeries(calcInp, 0) : [];
+  const seriesHigh = validCalc ? chartSeries(calcInp, cvNum / 100) : [];
+  const beMonth =
+    seriesMid.length > 1 ? seriesBreakEvenMonth(seriesMid) : null;
   const goalNumeric = [goal, rate, annualFees].map(Number);
   const validGoal =
     [goal, rate, annualFees].every((v) => v.trim() !== "") &&
@@ -724,12 +764,117 @@ export function App() {
   const goalAnnualAfterCosts = g * 12;
   const goalInvestment = ((goalGrossNeeded + gf) * 100) / gr;
   const goalRates = [gr + 2, gr, Math.max(gr - 2, 0.25)];
-  const openCalculator = (listing: Listing) => {
+  /** Picking a listing pre-fills the rate from its stated rent / value
+   *  where published; the field stays editable. */
+  const applyListing = (listing: Listing) => {
     setCalcId(listing.id);
+    const iy = impliedYieldFor(listing);
+    if (iy != null) setRate(iy.toFixed(2));
+  };
+  const openCalculator = (listing: Listing) => {
+    applyListing(listing);
     calculatorRef.current?.scrollIntoView({
       behavior: "smooth",
       block: "start",
     });
+  };
+  const compareAnother = () => {
+    setPicked((prev) =>
+      prev.includes(calcId) ? prev : [calcId, ...prev].slice(0, 3),
+    );
+    document
+      .getElementById("compare")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  const copyScenarioLink = () => {
+    if (typeof window === "undefined") return;
+    const q = new URLSearchParams({
+      l: String(calcId),
+      a: amount,
+      r: rate,
+      y: years,
+      u: upfront,
+      c: annualFees,
+      fees: includeFees ? "1" : "0",
+      mkt: includeMarketFee ? "1" : "0",
+      tax: taxRate,
+      sell: sellAtEnd ? "1" : "0",
+    });
+    if (validCmp) q.set("cmp", compareRate);
+    if (calcMode === "goal") {
+      q.set("mode", "goal");
+      q.set("g", goal);
+    }
+    const url = `${window.location.origin}${window.location.pathname}?${q.toString()}`;
+    navigator.clipboard
+      ?.writeText(url)
+      .then(() => {
+        setCopied(true);
+        window.setTimeout(() => setCopied(false), 2000);
+      })
+      .catch(() => {});
+  };
+  const downloadCsv = () => {
+    if (typeof window === "undefined" || !validCalc) return;
+    const rows: string[][] = [
+      ["Slicebase scenario estimate - informational only, not investment advice"],
+      [],
+      ["Listing", calcListing.name],
+      ["Platform", calcListing.platform],
+      ["Investment", money(a)],
+      ["Annual income rate", `${fmtRate(r)}%`],
+      ["Holding period", `${t} ${t === 1 ? "year" : "years"}`],
+      ["Stated fees", `${buyEff}% buy + ${sellEff}% sell`],
+      ["Tax rate on income", `${tn}%`],
+      ["Sell at end", sellAtEnd ? "yes" : "no"],
+      [],
+      ["You put in", money(base.totalIn)],
+      ["You get back", money(base.totalBack)],
+      [sellAtEnd ? "Net result if sold at end" : "Net income", money(base.net)],
+      ["Annualized net (simple average)", `${annualizedNet.toFixed(1)}%`],
+    ];
+    if (irrNet != null)
+      rows.push(["Timing-adjusted annual rate", `${irrNet.toFixed(1)}%`]);
+    if (sellAtEnd && valueFall != null && valueFall < 0)
+      rows.push([
+        "Value can fall before you lose money",
+        `about ${Math.abs(valueFall * 100).toFixed(0)}%`,
+      ]);
+    rows.push([]);
+    rows.push(["Stress test", ...gridRates.map((g) => `${fmtRate(g)}%`)]);
+    gridRows.forEach((row) =>
+      rows.push([
+        row.label,
+        ...gridRates.map((g) => money(scenario(g, row.dv).net)),
+      ]),
+    );
+    const csv = rows
+      .map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
+      .join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "slicebase-scenario.csv";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
+
+  const renderField = (def: FieldDef) => {
+    const [label, value, setter, min, max] = def;
+    return (
+      <label key={label}>
+        {label}
+        <input
+          type="number"
+          inputMode="decimal"
+          min={min}
+          max={max}
+          step="any"
+          value={value}
+          onChange={(e) => setter(e.target.value)}
+        />
+      </label>
+    );
   };
 
   const pickedListings = LISTINGS.filter((l) => picked.includes(l.id));
@@ -1008,12 +1153,15 @@ export function App() {
           >
             <div className="sb-calculator-heading">
               <p className="sb-eyebrow">Run the numbers</p>
-              <h3 id="calculator-title">What could the income look like?</h3>
+              <h3 id="calculator-title">What would you actually get back?</h3>
               <p>
-                Estimate your own income, separate from platform metrics.
+                Estimate your own net result, separate from platform metrics.
                 Start from an investment amount, or work back from a monthly
-                goal. The 8% starting rate is an example, not a forecast, and
-                platform yields are never used here. Platform-stated fees are
+                goal. Where the selected listing publishes rent and a value,
+                the rate starts at that stated rent / value ratio -
+                platform-stated, as published, not a forecast - and otherwise
+                at an 8% example. Edit every field freely; platform yields
+                are never used as the income rate. Platform-stated fees are
                 included by default; turn them off below to see income before
                 fees.
               </p>
@@ -1052,7 +1200,7 @@ export function App() {
                       const l = LISTINGS.find(
                         (x) => x.id === Number(e.target.value),
                       )!;
-                      setCalcId(l.id);
+                      applyListing(l);
                     }}
                   >
                     {LISTINGS.map((l) => (
@@ -1062,112 +1210,59 @@ export function App() {
                     ))}
                   </select>
                 </label>
-                {calcMode === "invest" && (
-                  <div className="sb-calc-fees">
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={includeFees}
-                        onChange={(e) => setIncludeFees(e.target.checked)}
-                      />
-                      <span>
-                        Include {calcListing.platform}&apos;s stated transaction
-                        fees: {calcFees.buyPct}% buy + {calcFees.sellPct}% sell
-                        {validCalc && includeFees
-                          ? ` (about ${money(base.buyFee + base.sellFee)} on ${money(a)})`
-                          : ""}
-                        .
-                      </span>
-                    </label>
-                  </div>
-                )}
-                {(calcMode === "invest"
-                  ? [
-                      [
-                        "Investment ($)",
-                        amount,
-                        setAmount,
-                        "1",
-                        "100000000",
-                      ],
-                      ["Annual income rate (%)", rate, setRate, "0", "100"],
-                      ["Holding period (years)", years, setYears, "1", "30"],
-                      [
-                        "Upfront costs ($)",
-                        upfront,
-                        setUpfront,
-                        "0",
-                        "100000000",
-                      ],
-                      [
-                        "Annual costs ($)",
-                        annualFees,
-                        setAnnualFees,
-                        "0",
-                        "100000000",
-                      ],
-                    ]
-                  : [
-                      [
-                        "Monthly income goal ($)",
-                        goal,
-                        setGoal,
-                        "1",
-                        "1000000",
-                      ],
-                      ["Annual income rate (%)", rate, setRate, "0", "100"],
-                      [
-                        "Annual costs ($)",
-                        annualFees,
-                        setAnnualFees,
-                        "0",
-                        "100000000",
-                      ],
-                    ]
-                ).map(([label, value, setter, min, max]) => (
-                  <label key={String(label)}>
-                    {String(label)}
-                    <input
-                      type="number"
-                      inputMode="decimal"
-                      min={String(min)}
-                      max={String(max)}
-                      step="any"
-                      value={String(value)}
-                      onChange={(e) =>
-                        (
-                          setter as React.Dispatch<React.SetStateAction<string>>
-                        )(e.target.value)
-                      }
-                    />
-                  </label>
-                ))}
-                <label>
-                  Tax rate on income (%, optional)
-                  <input
-                    type="number"
-                    inputMode="decimal"
-                    min="0"
-                    max="99"
-                    step="any"
-                    value={taxRate}
-                    onChange={(e) => setTaxRate(e.target.value)}
-                  />
-                </label>
-                {calcMode === "invest" && (
-                  <>
-                    <label className="sb-calc-check">
-                      <input
-                        type="checkbox"
-                        checked={sellAtEnd}
-                        onChange={(e) => setSellAtEnd(e.target.checked)}
-                      />
-                      <span>
-                        Sell at the end of the period - includes the stated
-                        sell fee and the sale proceeds.
-                      </span>
-                    </label>
-                    {calcListing.platform === "Lofty" && (
+                <fieldset className="sb-calc-group">
+                  <legend>1. Your investment</legend>
+                  {(calcMode === "invest"
+                    ? [
+                        ["Investment ($)", amount, setAmount, "1", "100000000"],
+                        ["Annual income rate (%)", rate, setRate, "0", "100"],
+                        ["Holding period (years)", years, setYears, "1", "30"],
+                      ]
+                    : [
+                        [
+                          "Monthly income goal ($)",
+                          goal,
+                          setGoal,
+                          "1",
+                          "1000000",
+                        ],
+                        ["Annual income rate (%)", rate, setRate, "0", "100"],
+                      ]
+                  ).map((f) => renderField(f as FieldDef))}
+                  {impliedYield != null && (
+                    <p className="sb-calc-rate-hint">
+                      This listing&apos;s stated rent / value is{" "}
+                      {impliedYield.toFixed(2)}% - platform-stated, as
+                      published (rent before any management or other costs;
+                      add those under Annual costs), not a forecast. The rate
+                      starts there when you pick the listing; edit it freely.
+                    </p>
+                  )}
+                </fieldset>
+                <fieldset className="sb-calc-group">
+                  <legend>2. Fees and costs</legend>
+                  {calcMode === "invest" && (
+                    <div className="sb-calc-fees">
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={includeFees}
+                          onChange={(e) => setIncludeFees(e.target.checked)}
+                        />
+                        <span>
+                          Include {calcListing.platform}&apos;s stated
+                          transaction fees: {calcFees.buyPct}% buy +{" "}
+                          {calcFees.sellPct}% sell
+                          {validCalc && includeFees
+                            ? ` (about ${money(base.buyFee + base.sellFee)} on ${money(a)})`
+                            : ""}
+                          .
+                        </span>
+                      </label>
+                    </div>
+                  )}
+                  {calcMode === "invest" &&
+                    calcListing.platform === "Lofty" && (
                       <label className="sb-calc-check">
                         <input
                           type="checkbox"
@@ -1182,21 +1277,50 @@ export function App() {
                         </span>
                       </label>
                     )}
-                    <label>
-                      Compare with leaving it at (% a year, optional)
-                      <input
-                        type="number"
-                        inputMode="decimal"
-                        min="0"
-                        max="100"
-                        step="any"
-                        value={compareRate}
-                        placeholder="Blank = off"
-                        onChange={(e) => setCompareRate(e.target.value)}
-                      />
-                    </label>
-                  </>
-                )}
+                  {(calcMode === "invest"
+                    ? [
+                        ["Upfront costs ($)", upfront, setUpfront, "0", "100000000"],
+                        ["Annual costs ($)", annualFees, setAnnualFees, "0", "100000000"],
+                      ]
+                    : [
+                        ["Annual costs ($)", annualFees, setAnnualFees, "0", "100000000"],
+                      ]
+                  ).map((f) => renderField(f as FieldDef))}
+                </fieldset>
+                <fieldset className="sb-calc-group">
+                  <legend>3. Assumptions</legend>
+                  {(
+                    [
+                      ["Tax rate on income (%, optional)", taxRate, setTaxRate, "0", "99"],
+                    ]
+                  ).map((f) => renderField(f as FieldDef))}
+                  {calcMode === "invest" && (
+                    <>
+                      <label className="sb-calc-check">
+                        <input
+                          type="checkbox"
+                          checked={sellAtEnd}
+                          onChange={(e) => setSellAtEnd(e.target.checked)}
+                        />
+                        <span>
+                          Sell at the end of the period - includes the stated
+                          sell fee and the sale proceeds.
+                        </span>
+                      </label>
+                      {(
+                        [
+                          [
+                            "Compare with leaving it at (% a year, optional)",
+                            compareRate,
+                            setCompareRate,
+                            "0",
+                            "100",
+                          ],
+                        ]
+                      ).map((f) => renderField(f as FieldDef))}
+                    </>
+                  )}
+                </fieldset>
                 {calcMode === "invest" ? (
                   <p>
                     No reinvestment or compounding is included, and the value
@@ -1273,6 +1397,22 @@ export function App() {
                       - over {t} {t === 1 ? "year" : "years"}
                     </span>
                     <strong>{money(base.net)}</strong>
+                    <p className="sb-calc-sentence">
+                      Invest {money(a)} in {calcListing.name}, hold {t}{" "}
+                      {t === 1 ? "year" : "years"}
+                      {sellAtEnd
+                        ? " and sell at the same value"
+                        : " without selling"}
+                      : you put in {money(base.totalIn)}, get back about{" "}
+                      {money(base.totalBack)}
+                      {sellAtEnd ? "" : " in income"}, and net{" "}
+                      {base.net >= 0 ? "+" : ""}
+                      {money(base.net)}, about {annualizedNet.toFixed(1)}% a
+                      year.
+                      {sellAtEnd && valueFall != null && valueFall < 0
+                        ? ` The value could fall about ${Math.abs(valueFall * 100).toFixed(0)}% before you lose money.`
+                        : ""}
+                    </p>
                     <p className="sb-calc-liquidity">
                       A secondary market doesn&apos;t guarantee a buyer or your
                       price.
@@ -1302,8 +1442,11 @@ export function App() {
                         <span>Annualized net</span>
                         <strong>{annualizedNet.toFixed(1)}%</strong>
                         <p>
-                          simple average on the money actually in, vs the {r}%
-                          entered rate
+                          simple average on the money actually in, vs the{" "}
+                          {fmtRate(r)}% entered rate
+                          {irrNet != null
+                            ? `; counting when income arrives gives roughly ${irrNet.toFixed(1)}%`
+                            : ""}
                         </p>
                       </div>
                     </div>
@@ -1328,6 +1471,18 @@ export function App() {
                           <dd>
                             every 10% change in property value moves this
                             result by about {money(sensitivity10)}
+                          </dd>
+                        </div>
+                      )}
+                      {sellAtEnd && (
+                        <div>
+                          <dt>Value can fall before you lose money</dt>
+                          <dd>
+                            {valueFall != null && valueFall < 0
+                              ? `about ${Math.abs(valueFall * 100).toFixed(0)}%`
+                              : valueFall != null
+                                ? "nothing - this scenario loses money even if the value is unchanged"
+                                : "income alone already covers what you put in"}
                           </dd>
                         </div>
                       )}
@@ -1376,6 +1531,30 @@ export function App() {
                       upfront costs are one-time; they reduce the result, not
                       the income rate.
                     </p>
+                    <div className="sb-calc-next">
+                      {calcListing.source && (
+                        <a
+                          href={calcListing.source}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Check this listing on {calcListing.platform} ↗
+                        </a>
+                      )}
+                      <button type="button" onClick={compareAnother}>
+                        Compare with another listing
+                      </button>
+                      <button type="button" onClick={copyScenarioLink}>
+                        {copied ? "Copied" : "Copy link to this scenario"}
+                      </button>
+                      <button type="button" onClick={downloadCsv}>
+                        Download CSV
+                      </button>
+                    </div>
+                    <p className="sb-calc-next-note">
+                      The listing link is direct, with no referral. Join links
+                      on this site are referral links - we may earn a reward.
+                    </p>
                   </>
                 ) : (
                   <p role="alert">
@@ -1397,8 +1576,12 @@ export function App() {
                       <th></th>
                       {gridRates.map((grr, i) => (
                         <th key={i}>
-                          Income at {grr.toFixed(1)}%
-                          {i === 1 && impliedYield != null ? "*" : ""}
+                          Income at {fmtRate(grr)}%
+                          {Math.abs(grr - r) < 0.005 ? " (your rate)" : ""}
+                          {impliedYield != null &&
+                          Math.abs(grr - impliedYield) < 0.05
+                            ? "*"
+                            : ""}
                         </th>
                       ))}
                     </tr>
@@ -1407,213 +1590,271 @@ export function App() {
                     {gridRows.map((row) => (
                       <tr key={row.label}>
                         <th>{row.label}</th>
-                        {gridRates.map((grr, i) => (
-                          <td
-                            key={i}
-                            className={
-                              i === 1 && row.dv === 0 ? "is-base" : ""
-                            }
-                          >
-                            {money(scenario(grr, row.dv).net)}
-                          </td>
-                        ))}
+                        {gridRates.map((grr, i) => {
+                          const v = scenario(grr, row.dv).net;
+                          const cls = [
+                            Math.abs(grr - r) < 0.005 && row.dv === 0
+                              ? "is-base"
+                              : "",
+                            v < 0 ? "neg" : "",
+                          ]
+                            .join(" ")
+                            .trim();
+                          return (
+                            <td key={i} className={cls || undefined}>
+                              {money(v)}
+                            </td>
+                          );
+                        })}
                       </tr>
                     ))}
                   </tbody>
                 </table>
                 </div>
+                <label className="sb-calc-vchg">
+                  Value change to test (%)
+                  <input
+                    type="number"
+                    inputMode="decimal"
+                    min="0"
+                    max="40"
+                    step="any"
+                    value={valueChg}
+                    onChange={(e) => setValueChg(e.target.value)}
+                  />
+                </label>
                 <p>
                   {impliedYield != null
-                    ? `*Middle column uses the selected listing's stated rent vs its published value (exact ratio ${impliedYield.toFixed(2)}%, shown and computed at ${gridMid.toFixed(1)}%), platform-stated and not a forecast. `
+                    ? `*The starred column is the selected listing's stated rent vs its published value (exact ratio ${impliedYield.toFixed(2)}%, used as shown), platform-stated and not a forecast. `
                     : ""}
                   Scenario illustrations from your inputs and the stated fees.
                   Informational only, not investment advice.
                 </p>
               </div>
             )}
-            {calcMode === "invest" && validCalc && chartPoints.length > 1 && (
+            {calcMode === "invest" && validCalc && seriesMid.length > 1 && (
               <figure className="sb-calc-chart">
                 <figcaption>
-                  {chartView === "line"
-                    ? "Cumulative net position over time - starts at the total fees and any upfront costs, then climbs with income"
-                    : `Net result if the value falls, holds or rises - at the middle-column rate (${gridMid.toFixed(1)}%)`}
+                  Three paths over {t} {t === 1 ? "year" : "years"} at your{" "}
+                  {fmtRate(r)}% rate: value down {cvNum}%, unchanged, up{" "}
+                  {cvNum}%. The start counts the stated buy fee and any
+                  upfront costs; the stated sell fee is applied at sale, in
+                  the last step.
                 </figcaption>
-                <div className="sb-calc-mode sb-chart-toggle" role="group" aria-label="Chart view">
-                  <button
-                    type="button"
-                    aria-pressed={chartView === "line"}
-                    onClick={() => setChartView("line")}
+                <div className="sb-chart-frame">
+                  <svg
+                    viewBox="0 0 560 170"
+                    role="img"
+                    aria-label="Line chart with three paths for the cumulative net position: property value down, unchanged and up, with a shaded band between them"
+                    onMouseMove={(e) => {
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      const fx = ((e.clientX - rect.left) / rect.width) * 560;
+                      const n = seriesMid.length;
+                      const mi = Math.min(
+                        Math.max(
+                          Math.round(((fx - 44) / (560 - 44 - 64)) * (n - 1)),
+                          0,
+                        ),
+                        n - 1,
+                      );
+                      setChartTip({ i: mi, px: e.clientX - rect.left });
+                    }}
+                    onMouseLeave={() => setChartTip(null)}
                   >
-                    Over time
-                  </button>
-                  <button
-                    type="button"
-                    aria-pressed={chartView === "bars"}
-                    onClick={() => setChartView("bars")}
-                  >
-                    Scenarios
-                  </button>
-                </div>
-                {chartView === "bars" ? (
-                <svg
-                  viewBox="0 0 560 210"
-                  role="img"
-                  aria-label="Bar chart of the net result when the property value falls 10 percent, is unchanged, or rises 10 percent"
-                >
-                  {(() => {
-                    const W = 560;
-                    const H = 210;
-                    const PT = 30;
-                    const PB = 44;
-                    const vals = gridRows.map((row) => ({
-                      label: row.label,
-                      v: scenario(gridMid, row.dv).net,
-                    }));
-                    const lo = Math.min(...vals.map((d) => d.v), 0);
-                    const hi = Math.max(...vals.map((d) => d.v), 0);
-                    const span = hi - lo || 1;
-                    const y = (v: number) =>
-                      H - PB - ((v - lo) / span) * (H - PT - PB);
-                    const bw = 90;
-                    return (
-                      <>
-                        <line
-                          className="zero"
-                          x1={30}
-                          x2={W - 30}
-                          y1={y(0)}
-                          y2={y(0)}
-                        />
-                        {vals.map((d, i) => {
-                          const cx = (W * (i + 0.5)) / 3;
-                          const top = Math.min(y(d.v), y(0));
-                          const h = Math.abs(y(d.v) - y(0)) || 1;
-                          return (
-                            <g key={d.label}>
-                              <rect
-                                className={d.v >= 0 ? "bar" : "bar neg"}
-                                x={cx - bw / 2}
-                                y={top}
-                                width={bw}
-                                height={h}
-                                rx={2}
+                    {(() => {
+                      const W = 560;
+                      const H = 170;
+                      const PL = 44;
+                      const PR = 64;
+                      const PT = 10;
+                      const PB = 24;
+                      const n = seriesMid.length;
+                      const all = [...seriesLow, ...seriesHigh, 0];
+                      const lo = Math.min(...all);
+                      const hi = Math.max(...all);
+                      const span = hi - lo || 1;
+                      const X = (ii: number) =>
+                        PL + (ii / (n - 1)) * (W - PL - PR);
+                      const Y = (v: number) =>
+                        H - PB - ((v - lo) / span) * (H - PT - PB);
+                      const pts = (arr: number[]) =>
+                        arr.map((v, ii) => `${X(ii)},${Y(v)}`).join(" ");
+                      const band =
+                        pts(seriesHigh) +
+                        " " +
+                        seriesLow
+                          .map(
+                            (_, ii) =>
+                              `${X(n - 1 - ii)},${Y(seriesLow[n - 1 - ii])}`,
+                          )
+                          .join(" ");
+                      const rawStep = span / 3;
+                      const mag = Math.pow(10, Math.floor(Math.log10(rawStep)));
+                      const step = Math.ceil(rawStep / mag) * mag;
+                      const yTicks: number[] = [];
+                      for (
+                        let v = Math.ceil(lo / step) * step;
+                        v <= hi;
+                        v += step
+                      ) {
+                        const rv = Math.round(v * 100) / 100;
+                        if (!(lo < 0 && rv === 0)) yTicks.push(rv);
+                      }
+                      const xTicks: number[] = [];
+                      for (let yr = 1; yr <= t; yr++)
+                        xTicks.push((yr * (n - 1)) / t);
+                      const shortD = (v: number) => `$${Math.round(v)}`;
+                      return (
+                        <>
+                          {yTicks.map((v) => (
+                            <g key={v}>
+                              <line
+                                className="axis"
+                                x1={PL}
+                                x2={W - PR}
+                                y1={Y(v)}
+                                y2={Y(v)}
                               />
-                              <text
-                                x={cx}
-                                y={d.v >= 0 ? top - 6 : top + h + 14}
-                                textAnchor="middle"
-                              >
-                                {money(d.v)}
-                              </text>
-                              <text
-                                x={cx}
-                                y={H - 24}
-                                textAnchor="middle"
-                                className="bar-label"
-                              >
-                                {d.label}
+                              <text x={PL - 5} y={Y(v) + 3} textAnchor="end">
+                                {shortD(v)}
                               </text>
                             </g>
-                          );
-                        })}
-                      </>
-                    );
-                  })()}
-                </svg>
-                ) : (
-                <svg
-                  viewBox="0 0 560 210"
-                  role="img"
-                  aria-label="Line chart of cumulative net position over the holding period, starting below zero at the fees and climbing with income"
-                >
-                  {(() => {
-                    const W = 560;
-                    const H = 210;
-                    const P = 40;
-                    const lo = Math.min(...chartPoints, 0);
-                    const hi = Math.max(...chartPoints, 0);
-                    const span = hi - lo || 1;
-                    const x = (i: number) =>
-                      P + (i / (chartPoints.length - 1)) * (W - 2 * P);
-                    const y = (v: number) =>
-                      H - P - ((v - lo) / span) * (H - 2 * P);
-                    const pts = chartPoints
-                      .map((v, i) => `${x(i)},${y(v)}`)
-                      .join(" ");
-                    const last = chartPoints[chartPoints.length - 1];
-                    return (
-                      <>
-                        {lo < 0 && (
-                          <line
-                            className="zero"
-                            x1={P}
-                            x2={W - P}
-                            y1={y(0)}
-                            y2={y(0)}
-                          />
-                        )}
-                        <polyline className="line" points={pts} />
-                        {breakEvenIdx > 0 && (
-                          <g>
-                            {(() => {
-                              const prev = chartPoints[breakEvenIdx - 1];
-                              const cur = chartPoints[breakEvenIdx];
-                              const frac =
-                                cur > prev ? -prev / (cur - prev) : 0;
-                              const month = breakEvenIdx - 1 + frac;
-                              const cx = x(breakEvenIdx - 1 + frac);
-                              return (
-                                <>
-                                  <circle
-                                    className="dot"
-                                    cx={cx}
-                                    cy={y(0)}
-                                    r={4}
-                                  />
-                                  <text
-                                    x={Math.min(cx + 8, W - P - 120)}
-                                    y={y(0) - 8}
-                                  >
-                                    Break-even, about month{" "}
-                                    {Math.round(month)}
-                                  </text>
-                                </>
-                              );
-                            })()}
-                          </g>
-                        )}
-                        <text x={P} y={y(chartPoints[0]) + 16}>
-                          {money(chartPoints[0])}
-                        </text>
-                        <text x={W - P} y={y(last) - 10} textAnchor="end">
-                          {money(last)} after {t}{" "}
-                          {t === 1 ? "year" : "years"}
-                        </text>
-                      </>
-                    );
-                  })()}
-                </svg>
-                )}
+                          ))}
+                          {xTicks.map((ii, k) => (
+                            <text key={k} x={X(ii)} y={H - 8} textAnchor="middle">
+                              {k + 1}y
+                            </text>
+                          ))}
+                          {lo < 0 && (
+                            <>
+                              <line
+                                className="zero"
+                                x1={PL}
+                                x2={W - PR}
+                                y1={Y(0)}
+                                y2={Y(0)}
+                              />
+                              <text x={PL - 5} y={Y(0) + 3} textAnchor="end">
+                                $0
+                              </text>
+                            </>
+                          )}
+                          {cvNum > 0 && (
+                            <polygon className="band" points={band} />
+                          )}
+                          {cvNum > 0 && (
+                            <polyline
+                              className="line-band"
+                              points={pts(seriesLow)}
+                            />
+                          )}
+                          <polyline className="line" points={pts(seriesMid)} />
+                          {cvNum > 0 && (
+                            <polyline
+                              className="line-band"
+                              points={pts(seriesHigh)}
+                            />
+                          )}
+                          {beMonth != null && (
+                            <g>
+                              <circle
+                                className="dot"
+                                cx={X(beMonth)}
+                                cy={Y(0)}
+                                r={3.5}
+                              />
+                              <polyline
+                                className="leader"
+                                points={`${X(beMonth)},${Y(0) - 4} ${Math.min(X(beMonth) + 12, W - PR - 148)},${Math.max(Y(0) - 16, PT + 6)}`}
+                              />
+                              <text
+                                x={Math.min(X(beMonth) + 14, W - PR - 146)}
+                                y={Math.max(Y(0) - 16, PT + 6) + 3}
+                              >
+                                Up-front costs covered, about month{" "}
+                                {Math.round(beMonth)}
+                              </text>
+                            </g>
+                          )}
+                          <text
+                            x={W - 4}
+                            y={Y(seriesMid[n - 1]) + 3}
+                            textAnchor="end"
+                          >
+                            {money(seriesMid[n - 1])}
+                          </text>
+                          {cvNum > 0 && (
+                            <>
+                              <text
+                                className="band-label"
+                                x={W - 4}
+                                y={Y(seriesHigh[n - 1]) + 3}
+                                textAnchor="end"
+                              >
+                                {money(seriesHigh[n - 1])}
+                              </text>
+                              <text
+                                className="band-label"
+                                x={W - 4}
+                                y={Y(seriesLow[n - 1]) + 3}
+                                textAnchor="end"
+                              >
+                                {money(seriesLow[n - 1])}
+                              </text>
+                            </>
+                          )}
+                        </>
+                      );
+                    })()}
+                  </svg>
+                  {chartTip && (
+                    <div className="sb-chart-tip" style={{ left: chartTip.px }}>
+                      Month {chartTip.i} · down {money(seriesLow[chartTip.i])} ·
+                      flat {money(seriesMid[chartTip.i])} · up{" "}
+                      {money(seriesHigh[chartTip.i])}
+                    </div>
+                  )}
+                </div>
+                <div className="sb-chart-sliders">
+                  <label>
+                    Holding period: {t} {t === 1 ? "year" : "years"}
+                    <input
+                      type="range"
+                      min="1"
+                      max="30"
+                      step="1"
+                      value={t}
+                      onChange={(e) => setYears(e.target.value)}
+                    />
+                  </label>
+                  <label>
+                    Value change to test: ±{cvNum}%
+                    <input
+                      type="range"
+                      min="0"
+                      max="40"
+                      step="1"
+                      value={cvNum}
+                      onChange={(e) => setValueChg(e.target.value)}
+                    />
+                  </label>
+                </div>
                 <div className="sb-calc-chart-legend">
-                  {chartView === "line" ? (
-                    <>
-                      <span>Start: {money(chartPoints[0])}</span>
-                      {breakEvenMonth != null && (
-                        <span>
-                          Break-even: about month {Math.round(breakEvenMonth)}
-                        </span>
-                      )}
-                      <span>
-                        End: {money(chartPoints[chartPoints.length - 1])} after{" "}
-                        {t} {t === 1 ? "year" : "years"}
-                      </span>
-                    </>
-                  ) : (
-                    gridRows.map((row) => (
-                      <span key={row.label}>
-                        {row.label}: {money(scenario(gridMid, row.dv).net)}
-                      </span>
-                    ))
+                  <span>Start: {money(seriesMid[0])}</span>
+                  {beMonth != null && (
+                    <span>
+                      Up-front costs covered: about month{" "}
+                      {Math.round(beMonth)}
+                    </span>
+                  )}
+                  <span>
+                    End (flat): {money(seriesMid[seriesMid.length - 1])}
+                  </span>
+                  {cvNum > 0 && (
+                    <span>
+                      Down {cvNum}%: {money(seriesLow[seriesLow.length - 1])} ·
+                      Up {cvNum}%: {money(seriesHigh[seriesHigh.length - 1])}
+                    </span>
                   )}
                 </div>
               </figure>
@@ -1652,7 +1893,7 @@ export function App() {
                                 <td>{money(scenario(r, 0, lBuy, lSell).net)}</td>
                                 <td>
                                   {iy != null
-                                    ? `${money(scenario(Math.round(iy * 10) / 10, 0, lBuy, lSell).net)} (${(Math.round(iy * 10) / 10).toFixed(1)}%)`
+                                    ? `${money(scenario(iy, 0, lBuy, lSell).net)} (${iy.toFixed(2)}%)`
                                     : "Figures not published"}
                                 </td>
                               </tr>
@@ -1680,26 +1921,60 @@ export function App() {
             )}
             <details className="sb-calculator-method">
               <summary>Assumptions and calculation</summary>
+              <p>The calculator runs these exact formulas, line by line:</p>
+              <ol>
+                <li>Buy fee = investment × stated buy % (0 when fees are off).</li>
+                <li>
+                  Annual income = investment × rate ÷ 100 × (1 − tax % ÷ 100)
+                  − annual costs.
+                </li>
+                <li>
+                  Period income = annual income × years − upfront costs.
+                  Income is not reinvested; the rate stays constant.
+                </li>
+                <li>
+                  Sale value = investment × (1 + value change); sell fee =
+                  sale value × stated sell % (only when selling at the end).
+                </li>
+                <li>
+                  You put in = investment + buy fee. You get back = period
+                  income + sale value − sell fee.
+                </li>
+                <li>
+                  Net when sold = you get back − you put in. Net when held =
+                  period income − buy fee (the principal is still owned).
+                </li>
+                <li>
+                  Annualized net = net ÷ money in ÷ years (simple average).
+                  The timing-adjusted figure solves the monthly cash flows
+                  for the rate that nets them to zero, annualized as monthly
+                  rate × 12.
+                </li>
+                <li>
+                  Fee break-even months = (buy fee + sell fee + upfront
+                  costs) ÷ annual income × 12.
+                </li>
+                <li>
+                  Value can fall = (investment + buy fee − period income) ÷
+                  (investment × (1 − sell % ÷ 100)) − 1.
+                </li>
+                <li>
+                  Goal mode: capital = (12 × monthly goal ÷ (1 − tax % ÷ 100)
+                  + annual costs) × 100 ÷ rate, shown at your rate ±2 points.
+                </li>
+              </ol>
               <p>
-                Net result = period income + optional sale proceeds −
-                investment − fees. Period income = (investment × annual rate ÷
-                100, less any tax rate you enter, − annual costs) × years −
-                upfront costs. The rate stays constant and income is not
-                reinvested; it is your own assumption, not a copied platform
-                return. Fees use the selected platform's stated percentages:
-                the buy fee on the investment, the sell fee on the sale value
-                (assumed equal to the investment unless a scenario row changes
-                it); Lofty's 2.5% market-order fee is optional and off by
-                default. Annualized net is a simple average (net ÷ money in ÷
-                years), not compounded and not IRR. The scenario grid moves
-                the rate ±2 points and the end value ±10%; where the selected
-                listing publishes rent and a value, the middle column uses
-                that platform-stated ratio, never a forecast. Oceanpoint APY
-                and Lofty avg yield are not treated as equivalent cash-income
-                rates. Goal mode: capital = (12 × monthly goal + annual
-                costs) × 100 ÷ rate, shown at your rate ±2 points. Actual
-                income can be lower or zero, and capital can be lost.
-                Informational only, not investment advice.
+                Fees use the selected platform's stated percentages; Lofty's
+                2.5% market-order fee is optional and off by default. The
+                stress table moves your rate ±2 points and adds the selected
+                listing's stated rent / value at its exact ratio where
+                published - platform-stated, never a forecast. The chart
+                charges the buy fee and upfront costs up front and applies
+                the sell fee at sale. Oceanpoint APY and Lofty avg yield are
+                not treated as equivalent cash-income rates. The math lives
+                in one tested function; the checks include this review's own
+                numbers. Actual income can be lower or zero, and capital can
+                be lost. Informational only, not investment advice.
               </p>
             </details>
           </section>
@@ -1753,6 +2028,7 @@ export function App() {
                 <option value="min">Source order</option>
                 <option value="name">Listing name</option>
                 <option value="platform">Platform</option>
+                <option value="yield">Stated rent / value</option>
               </select>
             </div>
           </div>
@@ -1882,7 +2158,7 @@ export function App() {
                         className="file-hover-underline"
                         onClick={() => openCalculator(l)}
                       >
-                        Estimate income ↗
+                        Run the numbers ↗
                       </button>
                       <label>
                         <input
@@ -2000,7 +2276,7 @@ export function App() {
                       <JoinLink platform={l.platform} />
                     </p>
                     <button type="button" onClick={() => openCalculator(l)}>
-                      Estimate income ↗
+                      Run the numbers ↗
                     </button>
                     <ReferralNote />
                   </article>

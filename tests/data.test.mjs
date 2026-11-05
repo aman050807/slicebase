@@ -21,7 +21,10 @@ test("every source photo exists and source links use HTTPS", () => {
 });
 test("calculator stays separate and no custody/payment integration is present", () => {
   const app = readFileSync(new URL("../src/App.tsx", import.meta.url), "utf8");
-  assert.ok(/useState\(['"]8['"]\)/.test(app));
+  // the income rate falls back to a generic 8% example and never to a
+  // platform yield; listings with published rent/value pre-fill their ratio
+  assert.ok(app.includes('"8"'));
+  assert.ok(/platform yields are never used/.test(app.replace(/\s+/g, " ")));
   assert.ok(
     app.includes("No deposits") ||
       app.includes("does not accept investment deposits"),
