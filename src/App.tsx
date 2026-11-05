@@ -434,7 +434,7 @@ function JoinLink({ platform }: { platform: string }) {
       target="_blank"
       rel="sponsored noopener noreferrer"
     >
-      {platform === "Lofty" ? "Invest now" : `Join ${platform}`} &#8599;
+      Invest now &#8599;
     </a>
   );
 }
@@ -2740,7 +2740,7 @@ export function App() {
               target="_blank"
               rel="sponsored noopener noreferrer"
             >
-              Join Oceanpoint <span aria-hidden="true">↗</span>
+              Invest now <span aria-hidden="true">↗</span>
             </a>
             </div>
           </div>
