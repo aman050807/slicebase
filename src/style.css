@@ -2480,3 +2480,19 @@ a.sb-join-link:hover {
   line-height: 1.7;
   margin: 10px 0 0;
 }
+.sb-calc-chart-legend {
+  display: none;
+}
+@media (max-width: 700px) {
+  .sb-calc-chart svg text {
+    display: none;
+  }
+  .sb-calc-chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    font-size: 12px;
+    color: #5d534e;
+    margin-top: 10px;
+  }
+}

@@ -701,6 +701,15 @@ export function App() {
     }
   }
   const breakEvenIdx = chartPoints.findIndex((v) => v >= 0);
+  const breakEvenMonth =
+    breakEvenIdx > 0
+      ? breakEvenIdx -
+        1 +
+        (chartPoints[breakEvenIdx] > chartPoints[breakEvenIdx - 1]
+          ? -chartPoints[breakEvenIdx - 1] /
+            (chartPoints[breakEvenIdx] - chartPoints[breakEvenIdx - 1])
+          : 0)
+      : null;
   const goalNumeric = [goal, rate, annualFees].map(Number);
   const validGoal =
     [goal, rate, annualFees].every((v) => v.trim() !== "") &&
@@ -1585,6 +1594,28 @@ export function App() {
                   })()}
                 </svg>
                 )}
+                <div className="sb-calc-chart-legend">
+                  {chartView === "line" ? (
+                    <>
+                      <span>Start: {money(chartPoints[0])}</span>
+                      {breakEvenMonth != null && (
+                        <span>
+                          Break-even: about month {Math.round(breakEvenMonth)}
+                        </span>
+                      )}
+                      <span>
+                        End: {money(chartPoints[chartPoints.length - 1])} after{" "}
+                        {t} {t === 1 ? "year" : "years"}
+                      </span>
+                    </>
+                  ) : (
+                    gridRows.map((row) => (
+                      <span key={row.label}>
+                        {row.label}: {money(scenario(gridMid, row.dv).net)}
+                      </span>
+                    ))
+                  )}
+                </div>
               </figure>
             )}
             {calcMode === "invest" && validCalc && (
