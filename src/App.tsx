@@ -176,16 +176,8 @@ function PropertyBadges({ listing: l }: { listing: Listing }) {
     </div>
   );
 }
-const COUNTRIES = [
-  { code: "us", label: "United States" },
-  { code: "in", label: "India" },
-  { code: "ae", label: "United Arab Emirates" },
-  { code: "gb", label: "United Kingdom" },
-  { code: "sg", label: "Singapore" },
-];
-
 const ELIGIBILITY_NOTE =
-  `Last updated: ${REFRESHED}. ${N_LOFTY} Lofty listings and ${N_OCEAN} Oceanpoint listings collected from their catalogs. Oceanpoint reports ${meta.oceanpointReported} properties; ${N_OCEAN_MISSING} are not captured in this view, so coverage is incomplete. Quotes and status can change. Platform terms below are checked separately from property metrics. Exact order minimums and full property costs remain unverified. Country selection is context only, not an eligibility filter.`;
+  `Last updated: ${REFRESHED}. ${N_LOFTY} Lofty listings and ${N_OCEAN} Oceanpoint listings collected from their catalogs. Oceanpoint reports ${meta.oceanpointReported} properties; ${N_OCEAN_MISSING} are not captured in this view, so coverage is incomplete. Quotes and status can change. Platform terms below are checked separately from property metrics. Exact order minimums and full property costs remain unverified.`;
 
 type Term = { label: string; value: string };
 function termsFor(l: Listing): Term[] {
@@ -384,7 +376,7 @@ function TermNotes({ listing: l }: { listing: Listing }) {
 
 export function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [faqOpen, setFaqOpen] = useState<number | null>(0);
+  const [faqOpen, setFaqOpen] = useState<number | null>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (!menuOpen) return;
@@ -397,7 +389,6 @@ export function App() {
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [menuOpen]);
-  const [country, setCountry] = useState("us");
   const [platform, setPlatform] = useState("all");
   const [maxMin, setMaxMin] = useState(10000);
   const [sort, setSort] = useState("mixed");
@@ -959,77 +950,17 @@ export function App() {
           </div>
         </section>
 
-        <div className="sb-below-hero">
-          <p className="sb-eyebrow">
-            Independent &middot; informational &middot; no custody
-          </p>
-          <ul className="sb-strip">
-            <li>
-              <strong>Side-by-side listings</strong>
-              <span>Yields, fees and terms in one view</span>
-            </li>
-            <li>
-              <strong>Access rules shown</strong>
-              <span>Platform-stated: 18+, KYC, sanctions, local rules</span>
-            </li>
-            <li>
-              <strong>Rankings never paid for</strong>
-              <span>Referral links may earn us a reward</span>
-            </li>
-            <li>
-              <strong>We never hold money or tokens</strong>
-              <span>Informational only; not investment advice</span>
-            </li>
-          </ul>
-        </div>
-
         <section id="compare" className="sb-section sb-directory">
           <div className="sb-directory-head">
             <div className="sb-head">
               <p className="sb-eyebrow">The directory</p>
               <h2>Compare listings.</h2>
               <p className="sb-section-sub">
-                One view. The numbers that matter.
+                Compare the price, return figure and resale terms. Select 2-3 listings to see them side by side.
               </p>
-              <span className="sb-demo-label">
-                Source-linked listings · Not live quotes
-              </span>
             </div>
           </div>
-          <div className="sb-index-banner">
-            <div>
-              <strong>{INDEX_STATS.listings}</strong>
-              <span>
-                listings indexed across {INDEX_STATS.platforms} platforms
-              </span>
-            </div>
-            <div>
-              <strong>{compactMoney(INDEX_STATS.totalValue)}</strong>
-              <span>
-                platform-published valuations indexed (
-                {INDEX_STATS.valueCount} of {INDEX_STATS.listings} listings,
-                USD)
-              </span>
-            </div>
-          </div>
-          <p className="sb-index-note">
-            Listings first captured {CAPTURED}; last refreshed {REFRESHED}.
-          </p>
           <div className="sb-controls">
-            <div className="sb-control">
-              <label htmlFor="f-country">Country context</label>
-              <select
-                id="f-country"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-              >
-                {COUNTRIES.map((c) => (
-                  <option key={c.code} value={c.code}>
-                    {c.label}
-                  </option>
-                ))}
-              </select>
-            </div>
             <div className="sb-control">
               <label htmlFor="f-platform">Platform</label>
               <select
@@ -1072,11 +1003,33 @@ export function App() {
           </div>
           <details className="sb-directory-data-notes">
             <summary>Partial catalogue <span>Coverage &amp; data notes</span></summary>
+          <div className="sb-index-banner">
+            <div>
+              <strong>{INDEX_STATS.listings}</strong>
+              <span>
+                listings indexed across {INDEX_STATS.platforms} platforms
+              </span>
+            </div>
+            <div>
+              <strong>{compactMoney(INDEX_STATS.totalValue)}</strong>
+              <span>
+                platform-published valuations indexed (
+                {INDEX_STATS.valueCount} of {INDEX_STATS.listings} listings,
+                USD)
+              </span>
+            </div>
+          </div>
+          <p className="sb-index-note">
+            Listings first captured {CAPTURED}; last refreshed {REFRESHED}.
+          </p>
             <p className="sb-directory-notice">{ELIGIBILITY_NOTE}</p>
           </details>
+          <p className="sb-metric-guide">
+            Rent / value, avg yield and APY use different bases. They are not like-for-like returns.
+          </p>
           <div className="sb-result-line">
             <span>
-              {results.length} of {LISTINGS.length} listings
+              {results.length} listings · Refreshed {REFRESHED} · Not live quotes
             </span>
             <button
               type="button"
@@ -1084,7 +1037,6 @@ export function App() {
                 setPlatform("all");
                 setMaxMin(10000);
                 setSort("mixed");
-                setCountry("us");
               }}
             >
               Reset filters
@@ -1119,7 +1071,7 @@ export function App() {
                     </div>
                     <h3>{l.name}</h3>
                     <p className="sb-property-location">{l.city}</p>
-                    <PropertyBadges listing={l} />
+                    <p className="sb-card-status">{liquidityFor(l).text}</p>
                     <dl className="sb-property-metrics sb-card-headlines">
                       <div>
                         <dt>{l.platform === "Lofty" ? "Price per share" : "Property valuation"}</dt>
@@ -1133,8 +1085,9 @@ export function App() {
                       </div>
                     </dl>
                     <details className="sb-card-details">
-                      <summary>Property details <span>Figures, fees &amp; sources</span></summary>
+                      <summary>Property details <span>Fees, resale &amp; sources</span></summary>
                       <div className="sb-card-detail-content">
+                    <PropertyBadges listing={l} />
                     <dl className="sb-property-metrics sb-detail-metrics">
                       <div>
                         <dt>
@@ -1245,7 +1198,7 @@ export function App() {
               </button>
             </div>
           )}
-          <div
+          {picked.length > 0 && <div
             className={`sb-selection sb-compare-strip${picked.length ? " is-live" : ""}`}
             aria-live="polite"
           >
@@ -1278,7 +1231,7 @@ export function App() {
                 </button>
               )}
             </div>
-          </div>
+          </div>}
           {compareOpen && pickedListings.length >= 2 && (
             <div className="sb-comparison">
               <div className="sb-comparison-heading">
@@ -1304,8 +1257,8 @@ export function App() {
                         </dd>
                       </div>
                       <div>
-                        <dt>{l.yieldLabel}</dt>
-                        <dd>{l.yieldText}</dd>
+                        <dt>{l.platform === "Lofty" && impliedYieldFor(l) != null ? "Annual rent / value" : `${l.yieldLabel} (${l.platform})`}</dt>
+                        <dd>{l.platform === "Lofty" && impliedYieldFor(l) != null ? `${impliedYieldFor(l)!.toFixed(2)}%` : l.yieldText}</dd>
                       </div>
                       <div>
                         <dt>Property type</dt>
@@ -1353,9 +1306,7 @@ export function App() {
               <p className="sb-eyebrow">Run the numbers</p>
               <h3 id="calculator-title">What would you actually get back?</h3>
               <p>
-                Estimate your own net result on your own assumptions, before
-                fees. The rate starts at the listing&apos;s stated rent /
-                value ratio; edit every field freely.
+                See income and net outcome after the costs you enter. Change the assumptions to understand the trade-offs, not predict returns.
               </p>
               <details className="sb-calc-notes">
                 <summary>(i) What this uses</summary>
@@ -1364,8 +1315,7 @@ export function App() {
                   monthly goal. Where the selected listing publishes rent and
                   a value, the rate starts at that stated rent / value ratio
                   - platform-stated, as published, not a forecast - and
-                  otherwise at an 8% example. Platform avg-yield metrics (avg
-                  yield, APY) are never used as the income rate.
+                  otherwise at an 8% example. Platform avg-yield metrics are never used as the income rate.
                   Platform-stated fees are included by default; turn them off
                   below to see income before fees. Nothing here is a
                   prediction or advice; it is arithmetic on your inputs.
@@ -1397,10 +1347,7 @@ export function App() {
                 <label className="sb-calc-property">
                   Listing context
                   <span className="sb-calc-property-hint">
-                    Sets which platform's stated fees are estimated below
-                    and, where the listing publishes rent and a value,
-                    pre-fills the rate from that stated ratio. Platform
-                    avg-yield metrics are never used as the income rate.
+                    Pre-fills stated fees and rent / value where available. All inputs are editable.
                   </span>
                   <select
                     value={calcId}
@@ -1641,20 +1588,8 @@ export function App() {
                     </span>
                     <strong>{money(base.net)}</strong>
                     <p className="sb-calc-sentence">
-                      Invest {money(a)} in {calcListing.name}, hold {t}{" "}
-                      {t === 1 ? "year" : "years"}
-                      {sellAtEnd
-                        ? " and sell at the same value"
-                        : " without selling"}
-                      : you put in {money(base.totalIn)}, get back about{" "}
-                      {money(base.totalBack)}
-                      {sellAtEnd ? "" : " in income"}, and net{" "}
-                      {base.net >= 0 ? "+" : ""}
-                      {money(base.net)}, about {annualizedNet.toFixed(1)}% a
-                      year.
-                      {sellAtEnd && valueFall != null && valueFall < 0
-                        ? ` The value could fall about ${Math.abs(valueFall * 100).toFixed(0)}% before you lose money.`
-                        : ""}
+                      {calcListing.name} · {t}-year scenario at {fmtRate(rUse)}% income.
+                      {sellAtEnd ? " Assumes a sale at the same property value." : " No sale assumed; you still own the principal."}
                     </p>
                     <p className="sb-calc-liquidity">
                       A secondary market doesn&apos;t guarantee a buyer or your
@@ -1810,10 +1745,8 @@ export function App() {
               </div>
             </div>
             {calcMode === "invest" && validCalc && (
-              <div className="sb-calc-scenarios">
-                <h4>
-                  Stress test: {t}-year net on {money(a)}
-                </h4>
+              <details className="sb-calc-scenarios sb-secondary-details">
+                <summary>Explore the stress test: {t}-year net on {money(a)}</summary>
                 <div className="sb-calc-table-wrap">
                 <table className="sb-calc-table">
                   <thead>
@@ -1869,7 +1802,7 @@ export function App() {
                   Scenario illustrations from your inputs and the stated fees.
                   Informational only, not investment advice.
                 </p>
-              </div>
+              </details>
             )}
             {calcMode === "invest" && validCalc && seriesMid.length > 1 && (
               <figure className="sb-calc-chart">
@@ -2176,7 +2109,7 @@ export function App() {
                 </div>
               </figure>
             )}
-            {calcMode === "invest" && validCalc && (
+            {calcMode === "invest" && validCalc && pickedListings.length >= 2 && (
               <div className="sb-calc-side">
                 <h4>Side by side: net outcome per listing</h4>
                 {pickedListings.length >= 2 ? (
@@ -2317,27 +2250,21 @@ export function App() {
               <span className="sb-step-num">01</span>
               <h3>Compare listings</h3>
               <p>
-                Pick 2-3 listings. Compare minimum investment, stated yield,
-                fees and exit terms. Missing information stays marked as
-                unverified.
+                Select 2-3 properties. Compare price, the basis of each return figure, fees and resale terms.
               </p>
             </li>
             <li className="sb-glass">
               <span className="sb-step-num">02</span>
               <h3>Estimate your income</h3>
               <p>
-                Enter your investment, income rate, costs and holding period.
-                See estimated income after entered costs, not a promised return
-                or future sale value.
+                Set your investment, costs and holding period. Test how different assumptions change the net outcome.
               </p>
             </li>
             <li className="sb-glass">
               <span className="sb-step-num">03</span>
               <h3>Check before you invest</h3>
               <p>
-                This is a dated listing record. Before investing, confirm
-                eligibility, fees, ownership rights and resale rules with the
-                platform. A higher yield does not mean lower risk.
+                Confirm current availability, eligibility, ownership rights and exit rules with the platform before investing.
               </p>
             </li>
           </ol>
@@ -2351,14 +2278,7 @@ export function App() {
               <br />
               <em>answers.</em>
             </h2>
-            <p>
-              Know what you are comparing.
-              <br />
-              Know what still needs checking.
-            </p>
-            <span className="sb-question-demo">
-              Source-linked listings · No capital handled
-            </span>
+
           </div>
           <div className="sb-question-list">
             <details open={faqOpen === 0}>
@@ -2421,8 +2341,7 @@ export function App() {
                   sanctions and local-law restrictions. Oceanpoint requires an
                   account and KYC for BSPTs and says some countries are
                   unsupported. These are platform-wide rules, not an approval
-                  for you or every offering. Selecting a country does not filter
-                  listings or confirm legal access. Read the source notes on
+                  for you or every offering. Read the source notes on
                   each card and confirm the specific offering's restrictions
                   before investing.
                 </p>
@@ -2502,27 +2421,7 @@ export function App() {
             <a className="sb-footer-action" href="#compare">
               Compare listings <span aria-hidden="true">&rarr;</span>
             </a>
-            <div className="sb-footer-signup">
-            <p>
-              Referral links - we may earn a reward.
-            </p>
-            <a
-              className="sb-footer-action"
-              href={REFERRAL.Lofty.url}
-              target="_blank"
-              rel="sponsored noopener noreferrer"
-            >
-              Invest now <span aria-hidden="true">↗</span>
-            </a>
-            <a
-              className="sb-footer-action"
-              href={REFERRAL.Oceanpoint.url}
-              target="_blank"
-              rel="sponsored noopener noreferrer"
-            >
-              Invest now <span aria-hidden="true">↗</span>
-            </a>
-            </div>
+
           </div>
         </div>
         <div className="sb-footer-info">

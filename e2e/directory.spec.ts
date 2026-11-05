@@ -77,3 +77,23 @@ test("default first twelve mix platforms without overriding explicit sorting", a
   await page.locator("#f-platform").selectOption("Oceanpoint");
   expect((await platforms.allTextContents()).every(t=>t.includes("Oceanpoint"))).toBe(true);
 });
+
+test('clarity cleanup keeps secondary detail on demand and metrics explicit', async ({page}) => {
+  await page.goto('/');
+  await expect(page.locator('#f-country')).toHaveCount(0);
+  await expect(page.locator('#about')).toBeAttached();
+  await expect(page.locator('#methodology')).toHaveCount(0);
+  await expect(page.locator('.sb-below-hero')).toHaveCount(0);
+  await expect(page.locator('.sb-index-banner')).toBeHidden();
+  await expect(page.locator('.sb-compare-strip')).toHaveCount(0);
+  await expect(page.locator('.sb-card-status').first()).toContainText('Secondary market');
+  await expect(page.locator('.sb-card-headlines').first()).toContainText('Annual rent / value');
+  await expect(page.locator('.sb-calc-scenarios .sb-calc-table')).toBeHidden();
+  await page.locator('.sb-calc-scenarios > summary').click();
+  await expect(page.locator('.sb-calc-scenarios .sb-calc-table')).toBeVisible();
+  await page.locator('.sb-directory-data-notes > summary').click();
+  await expect(page.locator('.sb-index-banner')).toBeVisible();
+  await page.locator('.sb-property input').first().check();
+  await expect(page.locator('.sb-compare-strip')).toBeVisible();
+  await expect(page.locator('.sb-footer-signup')).toHaveCount(0);
+});
