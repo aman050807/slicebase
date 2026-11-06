@@ -1,0 +1,1 @@
+const t=document.body.innerText.replace(/\s+/g," "); const re=/(TRADING|LISTED|COMING SOON) (.+?) (BSPT-OCN-\d+) Valuation: (\$[\d,]+) APY: ([\d.]+%)/g; const out=[]; let m; while((m=re.exec(t))) out.push({status:m[1],name:m[2],asset:m[3],valuation:m[4],apy:m[5]}); return {n:out.length,out};
