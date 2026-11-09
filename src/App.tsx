@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import { installWheelGlide, scrollToSection } from "./scroll";
 import { TextLink } from "./components/TextLink";
 import "./style.css";
@@ -2491,6 +2492,7 @@ export function App() {
           </ul>
         </div>
       </footer>
+      <Analytics />
     </div>
   );
 }
