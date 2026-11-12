@@ -34,7 +34,7 @@
     "photo": "lofty-2.jpg",
     "rawMetrics": "$40.00/share · 11.6% avg yield · 4% Undervalued",
     "valuation": "$289,600",
-    "monthlyRent": "$2,105.12",
+    "monthlyRent": "$2,107.68",
     "checkedAt": "2026-11-12"
   },
   {
@@ -141,14 +141,14 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$23.22/share",
+    "quote": "$23.21/share",
     "yieldLabel": "avg yield",
     "yieldText": "12.1%",
     "source": "https://www.lofty.ai/property_deal/1317-South-Solano-Dr_Las-Cruces-NM-88001",
     "photo": "lofty-8.jpg",
-    "rawMetrics": "$23.22/share · 12.1% avg yield · 1% Overvalued",
+    "rawMetrics": "$23.21/share · 12.1% avg yield · 1% Overvalued",
     "valuation": "$761,450",
-    "monthlyRent": "$3,162.59",
+    "monthlyRent": "$4,148.00",
     "checkedAt": "2026-11-12"
   },
   {
@@ -160,14 +160,14 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$30.49/share",
+    "quote": "$29.97/share",
     "yieldLabel": "avg yield",
     "yieldText": "5.0%",
     "source": "https://www.lofty.ai/property_deal/333-Illinois-Ave_Lorain-Ohio-44052",
     "photo": "lofty-9.jpg",
-    "rawMetrics": "$30.49/share · 5.0% avg yield · 4% Overvalued",
+    "rawMetrics": "$29.97/share · 5.0% avg yield · 3% Overvalued",
     "valuation": "$245,399.33",
-    "monthlyRent": "$1,705.00",
+    "monthlyRent": "$2,230.00",
     "checkedAt": "2026-11-12"
   },
   {
@@ -243,7 +243,7 @@
     "photo": "lofty-13.jpg",
     "rawMetrics": "$28.00/share · 4.7% avg yield · 34% Undervalued",
     "valuation": "$273,650",
-    "monthlyRent": "$2,648.00",
+    "monthlyRent": "$2,504.65",
     "checkedAt": "2026-11-12"
   },
   {
@@ -262,7 +262,7 @@
     "photo": "lofty-14.jpg",
     "rawMetrics": "$20.00/share · 11.2% avg yield · 11% Undervalued",
     "valuation": "$627,000",
-    "monthlyRent": "$8,197.92",
+    "monthlyRent": "$3,280.62",
     "checkedAt": "2026-11-12"
   },
   {
@@ -281,7 +281,7 @@
     "photo": "lofty-15.jpg",
     "rawMetrics": "$54.50/share · 12.7% avg yield · 6% Overvalued",
     "valuation": "$117,450",
-    "monthlyRent": "$1,945.00",
+    "monthlyRent": "$1,910.00",
     "checkedAt": "2026-11-12"
   },
   {
@@ -293,12 +293,12 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$37.10/share",
+    "quote": "$37.09/share",
     "yieldLabel": "avg yield",
     "yieldText": "8.9%",
     "source": "https://www.lofty.ai/property_deal/323-E-9th-St_Davenport-IA-52803",
     "photo": "lofty-16.jpg",
-    "rawMetrics": "$37.10/share · 8.9% avg yield · 25% Undervalued",
+    "rawMetrics": "$37.09/share · 8.9% avg yield · 25% Undervalued",
     "valuation": "$118,300",
     "monthlyRent": "$1,425.00",
     "checkedAt": "2026-11-12"
@@ -312,14 +312,14 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$38.55/share",
+    "quote": "$53.00/share",
     "yieldLabel": "avg yield",
     "yieldText": "5.5%",
     "source": "https://www.lofty.ai/property_deal/62-Liberty-St_Tiffin-OH-44883",
     "photo": "lofty-17.jpg",
-    "rawMetrics": "$38.55/share · 5.5% avg yield · 22% Undervalued",
+    "rawMetrics": "$53.00/share · 5.5% avg yield · 6% Overvalued",
     "valuation": "$80,300",
-    "monthlyRent": "$1,250.00",
+    "monthlyRent": "$500.00",
     "checkedAt": "2026-11-12"
   },
   {
@@ -521,12 +521,12 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$50.83/share",
+    "quote": "$47.95/share",
     "yieldLabel": "avg yield",
     "yieldText": "7.0%",
     "source": "https://www.lofty.ai/property_deal/3427-Sturdevant-St_Davenport-IA-52806",
     "photo": "lofty-28.jpg",
-    "rawMetrics": "$50.83/share · 7.0% avg yield · 29% Undervalued",
+    "rawMetrics": "$47.95/share · 7.0% avg yield · 33% Undervalued",
     "valuation": "$97,450",
     "monthlyRent": "$1,110.00",
     "checkedAt": "2026-11-12"
@@ -547,7 +547,7 @@
     "photo": "lofty-29.jpg",
     "rawMetrics": "$42.99/share · 17.0% avg yield · 2% Undervalued",
     "valuation": "$295,200",
-    "monthlyRent": "$1,379.09",
+    "monthlyRent": "$683.12",
     "checkedAt": "2026-11-12"
   },
   {
@@ -566,7 +566,7 @@
     "photo": "lofty-30.jpg",
     "rawMetrics": "$23.99/share · 6.5% avg yield · 15% Undervalued",
     "valuation": "$236,850",
-    "monthlyRent": "$2,430.00",
+    "monthlyRent": "$1,914.72",
     "checkedAt": "2026-11-12"
   },
   {
@@ -604,7 +604,7 @@
     "photo": "lofty-32.jpg",
     "rawMetrics": "$47.75/share · 6.6% avg yield · 4% Undervalued",
     "valuation": "$362,400",
-    "monthlyRent": "$3,700.00",
+    "monthlyRent": "$2,250.00",
     "checkedAt": "2026-11-12"
   },
   {
@@ -832,7 +832,7 @@
     "photo": "lofty-44.jpg",
     "rawMetrics": "$50.00/share · 12.3% avg yield · 8% Overvalued",
     "valuation": "$190,200",
-    "monthlyRent": "$400.00",
+    "monthlyRent": "$1,500.00",
     "checkedAt": "2026-11-12"
   },
   {
@@ -920,12 +920,12 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$48.49/share",
+    "quote": "$48.48/share",
     "yieldLabel": "avg yield",
     "yieldText": "1.8%",
     "source": "https://www.lofty.ai/property_deal/755-Robinwood-Dr_Florissant-MO-63033",
     "photo": "lofty-49.jpg",
-    "rawMetrics": "$48.49/share · 1.8% avg yield · 15% Undervalued",
+    "rawMetrics": "$48.48/share · 1.8% avg yield · 15% Undervalued",
     "valuation": "$127,050",
     "monthlyRent": "$1,345.00",
     "checkedAt": "2026-11-12"
@@ -965,7 +965,7 @@
     "photo": "lofty-51.jpg",
     "rawMetrics": "$18.99/share · 4.2% avg yield · 63% Undervalued",
     "valuation": "$145,264.88",
-    "monthlyRent": "$859.35",
+    "monthlyRent": "$0.00",
     "checkedAt": "2026-11-12"
   },
   {
@@ -996,12 +996,12 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$17.00/share",
+    "quote": "$16.50/share",
     "yieldLabel": "avg yield",
     "yieldText": "2.1%",
     "source": "https://www.lofty.ai/property_deal/566-Nash-St_Akron-OH-44306",
     "photo": "lofty-53.jpg",
-    "rawMetrics": "$17.00/share · 2.1% avg yield · 66% Undervalued",
+    "rawMetrics": "$16.50/share · 2.1% avg yield · 67% Undervalued",
     "valuation": "$105,952.32",
     "monthlyRent": "$973.00",
     "checkedAt": "2026-11-12"
@@ -1015,12 +1015,12 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$16.15/share",
+    "quote": "$16.21/share",
     "yieldLabel": "avg yield",
     "yieldText": "3.5%",
     "source": "https://www.lofty.ai/property_deal/7542-and-7656-S-Colfax-Ave_Chicago-IL-60649",
     "photo": "lofty-54.jpg",
-    "rawMetrics": "$16.15/share · 3.5% avg yield · 67% Undervalued",
+    "rawMetrics": "$16.21/share · 3.5% avg yield · 67% Undervalued",
     "valuation": "$755,388",
     "monthlyRent": "$0.00",
     "checkedAt": "2026-11-12"
@@ -1034,12 +1034,12 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$17.03/share",
+    "quote": "$24.99/share",
     "yieldLabel": "avg yield",
     "yieldText": "7.7%",
     "source": "https://www.lofty.ai/property_deal/9583-Pagewood-Ave_St.-Louis-MO-63114",
     "photo": "lofty-55.jpg",
-    "rawMetrics": "$17.03/share · 7.7% avg yield · 64% Undervalued",
+    "rawMetrics": "$24.99/share · 7.7% avg yield · 48% Undervalued",
     "valuation": "$130,109.98",
     "monthlyRent": "$1,275.00",
     "checkedAt": "2026-11-12"
@@ -1194,7 +1194,7 @@
     "photo": "lofty-63.jpg",
     "rawMetrics": "$36.00/share · 7.7% avg yield · 0.32% Overvalued",
     "valuation": "$209,550",
-    "monthlyRent": "$1,510.00",
+    "monthlyRent": "$1,661.00",
     "checkedAt": "2026-11-12"
   },
   {
@@ -1338,12 +1338,12 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$28.99/share",
+    "quote": "$28.46/share",
     "yieldLabel": "avg yield",
     "yieldText": "2.0%",
     "source": "https://www.lofty.ai/property_deal/1677-Walker-Ave_Memphis-TN-38114",
     "photo": "lofty-71.jpg",
-    "rawMetrics": "$28.99/share · 2.0% avg yield · 42% Undervalued",
+    "rawMetrics": "$28.46/share · 2.0% avg yield · 43% Undervalued",
     "valuation": "$213,684.95",
     "monthlyRent": "$1,430.00",
     "checkedAt": "2026-11-12"
@@ -1433,12 +1433,12 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$27.00/share",
+    "quote": "$26.49/share",
     "yieldLabel": "avg yield",
     "yieldText": "2.4%",
     "source": "https://www.lofty.ai/property_deal/9634-S-Green-St_Chicago-IL-60643",
     "photo": "lofty-76.jpg",
-    "rawMetrics": "$27.00/share · 2.4% avg yield · 46% Undervalued",
+    "rawMetrics": "$26.49/share · 2.4% avg yield · 47% Undervalued",
     "valuation": "$187,697.91",
     "monthlyRent": "$0.00",
     "checkedAt": "2026-11-12"
@@ -1478,7 +1478,7 @@
     "photo": "lofty-78.jpg",
     "rawMetrics": "$40.00/share · 2.6% avg yield · 5% Undervalued",
     "valuation": "$279,236.7",
-    "monthlyRent": "$1,802.42",
+    "monthlyRent": "$1,895.50",
     "checkedAt": "2026-11-12"
   },
   {
@@ -1565,14 +1565,14 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$60.00/share",
+    "quote": "$54.00/share",
     "yieldLabel": "avg yield",
     "yieldText": "7.6%",
     "source": "https://www.lofty.ai/property_deal/1106-29th-Ave_Rock-Island-IL-61201",
     "photo": "lofty-83.jpg",
-    "rawMetrics": "$60.00/share · 7.6% avg yield · 20% Overvalued",
+    "rawMetrics": "$54.00/share · 7.6% avg yield · 8% Overvalued",
     "valuation": "$82,732.16",
-    "monthlyRent": "$1,378.00",
+    "monthlyRent": "$239.00",
     "checkedAt": "2026-11-12"
   },
   {
