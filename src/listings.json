@@ -16,7 +16,7 @@
     "rawMetrics": "$49.69/share · 6.9% avg yield · 6% Overvalued",
     "valuation": "$3,795,700",
     "monthlyRent": "$12,500.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 2,
@@ -35,7 +35,7 @@
     "rawMetrics": "$40.51/share · 11.6% avg yield · 2% Undervalued",
     "valuation": "$289,600",
     "monthlyRent": "$2,105.12",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 3,
@@ -54,7 +54,7 @@
     "rawMetrics": "$45.04/share · 15.4% avg yield · 2% Overvalued",
     "valuation": "$465,150",
     "monthlyRent": "$2,039.58",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 4,
@@ -73,7 +73,7 @@
     "rawMetrics": "$40.90/share · 10.5% avg yield · 18% Undervalued",
     "valuation": "$2,367,550",
     "monthlyRent": "$8,057.34",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 5,
@@ -92,7 +92,7 @@
     "rawMetrics": "$18.90/share · 4.1% avg yield · 19% Undervalued",
     "valuation": "$371,050",
     "monthlyRent": "$9,491.26",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 6,
@@ -111,7 +111,7 @@
     "rawMetrics": "$34.99/share · 6.3% avg yield · 23% Undervalued",
     "valuation": "$302,026",
     "monthlyRent": "$1,829.95",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 7,
@@ -130,7 +130,7 @@
     "rawMetrics": "$44.00/share · 2.2% avg yield · 19% Overvalued",
     "valuation": "$394,050",
     "monthlyRent": "$2,281.10",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 8,
@@ -149,7 +149,7 @@
     "rawMetrics": "$22.49/share · 12.1% avg yield · 1% Undervalued",
     "valuation": "$761,450",
     "monthlyRent": "$3,162.59",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 9,
@@ -168,7 +168,7 @@
     "rawMetrics": "$30.49/share · 5.0% avg yield · 4% Overvalued",
     "valuation": "$245,399.33",
     "monthlyRent": "$1,705.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 10,
@@ -187,7 +187,7 @@
     "rawMetrics": "$60.00/share · 14.8% avg yield · 11% Overvalued",
     "valuation": "$622,250",
     "monthlyRent": "$3,966.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 11,
@@ -206,7 +206,7 @@
     "rawMetrics": "$59.94/share · 16.8% avg yield · 12% Overvalued",
     "valuation": "$1,077,900",
     "monthlyRent": "$6,944.79",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 12,
@@ -217,15 +217,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$50.00/share",
+    "quote": "$49.90/share",
     "yieldLabel": "avg yield",
     "yieldText": "7.1%",
     "source": "https://www.lofty.ai/property_deal/0-E-45Th-St_Jacksonville-FL-32208",
     "photo": "lofty-12.jpg",
-    "rawMetrics": "$50.00/share · 7.1% avg yield · Fairly valued",
+    "rawMetrics": "$49.90/share · 7.1% avg yield · 0.20% Undervalued",
     "valuation": "$128,900",
     "monthlyRent": "$814.42",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 13,
@@ -244,7 +244,7 @@
     "rawMetrics": "$28.00/share · 4.7% avg yield · 34% Undervalued",
     "valuation": "$273,650",
     "monthlyRent": "$2,648.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 14,
@@ -263,7 +263,7 @@
     "rawMetrics": "$23.74/share · 11.2% avg yield · 5% Overvalued",
     "valuation": "$627,000",
     "monthlyRent": "$8,197.92",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 15,
@@ -282,7 +282,7 @@
     "rawMetrics": "$54.50/share · 12.7% avg yield · 6% Overvalued",
     "valuation": "$117,450",
     "monthlyRent": "$1,945.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 16,
@@ -301,7 +301,7 @@
     "rawMetrics": "$37.10/share · 8.9% avg yield · 25% Undervalued",
     "valuation": "$118,300",
     "monthlyRent": "$1,425.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 17,
@@ -320,7 +320,7 @@
     "rawMetrics": "$38.55/share · 5.5% avg yield · 22% Undervalued",
     "valuation": "$80,300",
     "monthlyRent": "$1,250.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 18,
@@ -339,7 +339,7 @@
     "rawMetrics": "$51.90/share · 17.6% avg yield · 3% Overvalued",
     "valuation": "$432,650",
     "monthlyRent": "$4,669.22",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 19,
@@ -358,7 +358,7 @@
     "rawMetrics": "$43.25/share · 14.8% avg yield · 126% Overvalued",
     "valuation": "$286,250",
     "monthlyRent": "$3,081.60",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 20,
@@ -377,7 +377,7 @@
     "rawMetrics": "$44.49/share · 13.1% avg yield · 3% Overvalued",
     "valuation": "$637,700",
     "monthlyRent": "$420.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 21,
@@ -396,7 +396,7 @@
     "rawMetrics": "$18.00/share · 3.2% avg yield · 54% Undervalued",
     "valuation": "$1,963,650",
     "monthlyRent": "$11,125.65",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 22,
@@ -415,7 +415,7 @@
     "rawMetrics": "$29.00/share · 11.8% avg yield · 42% Undervalued",
     "valuation": "$375,750",
     "monthlyRent": "$16,481.78",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 23,
@@ -434,7 +434,7 @@
     "rawMetrics": "$53.88/share · 13.3% avg yield · 25% Overvalued",
     "valuation": "$763,150",
     "monthlyRent": "$3,600.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 24,
@@ -453,7 +453,7 @@
     "rawMetrics": "$40.37/share · 9.5% avg yield · 14% Undervalued",
     "valuation": "$148,900",
     "monthlyRent": "$1,660.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 25,
@@ -472,7 +472,7 @@
     "rawMetrics": "$48.50/share · 5.5% avg yield · 12% Undervalued",
     "valuation": "$129,422.93",
     "monthlyRent": "$1,200.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 26,
@@ -491,7 +491,7 @@
     "rawMetrics": "$49.95/share · 9.2% avg yield · 15% Overvalued",
     "valuation": "$543,550",
     "monthlyRent": "$2,250.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 27,
@@ -510,7 +510,7 @@
     "rawMetrics": "$40.00/share · 6.0% avg yield · 13% Undervalued",
     "valuation": "$146,476.9",
     "monthlyRent": "$1,575.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 28,
@@ -529,7 +529,7 @@
     "rawMetrics": "$50.83/share · 7.0% avg yield · 29% Undervalued",
     "valuation": "$97,450",
     "monthlyRent": "$1,110.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 29,
@@ -548,7 +548,7 @@
     "rawMetrics": "$42.99/share · 17.0% avg yield · 2% Undervalued",
     "valuation": "$295,200",
     "monthlyRent": "$1,379.09",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 30,
@@ -567,7 +567,7 @@
     "rawMetrics": "$23.99/share · 6.5% avg yield · 15% Undervalued",
     "valuation": "$236,850",
     "monthlyRent": "$2,430.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 31,
@@ -586,7 +586,7 @@
     "rawMetrics": "$47.76/share · 17.6% avg yield · 0.56% Overvalued",
     "valuation": "$313,600",
     "monthlyRent": "$2,912.18",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 32,
@@ -605,7 +605,7 @@
     "rawMetrics": "$47.75/share · 6.6% avg yield · 4% Undervalued",
     "valuation": "$362,400",
     "monthlyRent": "$3,700.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 33,
@@ -624,7 +624,7 @@
     "rawMetrics": "$59.99/share · 7.3% avg yield · 26% Overvalued",
     "valuation": "$259,800",
     "monthlyRent": "$1,578.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 34,
@@ -635,15 +635,15 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$49.94/share",
+    "quote": "$48.00/share",
     "yieldLabel": "avg yield",
     "yieldText": "12.6%",
     "source": "https://www.lofty.ai/property_deal/12615-Jackson-Ave_Grandview-MO-64030",
     "photo": "lofty-34.jpg",
-    "rawMetrics": "$49.94/share · 12.6% avg yield · 9% Undervalued",
+    "rawMetrics": "$48.00/share · 12.6% avg yield · 13% Undervalued",
     "valuation": "$1,352,100",
     "monthlyRent": "$12,172.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 35,
@@ -662,7 +662,7 @@
     "rawMetrics": "$92.00/share · 22.5% avg yield · 84% Overvalued",
     "valuation": "$279,000",
     "monthlyRent": "$2,918.11",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 36,
@@ -681,7 +681,7 @@
     "rawMetrics": "$49.99/share · 6.4% avg yield · 23% Overvalued",
     "valuation": "$503,900",
     "monthlyRent": "$2,934.21",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 37,
@@ -700,7 +700,7 @@
     "rawMetrics": "$41.00/share · 9.8% avg yield · 48% Overvalued",
     "valuation": "$923,050",
     "monthlyRent": "$4,504.98",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 38,
@@ -719,7 +719,7 @@
     "rawMetrics": "$45.00/share · 7.3% avg yield · 8% Undervalued",
     "valuation": "$142,700",
     "monthlyRent": "$1,266.80",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 39,
@@ -738,7 +738,7 @@
     "rawMetrics": "$49.20/share · 14.5% avg yield · 1% Undervalued",
     "valuation": "$317,850",
     "monthlyRent": "$1,595.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 40,
@@ -757,7 +757,7 @@
     "rawMetrics": "$73.90/share · 13.0% avg yield · 47% Overvalued",
     "valuation": "$68,850",
     "monthlyRent": "$1,350.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 41,
@@ -776,7 +776,7 @@
     "rawMetrics": "$53.00/share · 10.3% avg yield · 1% Overvalued",
     "valuation": "$658,800",
     "monthlyRent": "$4,256.86",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 42,
@@ -795,7 +795,7 @@
     "rawMetrics": "$55.50/share · 9.1% avg yield · 15% Overvalued",
     "valuation": "$848,400",
     "monthlyRent": "$5,000.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 43,
@@ -814,7 +814,7 @@
     "rawMetrics": "$24.00/share · 9.0% avg yield · 43% Undervalued",
     "valuation": "$924,600",
     "monthlyRent": "$6,040.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 44,
@@ -833,7 +833,7 @@
     "rawMetrics": "$50.00/share · 12.3% avg yield · 8% Overvalued",
     "valuation": "$190,200",
     "monthlyRent": "$400.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 45,
@@ -852,7 +852,7 @@
     "rawMetrics": "$49.97/share · 5.9% avg yield · 0.05% Undervalued",
     "valuation": "$191,300",
     "monthlyRent": "$1,548.21",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 46,
@@ -871,7 +871,7 @@
     "rawMetrics": "$440.00/share · 14.2% avg yield · 371% Overvalued",
     "valuation": "$312,000",
     "monthlyRent": "$2,500.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 47,
@@ -890,7 +890,7 @@
     "rawMetrics": "$13.91/share · 8.4% avg yield · 40% Overvalued",
     "valuation": "$3,493,600",
     "monthlyRent": "$13,592.20",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 48,
@@ -909,7 +909,7 @@
     "rawMetrics": "$35.90/share · 6.8% avg yield · 18% Undervalued",
     "valuation": "$433,100",
     "monthlyRent": "$2,945.09",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 49,
@@ -928,7 +928,7 @@
     "rawMetrics": "$48.49/share · 1.8% avg yield · 15% Undervalued",
     "valuation": "$127,050",
     "monthlyRent": "$1,345.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 50,
@@ -947,7 +947,7 @@
     "rawMetrics": "$33.49/share · 7.2% avg yield · 37% Undervalued",
     "valuation": "$122,677.8",
     "monthlyRent": "$0.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 51,
@@ -966,7 +966,7 @@
     "rawMetrics": "$18.99/share · 4.2% avg yield · 63% Undervalued",
     "valuation": "$145,264.88",
     "monthlyRent": "$859.35",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 52,
@@ -985,7 +985,7 @@
     "rawMetrics": "$40.00/share · 3.0% avg yield · 16% Overvalued",
     "valuation": "$142,643.76",
     "monthlyRent": "$1,095.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 53,
@@ -1004,7 +1004,7 @@
     "rawMetrics": "$17.00/share · 2.1% avg yield · 66% Undervalued",
     "valuation": "$105,952.32",
     "monthlyRent": "$973.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 54,
@@ -1023,7 +1023,7 @@
     "rawMetrics": "$16.15/share · 3.5% avg yield · 67% Undervalued",
     "valuation": "$755,388",
     "monthlyRent": "$0.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 55,
@@ -1042,7 +1042,7 @@
     "rawMetrics": "$17.03/share · 7.7% avg yield · 64% Undervalued",
     "valuation": "$130,109.98",
     "monthlyRent": "$1,275.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 56,
@@ -1081,7 +1081,7 @@
     "rawMetrics": "$17.71/share · 4.0% avg yield · 8% Undervalued",
     "valuation": "$331,176.98",
     "monthlyRent": "$2,798.50",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 58,
@@ -1100,7 +1100,7 @@
     "rawMetrics": "$25.48/share · 5.6% avg yield · 51% Undervalued",
     "valuation": "$203,787.05",
     "monthlyRent": "$1,135.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 59,
@@ -1119,7 +1119,7 @@
     "rawMetrics": "$20.00/share · 9.8% avg yield · 49% Undervalued",
     "valuation": "$457,450",
     "monthlyRent": "$2,800.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 60,
@@ -1138,7 +1138,7 @@
     "rawMetrics": "$19.75/share · 2.9% avg yield · 60% Undervalued",
     "valuation": "$304,860",
     "monthlyRent": "$0.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 61,
@@ -1157,7 +1157,7 @@
     "rawMetrics": "$38.19/share · 5.5% avg yield · 31% Undervalued",
     "valuation": "$131,341.61",
     "monthlyRent": "$1,325.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 62,
@@ -1176,7 +1176,7 @@
     "rawMetrics": "$13.02/share · 3.7% avg yield · 74% Undervalued",
     "valuation": "$194,100",
     "monthlyRent": "$0.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 63,
@@ -1195,7 +1195,7 @@
     "rawMetrics": "$36.00/share · 7.7% avg yield · 0.32% Overvalued",
     "valuation": "$209,550",
     "monthlyRent": "$1,510.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 64,
@@ -1213,7 +1213,7 @@
     "photo": "lofty-64.jpg",
     "rawMetrics": "$44.99/share · 13.3% avg yield · 5% Overvalued",
     "valuation": null,
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 65,
@@ -1232,7 +1232,7 @@
     "rawMetrics": "$16.90/share · 3.0% avg yield · 66% Undervalued",
     "valuation": "$484,599.4",
     "monthlyRent": "$2,800.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 66,
@@ -1251,7 +1251,7 @@
     "rawMetrics": "$24.40/share · 4.5% avg yield · 51% Undervalued",
     "valuation": "$91,604.08",
     "monthlyRent": "$950.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 67,
@@ -1270,7 +1270,7 @@
     "rawMetrics": "$50.00/share · 5.3% avg yield · 25% Undervalued",
     "valuation": "$104,100",
     "monthlyRent": "$1,100.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 68,
@@ -1289,7 +1289,7 @@
     "rawMetrics": "$31.00/share · 1.9% avg yield · 24% Undervalued",
     "valuation": "$212,100",
     "monthlyRent": "$2,245.62",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 69,
@@ -1308,7 +1308,7 @@
     "rawMetrics": "$37.49/share · 9.3% avg yield · 12% Undervalued",
     "valuation": "$402,500",
     "monthlyRent": "$0.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 70,
@@ -1327,7 +1327,7 @@
     "rawMetrics": "$14.99/share · 7.5% avg yield · 66% Undervalued",
     "valuation": "$94,861",
     "monthlyRent": "$0.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 71,
@@ -1346,7 +1346,7 @@
     "rawMetrics": "$28.99/share · 2.0% avg yield · 42% Undervalued",
     "valuation": "$213,684.95",
     "monthlyRent": "$1,430.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 72,
@@ -1365,7 +1365,7 @@
     "rawMetrics": "$39.83/share · 4.1% avg yield · 23% Undervalued",
     "valuation": "$108,963",
     "monthlyRent": "$1,245.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 73,
@@ -1384,7 +1384,7 @@
     "rawMetrics": "$13.89/share · 2.7% avg yield · 72% Undervalued",
     "valuation": "$153,250",
     "monthlyRent": "$0.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 74,
@@ -1403,7 +1403,7 @@
     "rawMetrics": "$40.50/share · 5.1% avg yield · 28% Undervalued",
     "valuation": "$74,940",
     "monthlyRent": "$1,050.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 75,
@@ -1422,7 +1422,7 @@
     "rawMetrics": "$16.95/share · 9.0% avg yield · 61% Undervalued",
     "valuation": "$733,450",
     "monthlyRent": "$1,865.76",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 76,
@@ -1441,7 +1441,7 @@
     "rawMetrics": "$27.00/share · 2.4% avg yield · 46% Undervalued",
     "valuation": "$187,697.91",
     "monthlyRent": "$0.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 77,
@@ -1460,7 +1460,7 @@
     "rawMetrics": "$24.00/share · 9.4% avg yield · 48% Undervalued",
     "valuation": "$453,450",
     "monthlyRent": "$2,400.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 78,
@@ -1479,7 +1479,7 @@
     "rawMetrics": "$40.00/share · 2.6% avg yield · 5% Undervalued",
     "valuation": "$279,236.7",
     "monthlyRent": "$1,802.42",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 79,
@@ -1498,7 +1498,7 @@
     "rawMetrics": "$22.48/share · 2.4% avg yield · 41% Undervalued",
     "valuation": "$131,033.63",
     "monthlyRent": "$0.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 80,
@@ -1517,7 +1517,7 @@
     "rawMetrics": "$42.00/share · 5.2% avg yield · 23% Undervalued",
     "valuation": "$136,614.67",
     "monthlyRent": "$1,100.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 81,
@@ -1536,7 +1536,7 @@
     "rawMetrics": "$50.00/share · 11.8% avg yield · Fairly valued",
     "valuation": "$562,800",
     "monthlyRent": "$3,286.11",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 82,
@@ -1554,7 +1554,7 @@
     "photo": "lofty-82.jpg",
     "rawMetrics": "$51.97/share · 6.3% avg yield · 16% Undervalued",
     "valuation": null,
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 83,
@@ -1573,7 +1573,7 @@
     "rawMetrics": "$60.00/share · 7.6% avg yield · 20% Overvalued",
     "valuation": "$82,732.16",
     "monthlyRent": "$1,378.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 84,
@@ -1592,7 +1592,7 @@
     "rawMetrics": "$50.00/share · 3.9% avg yield · Fairly valued",
     "valuation": "$137,250",
     "monthlyRent": "$0.00",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 85,
@@ -1612,7 +1612,7 @@
     "rawMetrics": null,
     "valuation": "$23,000",
     "asset": "BSPT-OCN-0",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 86,
@@ -1632,7 +1632,7 @@
     "rawMetrics": null,
     "valuation": "$950,000",
     "asset": "BSPT-OCN-1",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 87,
@@ -1652,7 +1652,7 @@
     "rawMetrics": null,
     "valuation": "$764,000",
     "asset": "BSPT-OCN-15",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 88,
@@ -1672,7 +1672,7 @@
     "rawMetrics": null,
     "valuation": "$705,000",
     "asset": "BSPT-OCN-3",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 89,
@@ -1692,7 +1692,7 @@
     "rawMetrics": null,
     "valuation": "$1,170,000",
     "asset": "BSPT-OCN-25",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 90,
@@ -1712,7 +1712,7 @@
     "rawMetrics": null,
     "valuation": "$2,175,000",
     "asset": "BSPT-OCN-16",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 91,
@@ -1732,7 +1732,7 @@
     "rawMetrics": null,
     "valuation": "$475,000",
     "asset": "BSPT-OCN-11",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 92,
@@ -1752,7 +1752,7 @@
     "rawMetrics": null,
     "valuation": "$1,475,000",
     "asset": "BSPT-OCN-10",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 93,
@@ -1772,7 +1772,7 @@
     "rawMetrics": null,
     "valuation": "$2,650,000",
     "asset": "BSPT-OCN-9",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 94,
@@ -1792,7 +1792,7 @@
     "rawMetrics": null,
     "valuation": "$640,000",
     "asset": "BSPT-OCN-4",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 95,
@@ -1812,7 +1812,7 @@
     "rawMetrics": null,
     "valuation": "$540,000",
     "asset": "BSPT-OCN-2",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 96,
@@ -1832,7 +1832,7 @@
     "rawMetrics": null,
     "valuation": "$1,190,000",
     "asset": "BSPT-OCN-5",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 97,
@@ -1852,7 +1852,7 @@
     "rawMetrics": null,
     "valuation": "$279,411",
     "asset": "BSPT-OCN-44",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 98,
@@ -1872,7 +1872,7 @@
     "rawMetrics": null,
     "valuation": "$1,805,123",
     "asset": "BSPT-OCN-39",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 99,
@@ -1892,7 +1892,7 @@
     "rawMetrics": null,
     "valuation": "$186,201",
     "asset": "BSPT-OCN-47",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 100,
@@ -1912,7 +1912,7 @@
     "rawMetrics": null,
     "valuation": "$692,197",
     "asset": "BSPT-OCN-46",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 101,
@@ -1932,7 +1932,7 @@
     "rawMetrics": null,
     "valuation": "$262,821",
     "asset": "BSPT-OCN-45",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 102,
@@ -1952,7 +1952,7 @@
     "rawMetrics": null,
     "valuation": "$204,756",
     "asset": "BSPT-OCN-43",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 103,
@@ -1972,7 +1972,7 @@
     "rawMetrics": null,
     "valuation": "$249,396",
     "asset": "BSPT-OCN-42",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 104,
@@ -1992,7 +1992,7 @@
     "rawMetrics": null,
     "valuation": "$234,880",
     "asset": "BSPT-OCN-41",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   },
   {
     "id": 105,
@@ -2012,6 +2012,6 @@
     "rawMetrics": null,
     "valuation": "$184,236",
     "asset": "BSPT-OCN-40",
-    "checkedAt": "2026-11-11"
+    "checkedAt": "2026-11-12"
   }
 ]
