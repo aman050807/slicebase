@@ -357,7 +357,7 @@
     "photo": "lofty-19.jpg",
     "rawMetrics": "$43.25/share · 14.8% avg yield · 126% Overvalued",
     "valuation": "$286,250",
-    "monthlyRent": "$3,081.60",
+    "monthlyRent": "$1,208.37",
     "checkedAt": "2026-11-13"
   },
   {
@@ -483,12 +483,12 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$49.50/share",
+    "quote": "$49.46/share",
     "yieldLabel": "avg yield",
     "yieldText": "9.2%",
     "source": "https://www.lofty.ai/property_deal/999-Canyon-Rd_Ogden-UT-84404",
     "photo": "lofty-26.jpg",
-    "rawMetrics": "$49.50/share · 9.2% avg yield · 14% Overvalued",
+    "rawMetrics": "$49.46/share · 9.2% avg yield · 14% Overvalued",
     "valuation": "$543,550",
     "monthlyRent": "$2,250.00",
     "checkedAt": "2026-11-13"
@@ -578,14 +578,14 @@
     "min": null,
     "yieldPct": null,
     "status": "Source listing",
-    "quote": "$47.76/share",
+    "quote": "$47.29/share",
     "yieldLabel": "avg yield",
     "yieldText": "17.6%",
     "source": "https://www.lofty.ai/property_deal/3761-Jade-Ave_Las-Cruces-NM-88012",
     "photo": "lofty-31.jpg",
-    "rawMetrics": "$47.76/share · 17.6% avg yield · 0.56% Overvalued",
+    "rawMetrics": "$47.29/share · 17.6% avg yield · 0.42% Undervalued",
     "valuation": "$313,600",
-    "monthlyRent": "$2,912.18",
+    "monthlyRent": "$5,379.77",
     "checkedAt": "2026-11-13"
   },
   {
